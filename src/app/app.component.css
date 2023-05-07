@@ -1,0 +1,79 @@
+body {
+    -webkit-user-select: none;
+    -moz-user-select: -moz-none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.selected {
+    -webkit-filter: drop-shadow(0 0 1em #616161);
+    filter: drop-shadow(0 0 1em #616161);
+    transition: transform 0.2s ease-in-out;
+}
+
+.selected.image img {
+    -webkit-filter: contrast(2.5);
+    filter: contrast(2.5);
+    -moz-transform: scale(1.1);
+    -webkit-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    transform: scale(1.2);
+}
+
+#header.hide .button.hidden:before,
+#header.preview .button.hidden:before {
+    color: attr(data-content);
+}
+
+.columns .fit img {
+    object-fit: cover;
+    object-position: top;
+}
+
+.columns .fit:nth-child(1) img,
+.columns .fit:nth-child(3) img,
+.columns .fit:nth-child(6) img,
+.columns .fit:nth-child(8) img,
+.columns .fit:nth-child(9) img,
+.columns .fit:nth-child(11) img,
+.columns .fit:nth-child(14) img,
+.columns .fit:nth-child(16) img {
+    aspect-ratio: 800/500;
+}
+
+.columns .fit:nth-child(2) img,
+.columns .fit:nth-child(4) img,
+.columns .fit:nth-child(5) img,
+.columns .fit:nth-child(7) img,
+.columns .fit:nth-child(10) img,
+.columns .fit:nth-child(12) img,
+.columns .fit:nth-child(13) img,
+.columns .fit:nth-child(15) img {
+    aspect-ratio: 533/800;
+}
+
+@keyframes leftMarquee {
+    40% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+    60% {
+        opacity: 1;
+    }
+}
+
+.leftGameName {
+    text-shadow: 2px 0 0 #fff, -2px 0 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff, 1px 1px #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;
+    font-size: 4rem;
+    filter: invert(1);
+    bottom: 0.2em;
+    letter-spacing: 3px;
+    font-family: 'Pattaya', sans-serif;
+    z-index: 10009;
+    position: fixed;
+    width: 100vw;
+    text-align: center;
+    animation: leftMarquee 5s linear infinite;
+}

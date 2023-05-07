@@ -1,0 +1,212 @@
+<html>
+
+<head>
+    <title>Retro Game Zone - By Shardul Pakhale</title>
+    <meta name="description"
+        content="A place for all nostalgic gamers to relive old memories. ReLived by Shardul Pakhale.">
+    <meta name="theme-color" content="#e74c3c">
+    <meta property="og:image" content="nesicon.png" />
+    <meta property="og:title" content="Retro Game Zone - By Shardul Pakhale" />
+    <meta property="og:description"
+        content="A place for all nostalgic gamers to relive old memories. ReLived by Shardul Pakhale." />
+    <style type="text/css">
+        #emulator:-webkit-full-screen {
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            margin: 0;
+        }
+
+        #emulator:-moz-full-screen {
+            background-color: black;
+            margin: 0;
+        }
+
+        #emulator:-ms-fullscreen {
+            background-color: black;
+            margin: 0;
+        }
+
+        /* W3C proposal that will eventually come in all browsers */
+
+        #emulator:fullscreen {
+            background-color: black;
+            margin: 0;
+            cursor: none;
+        }
+
+        #emulator:fullscreen canvas {
+            transform: scale(1.065);
+        }
+    </style>
+</head>
+
+<body>
+    <center>
+        <div id="emulator"></div>
+    </center>
+    <script src="lib/jquery-3.2.1.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="lib/dynamicaudio-min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="source/nes.js" type="text/javascript" charset="utf-8"></script>
+    <script src="source/utils.js" type="text/javascript" charset="utf-8"></script>
+    <script src="source/cpu.js" type="text/javascript" charset="utf-8"></script>
+    <script src="source/keyboard.js" type="text/javascript" charset="utf-8"></script>
+    <script src="source/mappers.js" type="text/javascript" charset="utf-8"></script>
+    <script src="source/papu.js" type="text/javascript" charset="utf-8"></script>
+    <script src="source/ppu.js" type="text/javascript" charset="utf-8"></script>
+    <script src="source/rom.js" type="text/javascript" charset="utf-8"></script>
+    <script src="source/ui.js" type="text/javascript" charset="utf-8"></script>
+    <script src="lib/fshelper.js" type="text/javascript" charset="utf-8"></script>
+    <script src="lib/audioUI.js" type="text/javascript" charset="utf-8"></script>
+    <script src="source/omssp.js" type="text/javascript" charset="utf-8"></script>
+    <script src="lib/gamepad.js" type="text/javascript" charset="utf-8"></script>
+    <script src="lib/nespad.js" type="text/javascript" charset="utf-8"></script>
+    <script src="lib/gamelist.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" charset="utf-8">
+
+        var nes;
+        $(function () {
+            nes = new JSNES({
+                'ui': $('#emulator').JSNESUI({
+                    "Choose ROM": gameNameArray
+                })
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            window.setTimeout(setCursor(), 1000);
+            var gamName = "&#nbsp;";
+            window.setTimeout(load, 1000);
+            focusMe();
+            $(document).bind('keydown', function (e) {
+                if (e.keyCode == 122 || e.keyCode == 70) {
+                    $('#go-button').click();
+                    e.preventDefault();
+                }
+            });
+            idleLogout();
+            fullScreenCanvasHandler();
+        });
+
+        function focusMe() {
+            window.focus();
+        }
+
+        function clickMe() {
+            $('#go-button').click();
+        }
+    </script>
+    <style type="text/css">
+        .nes-roms,
+        .nes-controls {
+            display: none;
+        }
+
+        .nes-status {
+            text-shadow: 1px 1px 5px #757575;
+            font-family: monospace;
+            transition: all 0.7s;
+            height: 10px;
+        }
+
+        #powbutton,
+        #ppbutton,
+        #mubutton {
+            transition: all 0.7s;
+            margin: 5px;
+            margin-top: 8px;
+        }
+
+        #powbutton:hover,
+        #ppbutton:hover,
+        #mubutton:hover {
+            transform: scale(1.1);
+            transition: all 1s ease-in;
+            -webkit-transition: all 0.7s;
+            -moz-transition: all 0.7s;
+            cursor: pointer;
+        }
+
+        #controlsdiv {
+            width: fit-content;
+            position: relative;
+            display: block;
+        }
+    </style>
+    <center>
+        <div id="controlsdiv">
+            <img src="controls/pause.png" title="Play/Pause" id="ppbutton" onClick="togglePause()">
+            <img src="controls/power.png" title="Power" id="powbutton" onClick="togglePower()">
+            <img src="controls/mute.png" title="Mute" id="mubutton" onClick="toggleAudio()">
+        </div>
+    </center>
+    <button id="go-button" style="display: none;">Enable Full Screen</button>
+    <script>
+        function idleLogout() {
+            var t;
+            window.onload = resetTimer;
+            window.onmousemove = resetTimer;
+            window.onmousedown = resetTimer;  // catches touchscreen presses as well      
+            window.ontouchstart = resetTimer; // catches touchscreen swipes as well      
+            window.ontouchmove = resetTimer;  // required by some devices 
+            window.onclick = resetTimer;      // catches touchpad clicks as well
+            window.onkeydown = resetTimer;
+            window.addEventListener('scroll', resetTimer, true); // improved; see comments
+
+            function yourFunction() {
+                $('#nescanvas').css('cursor', 'none');
+                // your function for too long inactivity goes here
+                // e.g. window.location.href = 'logout.php';
+            }
+
+            function resetTimer() {
+                clearTimeout(t);
+                t = setTimeout(yourFunction, 2000);  // time is in milliseconds
+            }
+        }
+
+        $("#go-button").on('click', function () {
+            if (IsFullScreenCurrently()) {
+                GoOutFullscreen();
+            } else {
+                GoInFullscreen($("#emulator").get(0));
+            }
+        });
+
+        $(document).on('fullscreenchange webkitfullscreenchange mozfullscreenchange MSFullscreenChange', fullScreenCanvasHandler);
+        function fullScreenCanvasHandler(forToggleStretchMode = false) {
+            console.log('some', IsFullScreenCurrently())
+            if (IsFullScreenCurrently()) {
+                //$("#element span").text('Full Screen Mode Enabled');
+                $("p.nes-status").fadeOut(10);
+                $("#go-button").text('Disable Full Screen');
+                screen.orientation.lock("landscape")
+                    .then(() => {
+                        $("canvas.nes-screen").css("width", stretchMode ? "100%" : "auto");
+                        $("canvas.nes-screen").css("height", "100%");
+                    })
+                    .catch(err => {
+                        if ($(window).width() < 500) {
+                            $("canvas.nes-screen").css("width", "100%");
+                            $("canvas.nes-screen").css("height", "auto");
+                        } else {
+                            $("canvas.nes-screen").css("width", stretchMode ? "100%" : "auto");
+                            $("canvas.nes-screen").css("height", "100%");
+                        }
+                        console.log(err);
+                    });
+            } else {
+                //$("#element span").text('Full Screen Mode Disabled');
+                $("p.nes-status").fadeIn(500);
+                if (forToggleStretchMode != "yes") {
+                    document.getElementById("zoomb").click();
+                    document.getElementById("zoomb").click();
+                }
+                $("#go-button").text('Enable Full Screen');
+            }
+        }
+    </script>
+</body>
+
+</html>
