@@ -73,7 +73,7 @@ with open(f"{OUTPUT_DIR}lib/gamelist.js", "r+") as list_js:
 
 
 for change in CHANGES:
-    with open(f"{OUTPUT_DIR}{change['file']}", "r +") as f:
+    with open(f"{OUTPUT_DIR}{change['file']}", "r+") as f:
         contents = f.read()
 
         for replacement in change['replacements']:
