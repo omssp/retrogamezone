@@ -1,3 +1,4 @@
+import os
 import re
 import ast
 import json
@@ -8,7 +9,7 @@ OUTPUT_DIR = "dist/retrogamezone/"
 
 CHANGES = [
     {
-        "file": f"{OUTPUT_DIR}game.html",
+        "file": "game.html",
         "replacements": [
             ['var para = 1;', """var para = "slug";
         if (para == "slug") {
@@ -20,19 +21,30 @@ CHANGES = [
         ]
     },
     {
-        "file": f"{OUTPUT_DIR}index.html",
+        "file": "index.html",
         "replacements": [
+            ["http://retrogamezone.droppages.com/",
+             "https://cdn.jsdelivr.net/gh/omssp/nesscraper/nesicon.png"],
             ['gameid="${gameInfo[3]}"',
              'gameid="${gameInfo[4]}" game-slug="${gameInfo[3]}"'],
             ["game.html?${$(this).attr('gameid')}",
-             "${$(this).attr('game-slug')}"]
-
+             "${$(this).attr('game-slug')}"],
         ]
-    }
+    },
 ]
+
+DELETIONS = [
+    "game.html",
+    "gooder.json",
+    "top100desc.json",
+    "fullS.svg",
+    "nesicon.png",
+]
+
 
 shutil.rmtree(OUTPUT_DIR, ignore_errors=True)
 shutil.copytree('src/', OUTPUT_DIR)
+
 
 slugs = []
 with open(f"{OUTPUT_DIR}lib/gamelist.js", "r+") as list_js:
@@ -61,7 +73,7 @@ with open(f"{OUTPUT_DIR}lib/gamelist.js", "r+") as list_js:
 
 
 for change in CHANGES:
-    with open(change['file'], "r+") as f:
+    with open(f"{OUTPUT_DIR}{change['file']}", "r +") as f:
         contents = f.read()
 
         for replacement in change['replacements']:
@@ -74,3 +86,11 @@ for change in CHANGES:
 
 for slug in slugs:
     shutil.copy(f"{OUTPUT_DIR}game.html", slug)
+
+
+for f in DELETIONS:
+    os.remove(f"{OUTPUT_DIR}{f}")
+
+
+for k, v in os.environ.items():
+    print(f'{k}={v}')
