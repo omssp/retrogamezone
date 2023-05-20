@@ -6,6 +6,31 @@ import slugify
 
 OUTPUT_DIR = "dist/retrogamezone/"
 
+CHANGES = [
+    {
+        "file": f"{OUTPUT_DIR}game.html",
+        "replacements": [
+            ['var para = 1;', """var para = "slug";
+        if (para == "slug") {
+                let slug = document.location.pathname.replace("/", "");
+                para = gameNameArray.findIndex(o => o[3] == slug);
+            }"""],
+            ['"href", "game.html?" + preG.toString()', '"href", gameNameArray[preG][3]'],
+            ['"href", "game.html?" + nexG.toString()', '"href", gameNameArray[nexG][3]']
+        ]
+    },
+    {
+        "file": f"{OUTPUT_DIR}index.html",
+        "replacements": [
+            ['gameid="${gameInfo[3]}"',
+             'gameid="${gameInfo[4]}" game-slug="${gameInfo[3]}"'],
+            ["game.html?${$(this).attr('gameid')}",
+             "${$(this).attr('game-slug')}"]
+
+        ]
+    }
+]
+
 shutil.rmtree(OUTPUT_DIR, ignore_errors=True)
 shutil.copytree('src/', OUTPUT_DIR)
 
@@ -34,33 +59,18 @@ with open(f"{OUTPUT_DIR}lib/gamelist.js", "r+") as list_js:
     list_js.truncate()
     list_js.write(f"var gameNameArray = {json.dumps(games, indent=4)};")
 
-with open(f"{OUTPUT_DIR}index.html", "r+") as home:
-    content = home.read()
-    content = content.replace(
-        'gameid="${gameInfo[3]}"', 'gameid="${gameInfo[4]}" game-slug="${gameInfo[3]}"')
-    content = content.replace(
-        "game.html?${$(this).attr('gameid')}", "${$(this).attr('game-slug')}")
 
-    home.seek(0)
-    home.truncate()
-    home.write(content)
+for change in CHANGES:
+    with open(change['file'], "r+") as f:
+        contents = f.read()
 
+        for replacement in change['replacements']:
+            contents = contents.replace(replacement[0], replacement[1])
 
-with open(f"{OUTPUT_DIR}game.html", "r+") as home:
-    content = home.read()
-    content = content.replace(
-        'var para = 1;', 'var para = "slug";')
-    content = content.replace("window.onload = function () {",
-                              """window.onload = function () {
+        f.seek(0)
+        f.truncate()
+        f.write(contents)
 
-            if (para == "slug") {
-                let slug = document.location.pathname.replace("/", "");
-                para = gameNameArray.findIndex(o => o[3] == slug);
-            }""")
-
-    home.seek(0)
-    home.truncate()
-    home.write(content)
 
 for slug in slugs:
     shutil.copy(f"{OUTPUT_DIR}game.html", slug)
