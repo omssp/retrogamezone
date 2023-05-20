@@ -1,28 +1,480 @@
-<!doctype html>
-<html lang="en">
+<html>
 
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <title>Retro Game Zone</title>
-  <base href="/">
-  <meta name="theme-color" content="#e74c3c">
-  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-  <meta name="description"
-    content="A place for all nostalgic gamers to relive old memories. ReLived by Shardul Pakhale.">
+    <title>Retro Game Zone</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="description"
+        content="A place for all nostalgic gamers to relive old memories. ReLived by Shardul Pakhale.">
+    <meta name="theme-color" content="#e74c3c">
+    <meta property="og:image" content="http://retrogamezone.droppages.com/nesicon.png" />
+    <meta property="og:title" content="Retro Game Zone - By Shardul Pakhale" />
+    <meta property="og:description"
+        content="A place for all nostalgic gamers to relive old memories. ReLived by Shardul Pakhale." />
 
-  <meta property="og:image" content="http://retrogamezone.droppages.com/nesicon.png" />
-  <meta property="og:title" content="Retro Game Zone - By Shardul Pakhale" />
-  <meta property="og:description"
-    content="A place for all nostalgic gamers to relive old memories. ReLived by Shardul Pakhale." />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="Shortcut Icon" href="favicon.ico" type="image/x-icon">
+    <link rel="Bookmark" href="favicon.ico">
+    <style>
+        body {
+            -webkit-user-select: none;
+            -moz-user-select: -moz-none;
+            -ms-user-select: none;
+            user-select: none;
+        }
 
-  <link rel="Shortcut Icon" href="favicon.ico" type="image/x-icon">
-  <link rel="Bookmark" href="favicon.ico">
+        .selected {
+            -webkit-filter: drop-shadow(0 0 1em #616161);
+            filter: drop-shadow(0 0 1em #616161);
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .selected.image img {
+            -webkit-filter: contrast(2.5);
+            filter: contrast(2.5);
+            -moz-transform: scale(1.1);
+            -webkit-transform: scale(1.1);
+            -ms-transform: scale(1.1);
+            transform: scale(1.2);
+        }
+
+        #header.hide .button.hidden:before,
+        #header.preview .button.hidden:before {
+            color: attr(data-content);
+        }
+
+        .columns .fit img {
+            object-fit: cover;
+            object-position: top;
+        }
+
+        .columns .fit:nth-child(1) img,
+        .columns .fit:nth-child(3) img,
+        .columns .fit:nth-child(6) img,
+        .columns .fit:nth-child(8) img,
+        .columns .fit:nth-child(9) img,
+        .columns .fit:nth-child(11) img,
+        .columns .fit:nth-child(14) img,
+        .columns .fit:nth-child(16) img {
+            aspect-ratio: 800/500;
+        }
+
+        .columns .fit:nth-child(2) img,
+        .columns .fit:nth-child(4) img,
+        .columns .fit:nth-child(5) img,
+        .columns .fit:nth-child(7) img,
+        .columns .fit:nth-child(10) img,
+        .columns .fit:nth-child(12) img,
+        .columns .fit:nth-child(13) img,
+        .columns .fit:nth-child(15) img {
+            aspect-ratio: 533/800;
+        }
+
+        @keyframes leftMarquee {
+
+            40% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+
+            60% {
+                opacity: 1;
+            }
+        }
+
+        .leftGameName {
+            text-shadow: 2px 0 0 #fff, -2px 0 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff, 1px 1px #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;
+            font-size: 4rem;
+            filter: invert(1);
+            bottom: 0.2em;
+            letter-spacing: 3px;
+            font-family: 'Pattaya', sans-serif;
+            z-index: 10009;
+            position: fixed;
+            width: 100vw;
+            text-align: center;
+            animation: leftMarquee 5s linear infinite;
+        }
+    </style>
 </head>
 
-<body>
-  <app-root></app-root>
+<body style="height: 100%;">
+
+    <span class="leftGameName"></span>
+    <header id="header">
+        <div class="inner">
+            <div class="content">
+                <h1>Retro Game Zone</h1>
+                <h2>A place for gamers to relive their old memories</h2>
+                <a style="text-align: right;" class="button big alt">
+                    <span>Get Nostalgic</span>
+                </a>
+            </div>
+            <a style="text-align: right;" class="button hidden" data-content="#fff">
+                <span>Get Nostalgic</span>
+            </a>
+        </div>
+    </header>
+    <div id="main">
+        <div class="inner">
+        </div>
+    </div>
+    <footer id="footer">
+        <a style="cursor: pointer!important;" class="info fa fa-info-circle">
+            <span>About</span>
+        </a>
+        <div class="inner">
+            <div class="content">
+                <h3 style="margin: 0 0 0 0; font-size:23px;">
+                    A website by <a href="https://www.fb.com/omssp" target="_blank">Shardul Pakhale</a>
+                </h3>
+            </div>
+            <div class="copyright" style="text-align: right;">
+                &copy; Shardul Pakhale | Moblie:
+                <small>
+                    <a href="tel: +918793687422">+918793687422</a>
+                </small> | Visit: <a href="http://vomkar.droppages.com" target="_blank">Vomkar's Creations</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="MaterialColorThief.js"></script>
+    <script src="lib/gamelist.js"></script>
+    <script src="lib/audioUI.js"></script>
+    <script src="lib/cookie.js"></script>
+
+    <script type="text/javascript">
+
+        class MoveMat {
+
+            curr_x = -1;
+            curr_y = -1;
+
+            totalDivs = null;
+            numColumns = null;
+            numSetLen = null;
+            divsArr = null;
+            totalRows = null;
+
+            darkMode = false;
+
+            toggleDarkMode = () => this.handleDarkMode(!this.darkMode);
+            enableDarkMode = () => this.handleDarkMode(true);
+            disableDarkMode = () => this.handleDarkMode(false);
+
+            handleDarkMode = (to) => {
+                this.darkMode = to;
+                this.selectGame();
+            }
+
+            calculateMovMat = () => {
+                this.totalDivs = $('.image a').toArray();
+                this.numColumns = Math.floor($('.columns')[0].offsetWidth / $('.image.fit')[0].offsetWidth);
+                this.numSetLen = $('.columns:eq(1) .fit').length;
+                this.totalRows = this.totalDivs.length / this.numColumns;
+                this.divsArr = [...Array(this.totalRows)].map(() => Array(this.numColumns));
+
+                let i = 0;
+                while (i < this.totalDivs.length) {
+                    for (let col = 0; col < this.numColumns; col++) {
+                        let rowOffset = Math.floor(i / this.numSetLen) * (this.numSetLen / this.numColumns)
+                        for (let row = 0; row < this.numSetLen / this.numColumns; row++) {
+                            this.divsArr[rowOffset + row][col] = i++;
+                        }
+
+                    }
+                }
+            }
+
+            up = () => {
+                this.curr_x--;
+                if (this.curr_x < 0 && this.curr_y < 0) {
+                    this.curr_x = this.totalRows - 1
+                    this.curr_y = 0
+                } else if (this.curr_x < 0) {
+                    this.curr_x = this.totalRows - 1
+                }
+                this.selectGame()
+            }
+            down = () => {
+                this.curr_x++;
+                if (this.curr_y < 0) {
+                    this.curr_y = 0
+                } else if (this.curr_x >= this.totalRows) {
+                    this.curr_x = 0
+                }
+                this.selectGame()
+            }
+            left = () => {
+                this.curr_y--;
+                if (this.curr_x < 0 && this.curr_y < 0) {
+                    this.curr_x = 0
+                    this.curr_y = this.numColumns - 1
+                } else if (this.curr_y < 0) {
+                    this.curr_y = this.numColumns - 1
+                }
+                this.selectGame()
+            }
+            right = () => {
+                this.curr_y++;
+                if (this.curr_x < 0) {
+                    this.curr_x = 0
+                } else if (this.curr_y >= this.numColumns) {
+                    this.curr_y = 0
+                }
+                this.selectGame()
+            }
+            leftmost = () => {
+                this.curr_y = 0;
+                if (this.curr_x < 0) {
+                    this.curr_x = 0
+                }
+                this.selectGame()
+            }
+            rightmost = () => {
+                this.curr_y = this.numColumns - 1;
+                if (this.curr_x < 0) {
+                    this.curr_x = 0
+                }
+                this.selectGame()
+            }
+            unselect = (fast = false) => {
+                if ((this.curr_x > 0 || this.curr_y > 0) && !fast) {
+                    this.curr_x = 0
+                    this.curr_y = 0
+                } else {
+                    this.curr_x = -1
+                    this.curr_y = -1
+                }
+                this.selectGame()
+            }
+
+            selectGame = () => {
+                try{
+                    window.moveAudio.playclip();
+                } catch(err) {}
+                $('.selected').removeClass('selected');
+                let theDiv = null
+                try {
+                    theDiv = this.totalDivs.find(o => parseInt($(o).attr('gameid')) == this.divsArr[this.curr_x][this.curr_y])
+                } catch (error) {
+
+                }
+                if (theDiv) {
+                    $('.leftGameName').text($(theDiv).find('img').attr('title'))
+                    $(theDiv
+                        .parentElement
+                    )
+                        .addClass('selected')[0]
+                        .scrollIntoView({
+                            behavior: "smooth",
+                            block: "center",
+                            inline: "center"
+                        });
+                    let backgroundColorRGB = (this.darkMode ?
+                        materialColorThief.getDarkestMaterialColor(theDiv.firstElementChild) :
+                        materialColorThief.getBrightestMaterialColor(theDiv.firstElementChild)
+                    ).join(',')
+                    // let accentColorRGB = materialColorThief.getMaterialColor(theDiv.firstElementChild)
+                    this.updateBackgrounds(backgroundColorRGB);
+                    $('.image').css('pointer-events', 'none');
+                } else {
+                    $('.leftGameName').text('');
+                    this.curr_x = -1;
+                    this.curr_y = -1;
+                    this.updateBackgrounds('');
+                    $('.image').css('pointer-events', 'auto');
+                }
+                setCookie('curr_x', this.curr_x)
+                setCookie('curr_y', this.curr_y)
+            }
+            updateBackgrounds = (backgroundColorRGB) => {
+                $('#header').css('background', `rgba(${backgroundColorRGB}, 0.85)`)
+                $('body').css("background-color", `rgb(${backgroundColorRGB})`);
+                $('#header .inner').css("box-shadow", `0 0 0 1em rgb(${backgroundColorRGB})`);
+                $('#footer > a, .leftGameName').css("color", `rgb(${backgroundColorRGB})`);
+                $('#header.hide a.button.hidden, #header.preview a.button.big.alt').attr('data-content', `rgb(${backgroundColorRGB})`)
+            }
+            go = () => {
+                if (!$(".hide").length) {
+                    $("#header .alt").click();
+                } else {
+                    $('.selected a').click();
+                }
+            }
+        }
+
+        $(document).bind('keydown', function (e) {
+            switch (e.keyCode) {
+                case 32:
+                case 13:
+                    gridNav.go();
+                    e.preventDefault();
+                    break;
+                case 27:
+                    gridNav.unselect();
+                    e.preventDefault();
+                    break;
+                case 87:
+                case 38:
+                    gridNav.up();
+                    e.preventDefault();
+                    break;
+                case 65:
+                case 37:
+                    gridNav.left();
+                    e.preventDefault();
+                    break;
+                case 83:
+                case 40:
+                    gridNav.down();
+                    e.preventDefault();
+                    break;
+                case 39:
+                case 68:
+                    gridNav.right();
+                    e.preventDefault();
+                    break;
+
+                default:
+                    break;
+            }
+        });
+
+        const gridNav = new MoveMat();
+
+        const materialColorThief = new MaterialColorThief();
+
+        const chunkify = function* (itr, size) {
+            let chunk = [];
+            for (const v of itr) {
+                chunk.push(v);
+                if (chunk.length === size) {
+                    yield chunk;
+                    chunk = [];
+                }
+            }
+            if (chunk.length) yield chunk;
+        };
+
+
+        let cunkedGameList = [
+            ...chunkify(gameNameArray.map((o, i) => {
+                o[o.length] = i;
+                return o;
+            }), 16)
+        ];
+
+        function generateNextChunkTiles() {
+            let gamesHTML = "";
+
+            // for (let i = startChunk - 1; i < endChunk; i++) {
+            let nextChunkNumber = $('div[id^=gamesDiv]').length;
+            if (cunkedGameList.length == nextChunkNumber) return;
+            const element = cunkedGameList[nextChunkNumber];
+            gamesHTML += `<div class="columns" id="gamesDiv${nextChunkNumber}">`;
+
+            for (let j = 0; j < element.length; j++) {
+
+                const gameInfo = element[j];
+                gamesHTML += `<div class="image fit">
+                                    <a gameid="${gameInfo[3]}">
+                                        <img src="${gameInfo[2]}" alt="${gameInfo[0]}" title="${gameInfo[0]}" crossorigin="anonymous">
+                                    </a>
+                                </div>`;
+            }
+
+            gamesHTML += `</div>`;
+            // }
+            $('#main .inner').append(gamesHTML);
+
+            $(".image a").each(function () {
+                $(this).css("cursor", "pointer");
+                $(this).unbind("click").on("click", function () {
+                    window.selectAudio.playclip();
+                    window.setTimeout(() => {
+                        window.location.replace(`game.html?${$(this).attr('gameid')}`);
+                    }, window.selectAudio.duration * 1000);
+                });
+            });
+
+        }
+
+        $(document).ready(() => {
+
+            if (/Apple/.test(navigator.vendor)) {
+                $('.button.big.alt').remove();
+                $('h2').text('iOS is Unsupported')
+            }
+
+            generateNextChunkTiles();
+            generateNextChunkTiles();
+
+
+
+            $('a.button.hidden, a.button.big.alt').on('click', function () {
+                try {
+                    window.selectAudio.playclip();
+                } catch (error) { }
+            });
+
+
+            gridNav.calculateMovMat();
+            let currHrs = new Date().getHours();
+            gridNav.darkMode = (currHrs > 18 || currHrs < 6) || window.matchMedia("(prefers-color-scheme: dark)").matches;
+            if (gridNav.darkMode) {
+                gridNav.updateBackgrounds('62,39,35')
+            }
+
+            $('body').on('mousemove', () => {
+                $('.image').css('pointer-events', 'auto');
+                $('.leftGameName').text('');
+                // gridNav.unselect(true);
+            });
+
+            let curr_x = parseInt(getCookie('curr_x'))
+            let curr_y = parseInt(getCookie('curr_y'))
+
+            if (!isNaN(curr_x) && !isNaN(curr_y)) {
+                $("#header").addClass('hide');
+                while (curr_x > gridNav.divsArr.length) {
+                    generateNextChunkTiles();
+                    gridNav.calculateMovMat();
+                }
+                gridNav.curr_x = curr_x;
+                gridNav.curr_y = curr_y;
+                setTimeout(gridNav.selectGame, 500);
+            }
+        });
+
+        $(window).scroll(checkBottom);
+
+        let debounce;
+        function checkBottom() {
+            if (debounce) clearTimeout(debounce)
+            debounce = setTimeout(() => {
+                var end = $("#footer").offset().top;
+                var viewEnd = $(window).scrollTop() + $(window).height();
+                var distance = end - viewEnd;
+                if (distance < 0) {
+                    generateNextChunkTiles();
+                    gridNav.calculateMovMat();
+                }
+            }, 1000);
+        }
+
+    </script>
+    <script src="assets/js/skel.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="lib/gamepad.js"></script>
+    <script src="lib/fshelper.js"></script>
+    <script src="lib/homepad.js"></script>
 </body>
 
 </html>
