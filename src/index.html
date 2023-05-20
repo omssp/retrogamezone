@@ -93,11 +93,12 @@
             bottom: 0.2em;
             letter-spacing: 3px;
             font-family: 'Pattaya', sans-serif;
-            z-index: 10009;
+            z-index: 10001;
             position: fixed;
             width: 100vw;
             text-align: center;
-            animation: leftMarquee 5s linear infinite;
+            animation: leftMarquee 2.4s linear infinite;
+            pointer-events: none;
         }
     </style>
 </head>
@@ -254,35 +255,41 @@
                 this.selectGame()
             }
 
-            selectGame = () => {
-                try{
+            selectGame = (gameid) => {
+                try {
                     window.moveAudio.playclip();
-                } catch(err) {}
+                } catch (err) { }
                 $('.selected').removeClass('selected');
                 let theDiv = null
                 try {
-                    theDiv = this.totalDivs.find(o => parseInt($(o).attr('gameid')) == this.divsArr[this.curr_x][this.curr_y])
-                } catch (error) {
+                    theDiv = this.totalDivs.find(o => parseInt($(o).attr('gameid')) == (gameid ? parseInt(gameid) : this.divsArr[this.curr_x][this.curr_y]))
+                } catch (error) { }
 
-                }
                 if (theDiv) {
                     $('.leftGameName').text($(theDiv).find('img').attr('title'))
-                    $(theDiv
-                        .parentElement
-                    )
-                        .addClass('selected')[0]
-                        .scrollIntoView({
-                            behavior: "smooth",
-                            block: "center",
-                            inline: "center"
-                        });
+                    if (gameid) {
+                        gameid = parseInt(gameid)
+                        this.curr_x = this.divsArr.findIndex(o => (o.indexOf(gameid) != -1));
+                        this.curr_y = this.divsArr[this.curr_x].indexOf(gameid);
+                        $(theDiv.parentElement).addClass('selected')[0];
+                    } else {
+                        $(theDiv.parentElement)
+                            .addClass('selected')[0]
+                            .scrollIntoView({
+                                behavior: "smooth",
+                                block: "center",
+                                inline: "center"
+                            });
+                    }
                     let backgroundColorRGB = (this.darkMode ?
                         materialColorThief.getDarkestMaterialColor(theDiv.firstElementChild) :
                         materialColorThief.getBrightestMaterialColor(theDiv.firstElementChild)
                     ).join(',')
                     // let accentColorRGB = materialColorThief.getMaterialColor(theDiv.firstElementChild)
                     this.updateBackgrounds(backgroundColorRGB);
-                    $('.image').css('pointer-events', 'none');
+                    if (!gameid) {
+                        $('.image').css('pointer-events', 'none');
+                    }
                 } else {
                     $('.leftGameName').text('');
                     this.curr_x = -1;
@@ -401,6 +408,23 @@
                         window.location.replace(`game.html?${$(this).attr('gameid')}`);
                     }, window.selectAudio.duration * 1000);
                 });
+
+                $(this).hover(function (event) {
+                    if (!$(this).parent().hasClass('selected')) {
+                        gridNav.selectGame($(this).attr('gameid'))
+                    }
+                }, function (event) {
+                    // console.log(event);
+                    // console.log(this);
+
+                    $(this).parent().removeClass('selected');
+                    setTimeout(() => {
+                        if ($('.selected').length < 1) {
+                            $('.leftGameName').text('');
+                            gridNav.updateBackgrounds('');
+                        }
+                    }, 500);
+                })
             });
 
         }
@@ -433,9 +457,10 @@
 
             $('body').on('mousemove', () => {
                 $('.image').css('pointer-events', 'auto');
-                $('.leftGameName').text('');
+                // $('.leftGameName').text('');
                 // gridNav.unselect(true);
             });
+
 
             let curr_x = parseInt(getCookie('curr_x'))
             let curr_y = parseInt(getCookie('curr_y'))

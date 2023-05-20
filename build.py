@@ -24,7 +24,7 @@ CHANGES = [
         "file": "index.html",
         "replacements": [
             ["http://retrogamezone.droppages.com/",
-             "https://cdn.jsdelivr.net/gh/omssp/nesscraper/nesicon.png"],
+             "https://cdn.jsdelivr.net/gh/omssp/nesscraper/"],
             ['gameid="${gameInfo[3]}"',
              'gameid="${gameInfo[4]}" game-slug="${gameInfo[3]}"'],
             ["game.html?${$(this).attr('gameid')}",
