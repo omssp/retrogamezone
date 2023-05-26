@@ -1,14 +1,17 @@
 function load() {
-    let arg = parent.document.getElementById('gameName').innerHTML;
+    const arg = parent.document.getElementById('gameName').innerHTML;
     $('option:selected', 'select[name="options"]').removeAttr('selected');
-    let foundrom = $('select[name="options"]').find('option[value="' + arg + '"]')
+    const select_tag = $('select[name="options"]');
+    const foundrom = select_tag.find('option[value="' + arg + '"]')
     if (!foundrom.length) {
         console.log(foundrom.length)
         setTimeout(load, 100);
         return;
     }
     foundrom.attr("selected", true);
-    $('select[name="options"]').change();
+    foundrom.prop("selected", true);
+    select_tag[0].value = foundrom[0].value;
+    select_tag.change();
 }
 var pauseStatus = false;
 

@@ -175,27 +175,27 @@
         });
 
         $(document).on('fullscreenchange webkitfullscreenchange mozfullscreenchange MSFullscreenChange', fullScreenCanvasHandler);
-        function fullScreenCanvasHandler(forToggleStretchMode = false) {
+        async function fullScreenCanvasHandler(forToggleStretchMode = false) {
             console.log('some', IsFullScreenCurrently())
             if (IsFullScreenCurrently()) {
                 //$("#element span").text('Full Screen Mode Enabled');
                 $("p.nes-status").fadeOut(10);
                 $("#go-button").text('Disable Full Screen');
-                screen.orientation.lock("landscape")
-                    .then(() => {
+                try {
+                    await screen.orientation.lock("landscape")
+                    $("canvas.nes-screen").css("width", stretchMode ? "100%" : "auto");
+                    $("canvas.nes-screen").css("height", "100%");
+                } catch (err) {
+                    if ($(window).width() < 500) {
+                        $("canvas.nes-screen").css("width", "100%");
+                        $("canvas.nes-screen").css("height", "auto");
+                    } else {
                         $("canvas.nes-screen").css("width", stretchMode ? "100%" : "auto");
                         $("canvas.nes-screen").css("height", "100%");
-                    })
-                    .catch(err => {
-                        if ($(window).width() < 500) {
-                            $("canvas.nes-screen").css("width", "100%");
-                            $("canvas.nes-screen").css("height", "auto");
-                        } else {
-                            $("canvas.nes-screen").css("width", stretchMode ? "100%" : "auto");
-                            $("canvas.nes-screen").css("height", "100%");
-                        }
-                        console.log(err);
-                    });
+                    }
+                    console.log(err);
+                }
+
             } else {
                 //$("#element span").text('Full Screen Mode Disabled');
                 $("p.nes-status").fadeIn(500);
