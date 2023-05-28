@@ -101,8 +101,7 @@
             pointer-events: none;
         }
 
-        #main #search_bar,
-        .inner h1 {
+        #main #search_bar {
             text-shadow: 2px 0 0 #fff, -2px 0 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff, 1px 1px #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;
             letter-spacing: 3px;
             font-family: 'Pattaya', sans-serif;
@@ -304,6 +303,7 @@
                     this.updateBackgrounds(backgroundColorRGB);
                     if (!gameid) {
                         $('.image').css('pointer-events', 'none');
+                        $("#search_bar").blur();
                     }
                 } else {
                     $('.leftGameName').text('');
@@ -382,27 +382,22 @@
                     break;
                 case 27:
                     gridNav.unselect();
-                    $("#search_bar").blur();
                     e.preventDefault();
                     break;
                 case 38:
                     gridNav.up();
-                    $("#search_bar").blur();
                     e.preventDefault();
                     break;
                 case 37:
                     gridNav.left();
-                    $("#search_bar").blur();
                     e.preventDefault();
                     break;
                 case 40:
                     gridNav.down();
-                    $("#search_bar").blur();
                     e.preventDefault();
                     break;
                 case 39:
                     gridNav.right();
-                    $("#search_bar").blur();
                     e.preventDefault();
                     break;
             }
