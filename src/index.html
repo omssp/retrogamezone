@@ -568,9 +568,9 @@
 
             $('#main .inner')[0].innerHTML = '';
             if (filteredGameListPlus.length > 0) {
-                $('.image').css('pointer-events', 'none')
                 generateNextChunkTiles();
                 gridNav.calculateMovMat();
+                $('.image').css('pointer-events', 'none')
             } else {
                 $('.leftGameName').text('no matching nostalgia found');
             }
@@ -581,7 +581,7 @@
                 window.moveAudio.playclip()
             } catch (error) { }
 
-            keyb = setTimeout(hideKeyboard, 3000);
+            keyb = setTimeout(hideKeyboard, 2000);
         }
 
         function hideKeyboard() {
