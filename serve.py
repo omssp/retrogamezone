@@ -16,7 +16,7 @@ with socketserver.TCPServer(("", PORT), Handler) as httpd:
     ctx.load_cert_chain(certfile="server.pem", keyfile="key.pem")
     with ctx.wrap_socket(httpd.socket, server_side=True) as wrap:
         httpd.socket = wrap
-        print("Server started at http://localhost:" + str(PORT))
+        print("Server started at https://localhost:" + str(PORT))
         try:
             httpd.serve_forever()
         except KeyboardInterrupt:

@@ -18,13 +18,16 @@ const nespad_mapping = {
     "shoulder_top_left": gridNav.leftmost,
     "shoulder_top_right": gridNav.rightmost,
     "shoulder_bottom_left": () => {
-        // window.location.reload();
-        if (IsFullScreenCurrently()) {
-            GoOutFullscreen();
-        }
+        $('#search_bar').focus().select()[0].scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+            inline: "center"
+        });
     },
     "shoulder_bottom_right": () => {
-        if (!IsFullScreenCurrently()) {
+        if (IsFullScreenCurrently()) {
+            GoOutFullscreen();
+        } else {
             GoInFullscreen(document.documentElement);
         }
     }

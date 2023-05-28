@@ -1,7 +1,7 @@
+const numSetLen = 16;
 
 
-
-var gameNameArray = [
+const gameNameArray = [
     ["PAC MAN", "//cdn.jsdelivr.net/gh/omssp/nesscraper/local-roms/Pac-Man.nes.txt", "//cdn.jsdelivr.net/gh/omssp/nesscraper/images/pic01.jpg"],
     ["Super Mario Bros.", "//cdn.jsdelivr.net/gh/omssp/nesscraper/local-roms/Mario.nes.txt", "//cdn.jsdelivr.net/gh/omssp/nesscraper/images/pic02.jpg"],
     ["Dr. Mario", "//cdn.jsdelivr.net/gh/omssp/nesscraper/local-roms/Dr.Mario.nes.txt", "//cdn.jsdelivr.net/gh/omssp/nesscraper/images/pic03.jpg"],

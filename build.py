@@ -55,21 +55,23 @@ with open(f"{OUTPUT_DIR}lib/gamelist.js", "r+") as list_js:
 
     for game in games:
         slug = slugify.slugify(game[0], replacements=[['&', 'and']])
-        game.append(slug)
-        slug = f"{OUTPUT_DIR}{slug}.html"
-        slugs.append(slug)
-        if slugs.count(slug) > 1:
+        slug_file = f"{OUTPUT_DIR}{slug}.html"
+        repeated = slugs.count(slug_file)
+        if repeated > 0:
+            slug += f'-{repeated}'
+            slug_file = f"{OUTPUT_DIR}{slug}.html"
             print(
                 f"WARNING!!! Duplicate found in gamelist.js : {slug} : {game}")
-            del game
-            slugs.pop()
+        slugs.append(slug_file)
+        game.append(slug)
 
     # print(len(set(slugs)))
     # print(games)
 
     list_js.seek(0)
     list_js.truncate()
-    list_js.write(f"var gameNameArray = {json.dumps(games, indent=4)};")
+    list_js.write(
+        f"const numSetLen=16; var gameNameArray={json.dumps(games, indent=4)}")
 
 
 for change in CHANGES:
