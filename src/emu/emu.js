@@ -4,7 +4,8 @@ window.EJS_biosUrl = ""
 window.EJS_gameUrl = "https://cdn.jsdelivr.net/gh/omssp/nesscraper/local-roms/Mario.nes.txt"
 window.EJS_core = "nes"
 window.EJS_pathtodata = "emu/data/"
-// window.EJS_startOnLoaded = true;
+window.EJS_oldCores = true;
+window.EJS_startOnLoaded = true;
 
 window.EJS_VirtualGamepadSettings = [
     {

@@ -71,6 +71,7 @@
             <div class="image fit">
                 <iframe name="gameFrame" id="gameFrame" src="index2.html"
                     style="width: 100%; height: 693px; transition: all 0.9s; margin-top: 15px;" scrolling="no"></iframe>
+                <div id="game"></div>
             </div>
             <div class="content">
                 <header>
@@ -195,6 +196,7 @@
     <script src="lib/gamelist.js"></script>
     <script src="lib/swapplayers.js"></script>
     <script src="lib/audioUI.js"></script>
+    <script src="emu/emu.js"></script>
     <script>
 
         const materialColorThief = new MaterialColorThief();
@@ -208,8 +210,8 @@
         }
         window.onload = function () {
 
-            document.getElementById('gameName').innerHTML = gameNameArray[para][1];
-            document.getElementById('gameTitle').innerHTML = document.title = gameNameArray[para][0];
+            document.getElementById('gameName').innerHTML = window.EJS_gameUrl = gameNameArray[para][1];
+            document.getElementById('gameTitle').innerHTML = document.title = window.EJS_gameName = gameNameArray[para][0];
 
 
             let currHrs = new Date().getHours();
@@ -285,9 +287,9 @@
                 keybPrimaryPlayer.resetSwapped();
                 console.log("A gamepad disconnected:");
                 console.log(event.gamepad);
-
             });
             $('#gamepadicon').fadeOut("slow");
+
             if (debounce)
                 clearTimeout(debounce)
             debounce = setTimeout(function () {
@@ -314,13 +316,14 @@
                     });
                 }
             });
+            setTimeout(checkandchange, 4000);
         });
 
         function checkWidth(curWidth) {
             let nesCanvas = $('#gameFrame').contents().find('#nescanvas');
-            if (curWidth < 500 && nesCanvas[0].offsetHeight > 400) {
+            if (curWidth < 500 && nesCanvas[0]?.offsetHeight > 400) {
                 nesCanvas.click();
-            } else if (curWidth > 500 && nesCanvas[0].offsetHeight < 245) {
+            } else if (curWidth > 500 && nesCanvas[0]?.offsetHeight < 245) {
                 nesCanvas.click();
             }
         }
@@ -330,6 +333,28 @@
                 window.focus();
             }
         });
+
+        function checkandchange() {
+            const initial_gamepads = window.navigator.getGamepads().filter(o => o).length;
+            const isMobile = ('ontouchstart' in document.documentElement);
+            console.log(initial_gamepads)
+            if (isMobile && !initial_gamepads) {
+                loadEMU();
+            }
+        }
+
+        function loadEMU() {
+            document.getElementById('gameFrame').remove();
+            $(window).off('resize')
+            $('body').attr('onkeydown', '')
+            $('.image.fit').css("padding-top", '4em')
+            const script = document.createElement("script")
+            script.src = "emu/data/loader.js"
+            document.body.appendChild(script)
+            $('#fsbutton').attr('onclick', '').click(function() {
+                $('button[data-btn="fullscreen"]').click();
+            })
+        }
     </script>
     <script src="assets/js/skel.min.js"></script>
     <script src="assets/js/util.js"></script>
