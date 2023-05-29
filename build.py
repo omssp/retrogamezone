@@ -9,18 +9,6 @@ OUTPUT_DIR = "dist/retrogamezone/"
 
 CHANGES = [
     {
-        "file": "game.html",
-        "replacements": [
-            ['var para = 1;', """var para = "slug";
-        if (para == "slug") {
-                let slug = document.location.pathname.replace("/", "");
-                para = gameNameArray.findIndex(o => o[3] == slug);
-            }"""],
-            ['"href", "game.html?" + preG.toString()', '"href", gameNameArray[preG][3]'],
-            ['"href", "game.html?" + nexG.toString()', '"href", gameNameArray[nexG][3]']
-        ]
-    },
-    {
         "file": "index.html",
         "replacements": [
             ["http://retrogamezone.droppages.com/",
@@ -29,6 +17,24 @@ CHANGES = [
              'gameid="${gameInfo[4]}" game-slug="${gameInfo[3]}"'],
             ["game.html?${$(this).attr('gameid')}",
              "${$(this).attr('game-slug')}"],
+        ]
+    },
+    {
+        "file": "game.html",
+        "replacements": [
+            #     ['var para = 1;', """var para = "slug";
+            # if (para == "slug") {
+            #         let slug = document.location.pathname.replace("/", "");
+            #         para = gameNameArray.findIndex(o => o[3] == slug);
+            #     }"""],
+            # ['"game.html?" + preG.toString()', 'gameNameArray[preG][3]'],
+            # ['"game.html?" + nexG.toString()', 'gameNameArray[nexG][3]']
+            ['var para = 1;\n', ''],
+            ['var nexG = (para + 1) % gameNameArray.length;\n', ''],
+            ['var preG = para - 1;\n', ''],
+            ['if (preG < 0)\n', ''],
+            ['preG = gameNameArray.length - 1;\n', ''],
+            ['    <script src="lib/gamelist.js"></script>\n', ''],
         ]
     },
 ]
@@ -45,7 +51,7 @@ DELETIONS = [
 shutil.rmtree(OUTPUT_DIR, ignore_errors=True)
 shutil.copytree('src/', OUTPUT_DIR)
 
-
+games = []
 slugs = []
 with open(f"{OUTPUT_DIR}lib/gamelist.js", "r+") as list_js:
     data = list_js.read()
@@ -73,7 +79,7 @@ with open(f"{OUTPUT_DIR}lib/gamelist.js", "r+") as list_js:
     list_js.write(
         f"const numSetLen=16; var gameNameArray={json.dumps(games, indent=4)}")
 
-
+contents = ""
 for change in CHANGES:
     with open(f"{OUTPUT_DIR}{change['file']}", "r+") as f:
         contents = f.read()
@@ -86,8 +92,32 @@ for change in CHANGES:
         f.write(contents)
 
 
-for slug in slugs:
-    shutil.copy(f"{OUTPUT_DIR}game.html", slug)
+for index, slug in enumerate(slugs):
+    lent = len(games)
+    nexG = (index + 1) % lent
+    preG = index - 1
+    if preG < 0:
+        preG = lent - 1
+
+    replacements = [
+        ['"game.html?" + nexG.toString()', f'"{games[nexG][3]}"'],
+        ['"game.html?" + preG.toString()', f'"{games[preG][3]}"'],
+        ['<title>Game Loading...</title>',
+            f'<title>{games[index][0]}</title>'],
+        ['gameNameArray[para][1]', f'"{games[index][1]}"'],
+        ['gameNameArray[para][0]', f'"{games[index][0]}"'],
+        ['gameNameArray[para][2]', f'"{games[index][2]}"'],
+        ['<h2 id="gameTitle">&nbsp;</h2>',
+            f'<h2 id="gameTitle">{games[index][0]}</h2>'],
+        ['<div id="gameName" style="display: none;">&nbsp;</div>',
+            f'<div id="gameName" style="display: none;">{games[index][1]}</div>']
+    ]
+    slug_contents = '%s' % contents
+    for pair in replacements:
+        slug_contents = slug_contents.replace(pair[0], pair[1])
+
+    with open(slug, 'w') as out:
+        out.write(slug_contents)
 
 
 for f in DELETIONS:

@@ -1,19 +1,27 @@
 <html>
 
 <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
     <title>Game Loading...</title>
-    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#e74c3c">
     <meta name="description"
         content="A place for all nostalgic gamers to relive old memories. ReLived by Shardul Pakhale.">
-    <meta name="theme-color" content="#e74c3c">
-    <meta property="og:image" content="nesicon.png" />
-    <meta property="og:title" content="Retro Game Zone - By Shardul Pakhale" />
+    <meta property="og:image" content="http://retrogamezone.droppages.com/nesicon.png">
+    <meta property="og:title" content="Retro Game Zone - By Shardul Pakhale">
     <meta property="og:description"
-        content="A place for all nostalgic gamers to relive old memories. ReLived by Shardul Pakhale." />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="assets/css/main.css" />
+        content="A place for all nostalgic gamers to relive old memories. ReLived by Shardul Pakhale.">
+    <link rel="apple-touch-icon" href="http://retrogamezone.droppages.com/nesicon.png">
+    <link rel="apple-touch-startup-image" href="http://retrogamezone.droppages.com/nesicon.png">
     <link rel="Shortcut Icon" href="favicon.ico" type="image/x-icon">
     <link rel="Bookmark" href="favicon.ico">
+    <link rel="stylesheet" href="assets/css/main.css" />
     <style>
         .infoDiv {
             padding: 1em;
@@ -99,8 +107,10 @@
                     <i class="fa fa-exchange" onclick="keybPrimaryPlayer.toggle()" title="Swap Players"
                         style="cursor: pointer; color: rgb(244, 67, 54);"></i>
                 </h4>
-                <img class="controllers" src="//cdn.jsdelivr.net/gh/omssp/nesscraper/images/controller1.png" alt="Controller 1" />
-                <img class="controllers" src="//cdn.jsdelivr.net/gh/omssp/nesscraper/images/controller2.png" alt="Controller 2" />
+                <img class="controllers" src="//cdn.jsdelivr.net/gh/omssp/nesscraper/images/controller1.png"
+                    alt="Controller 1" />
+                <img class="controllers" src="//cdn.jsdelivr.net/gh/omssp/nesscraper/images/controller2.png"
+                    alt="Controller 2" />
                 <center>
                     <table id="controls">
                         <tr>
@@ -275,6 +285,10 @@
             var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
             if (isChrome == false) {
                 $(".infoDiv.chrome").fadeIn(1000);
+
+                if (/Apple/.test(navigator.vendor) && isMobile) {
+                    $('#fsbutton').fadeOut("slow");
+                }
             }
             window.addEventListener("gamepadconnected", (event) => {
                 $('#gamepadicon').fadeIn("slow");
@@ -342,14 +356,14 @@
             console.log(initial_gamepads)
             if (isMobile && !initial_gamepads) {
                 loadEMU();
-            } else if(!$('#gameFrame').length) {
+            } else if (!$('#gameFrame').length) {
                 unLoadEMU();
             }
         }
 
         function loadEMU() {
             const gameFrame = document.getElementById('gameFrame');
-            if(gameFrame) {
+            if (gameFrame) {
                 gameFrame.remove();
                 $('.image.fit').css("padding-top", '4em');
                 $('#header.preview').css("z-index", '0');
@@ -358,7 +372,7 @@
                 script.src = "emu/data/loader.js";
                 script.id = 'loaderJS';
                 document.body.appendChild(script)
-                $('#fsbutton').click(function() {
+                $('#fsbutton').click(function () {
                     $('button[data-btn="fullscreen"]').click();
                 })
             }
