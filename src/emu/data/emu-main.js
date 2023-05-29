@@ -3923,6 +3923,7 @@ window.EJS_main = function(_0xa88a13, _0x17edbf, _0x2c1832) {
                     } else if (info[i].bold) {
                         style += 'font-weight:bold;';
                     }
+                    style += 'transform: scale(1.6);'
                     info[i].fontSize = info[i].fontSize || 30;
                     style += 'font-size:'+info[i].fontSize+'px;';
                     if (info[i].block) {
@@ -4039,6 +4040,7 @@ window.EJS_main = function(_0xa88a13, _0x17edbf, _0x2c1832) {
                     if (dpad.top) {
                         style += 'top:'+dpad.top+';';
                     }
+                    style += "transform: scale(1.2);margin-top: 60px;margin-left: 25px;";
                     elem.style = style;
                     parent.appendChild(elem);
                     createDPad({container: elem, event: function(up, down, left, right) {
