@@ -7,6 +7,10 @@ window.EJS_pathtodata = "emu/data/"
 window.EJS_oldCores = true;
 window.EJS_startOnLoaded = true;
 
+window.EJS_Settings = {
+    volume:1,
+}
+
 window.EJS_VirtualGamepadSettings = [
     {
         type: "button",
@@ -14,8 +18,8 @@ window.EJS_VirtualGamepadSettings = [
         id: "a",
         location: "right",
         fontSize: 50,
-        left: 40,
-        top: 40,
+        left: 50,
+        top: 35,
         bold: true,
         input_value: 8
     },
@@ -25,7 +29,7 @@ window.EJS_VirtualGamepadSettings = [
         id: "b",
         location: "right",
         left: 0,
-        top: 80,
+        top: 85,
         fontSize: 50,
         bold: true,
         input_value: 0
@@ -74,7 +78,7 @@ window.EJS_Buttons = {
     playPause: true,
     restart: true,
     mute: false,
-    settings: true,
+    settings: false,
     fullscreen: true,
     saveState: false,
     loadState: false,
@@ -97,3 +101,37 @@ window.EJS_defaultOptions = {
 // const script = document.createElement("script")
 // script.src = "data/loader.js"
 // document.body.appendChild(script)
+
+// EJS_Settings = {
+//     defaultControllers:{"0":{"0":{"value":"88","value2":"1"},"1":{"value":"83","value2":"3"},"2":{"value":"16","value2":"8"},"3":{"value":"13","value2":"9"},"4":{"value":"38","value2":"12"},"5":{"value":"40","value2":"13"},"6":{"value":"37","value2":"14"},"7":{"value":"39","value2":"15"},"8":{"value":"90","value2":"0"},"9":{"value":"65","value2":"2"},"10":{"value":"81","value2":"4"},"11":{"value":"69","value2":"5"},"12":{"value":"82","value2":"6"},"13":{"value":"87","value2":"7"},"14":{},"15":{},"16":{"value":"72"},"17":{"value":"70"},"18":{"value":"71"},"19":{"value":"84"},"20":{"value":"76"},"21":{"value":"74"},"22":{"value":"75"},"23":{"value":"73"},"24":{},"25":{},"26":{}},"1":{},"2":{},"3":{}}
+// }
+
+// {
+//     0: 'B',
+//     1: 'Y',
+//     2: 'SELECT',
+//     3: 'START',
+//     4: 'UP',
+//     5: 'DOWN',
+//     6: 'LEFT',
+//     7: 'RIGHT',
+//     8: 'A',
+//     9: 'X',
+//     10: 'L',
+//     11: 'R',
+//     12: 'L2',
+//     13: 'R2',
+//     14: 'L3',
+//     15: 'R3',
+//     19: 'L STICK UP',
+//     18: 'L STICK DOWN',
+//     17: 'L STICK LEFT',
+//     16: 'L STICK RIGHT',
+//     23: 'R STICK UP',
+//     22: 'R STICK DOWN',
+//     21: 'R STICK LEFT',
+//     20: 'R STICK RIGHT',
+//     24: 'QUICK SAVE STATE',
+//     25: 'QUICK LOAD STATE',
+//     26: 'CHANGE STATE SLOT'
+// }

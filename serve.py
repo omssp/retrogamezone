@@ -13,7 +13,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 
 with socketserver.TCPServer(("", PORT), Handler) as httpd:
     ctx = ssl.SSLContext(protocol=ssl.PROTOCOL_TLS_SERVER)
-    ctx.load_cert_chain(certfile="server.pem", keyfile="key.pem")
+    ctx.load_cert_chain(certfile="cert.pem", keyfile="key.pem")
     with ctx.wrap_socket(httpd.socket, server_side=True) as wrap:
         httpd.socket = wrap
         print("Server started at https://localhost:" + str(PORT))
