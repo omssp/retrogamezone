@@ -60,10 +60,10 @@ global_replacements = [
         'src="source/mappers.js"',
         'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/source/mappers.min.js"'
     ],
-    [
-        'src="source/nes.js"',
-        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/source/nes.min.js"'
-    ],
+    # [
+    #     'src="source/nes.js"',
+    #     'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/source/nes.min.js"'
+    # ],
     [
         'src="source/cpu.js"',
         'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/source/cpu.min.js"'
@@ -84,10 +84,10 @@ global_replacements = [
         'src="lib/audioUI.js"',
         'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/lib/audioUI.min.js"'
     ],
-    [
-        'src="source/omssp.js"',
-        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/source/omssp.min.js"'
-    ],
+    # [
+    #     'src="source/omssp.js"',
+    #     'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/source/omssp.min.js"'
+    # ],
     [
         'src="lib/cookie.js"',
         'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/lib/cookie.min.js"'
@@ -121,16 +121,36 @@ global_replacements = [
         'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/fullS.png"'
     ],
     [
-        'src="controls/mute.png"',
-        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/controls/mute.png"'
+        'controls/mute.png',
+        'https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/controls/mute.png'
     ],
     [
-        'src="controls/power.png"',
-        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/controls/power.png"'
+        'controls/unmute.png',
+        'https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/controls/unmute.png'
     ],
     [
-        'src="controls/pause.png"',
-        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/controls/pause.png"'
+        'controls/power.png',
+        'https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/controls/power.png'
+    ],
+    [
+        'controls/pause.png',
+        'https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/controls/pause.png'
+    ],
+    [
+        'controls/play.png',
+        'https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/controls/play.png'
+    ],
+    [
+        'controls/zoom-in.ico',
+        'https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/controls/zoom-in.ico'
+    ],
+    [
+        'controls/zoom-out.ico',
+        'https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/controls/zoom-out.ico'
+    ],
+    [
+        'controls/nespad.ico',
+        'https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/controls/nespad.ico'
     ],
     [
         'href="assets/css/main.css"',
@@ -151,6 +171,20 @@ CHANGES = [
         ]
     },
     {
+        "file": "index2.html",
+        "replacements": global_replacements 
+    },
+    {
+        "file": "source/omssp.js",
+        "replacements": global_replacements 
+    },
+    {
+        "file": "source/nes.js",
+        "replacements": global_replacements + [
+            ["'lib/'", "'https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/lib/'"]
+        ]
+    },
+    {
         "file": "game.html",
         "replacements": global_replacements + [
             #     ['var para = 1;', """var para = "slug";
@@ -166,52 +200,25 @@ CHANGES = [
             ['if (preG < 0)\n', ''],
             ['preG = gameNameArray.length - 1;\n', ''],
             ['    <script src="lib/gamelist.js"></script>\n', ''],
-        ]
+            ['script.src = "emu/data/loader.js";',
+             """script.src = "https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/emu/data/loader.min.js";
+             window.EJS_pathtodata = "https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/emu/data/";"""],
+        ],
     },
 ]
 
-DELETIONS = [
-    "game.html",
-    "gooder.json",
-    "top100desc.json",
-    "fullS.svg",
-    "nesicon.png",
-'MaterialColorThief.js',
-'lib/swapplayers.js',
-'lib/audioUI.js',
-'emu/emu.js',
-'assets/js/skel.min.js',
-'assets/js/util.js',
-'assets/js/main.js',
-'assets/js/jquery.min.js',
-'lib/cookie.js',
-'lib/slugify.js',
-'lib/gamepad.js',
-'lib/fshelper.js',
-'lib/homepad.js',
-'lib/jquery-3.2.1.min.js',
-'lib/dynamicaudio-min.js',
-'source/nes.js',
-'source/utils.js',
-'source/cpu.js',
-'source/keyboard.js',
-'source/mappers.js',
-'source/papu.js',
-'source/ppu.js',
-'source/rom.js',
-'source/ui.js',
-'source/omssp.js',
-'lib/nespad.js',
-'assets/css/main.css',
-# 'fullS.png',
-# 'controls/pause.png',
-# 'controls/power.png',
-# 'controls/mute.png',
+TOCPY = [change['file'] for change in CHANGES] + [
+    'favicon.ico',
+    'lib/gamelist.js'
 ]
 
 
 shutil.rmtree(OUTPUT_DIR, ignore_errors=True)
-shutil.copytree('src/', OUTPUT_DIR)
+# shutil.copytree('src/', OUTPUT_DIR)
+os.makedirs(os.path.dirname(f"{OUTPUT_DIR}lib/"), exist_ok=True)
+os.makedirs(os.path.dirname(f"{OUTPUT_DIR}source/"), exist_ok=True)
+for f in set(TOCPY):
+    shutil.copy2(f"src/{f}", f"{OUTPUT_DIR}{f}")
 
 games = []
 slugs = []
@@ -280,10 +287,6 @@ for index, slug in enumerate(slugs):
 
     with open(slug, 'w') as out:
         out.write(slug_contents)
-
-
-for f in set(DELETIONS):
-    os.remove(f"{OUTPUT_DIR}{f}")
 
 
 for k, v in os.environ.items():
