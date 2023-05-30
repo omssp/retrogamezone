@@ -7,10 +7,141 @@ import slugify
 
 OUTPUT_DIR = "dist/retrogamezone/"
 
+global_replacements = [
+    [
+        'src="MaterialColorThief.js"',
+        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/MaterialColorThief.min.js"'
+    ],
+    [
+        'src="lib/dynamicaudio-min.js"',
+        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/lib/dynamicaudio-min.js"'
+    ],
+    [
+        'src="source/ppu.js"',
+        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/source/ppu.min.js"'
+    ],
+    [
+        'src="source/keyboard.js"',
+        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/source/keyboard.min.js"'
+    ],
+    [
+        'src="assets/js/main.js"',
+        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/assets/js/main.min.js"'
+    ],
+    [
+        'src="source/utils.js"',
+        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/source/utils.min.js"'
+    ],
+    [
+        'src="assets/js/jquery.min.js"',
+        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/assets/js/jquery.min.js"'
+    ],
+    [
+        'src="source/ui.js"',
+        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/source/ui.min.js"'
+    ],
+    [
+        'src="lib/nespad.js"',
+        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/lib/nespad.min.js"'
+    ],
+    [
+        'src="lib/fshelper.js"',
+        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/lib/fshelper.min.js"'
+    ],
+    [
+        'src="lib/homepad.js"',
+        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/lib/homepad.min.js"'
+    ],
+    # [
+    #     'src="lib/gamelist.js"',
+    #     'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/lib/gamelist.min.js"'
+    # ],
+    [
+        'src="source/mappers.js"',
+        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/source/mappers.min.js"'
+    ],
+    [
+        'src="source/nes.js"',
+        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/source/nes.min.js"'
+    ],
+    [
+        'src="source/cpu.js"',
+        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/source/cpu.min.js"'
+    ],
+    [
+        'src="source/rom.js"',
+        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/source/rom.min.js"'
+    ],
+    [
+        'src="lib/jquery-3.2.1.min.js"',
+        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/lib/jquery-3.2.1.min.js"'
+    ],
+    [
+        'src="lib/swapplayers.js"',
+        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/lib/swapplayers.min.js"'
+    ],
+    [
+        'src="lib/audioUI.js"',
+        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/lib/audioUI.min.js"'
+    ],
+    [
+        'src="source/omssp.js"',
+        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/source/omssp.min.js"'
+    ],
+    [
+        'src="lib/cookie.js"',
+        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/lib/cookie.min.js"'
+    ],
+    [
+        'src="source/papu.js"',
+        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/source/papu.min.js"'
+    ],
+    [
+        'src="assets/js/util.js"',
+        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/assets/js/util.min.js"'
+    ],
+    [
+        'src="lib/slugify.js"',
+        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/lib/slugify.min.js"'
+    ],
+    [
+        'src="assets/js/skel.min.js"',
+        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/assets/js/skel.min.js"'
+    ],
+    [
+        'src="emu/emu.js"',
+        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/emu/emu.min.js"'
+    ],
+    [
+        'src="lib/gamepad.js"',
+        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/lib/gamepad.min.js"'
+    ],
+    [
+        'src="fullS.png"',
+        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/fullS.png"'
+    ],
+    [
+        'src="controls/mute.png"',
+        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/controls/mute.png"'
+    ],
+    [
+        'src="controls/power.png"',
+        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/controls/power.png"'
+    ],
+    [
+        'src="controls/pause.png"',
+        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/controls/pause.png"'
+    ],
+    [
+        'href="assets/css/main.css"',
+        'href="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/assets/css/main.css"'
+    ]
+]
+
 CHANGES = [
     {
         "file": "index.html",
-        "replacements": [
+        "replacements": global_replacements + [
             ["http://retrogamezone.droppages.com/",
              "https://cdn.jsdelivr.net/gh/omssp/nesscraper/"],
             ['gameid="${gameInfo[3]}"',
@@ -21,7 +152,7 @@ CHANGES = [
     },
     {
         "file": "game.html",
-        "replacements": [
+        "replacements": global_replacements + [
             #     ['var para = 1;', """var para = "slug";
             # if (para == "slug") {
             #         let slug = document.location.pathname.replace("/", "");
@@ -45,6 +176,37 @@ DELETIONS = [
     "top100desc.json",
     "fullS.svg",
     "nesicon.png",
+'MaterialColorThief.js',
+'lib/swapplayers.js',
+'lib/audioUI.js',
+'emu/emu.js',
+'assets/js/skel.min.js',
+'assets/js/util.js',
+'assets/js/main.js',
+'assets/js/jquery.min.js',
+'lib/cookie.js',
+'lib/slugify.js',
+'lib/gamepad.js',
+'lib/fshelper.js',
+'lib/homepad.js',
+'lib/jquery-3.2.1.min.js',
+'lib/dynamicaudio-min.js',
+'source/nes.js',
+'source/utils.js',
+'source/cpu.js',
+'source/keyboard.js',
+'source/mappers.js',
+'source/papu.js',
+'source/ppu.js',
+'source/rom.js',
+'source/ui.js',
+'source/omssp.js',
+'lib/nespad.js',
+'assets/css/main.css',
+# 'fullS.png',
+# 'controls/pause.png',
+# 'controls/power.png',
+# 'controls/mute.png',
 ]
 
 
@@ -120,7 +282,7 @@ for index, slug in enumerate(slugs):
         out.write(slug_contents)
 
 
-for f in DELETIONS:
+for f in set(DELETIONS):
     os.remove(f"{OUTPUT_DIR}{f}")
 
 

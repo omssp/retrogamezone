@@ -3,7 +3,7 @@ window.EJS_gameName = "Super Mario Bros."
 window.EJS_biosUrl = ""
 window.EJS_gameUrl = "https://cdn.jsdelivr.net/gh/omssp/nesscraper/local-roms/Mario.nes.txt"
 window.EJS_core = "nes"
-window.EJS_pathtodata = "emu/data/"
+window.EJS_pathtodata = "https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/emu/data/"
 window.EJS_oldCores = true;
 window.EJS_startOnLoaded = true;
 
