@@ -438,7 +438,8 @@
 
             let nextChunkNumber = $('div[id^=gamesDiv]').length;
             if (cunkedGameList.length <= nextChunkNumber) return;
-            const element = cunkedGameList[nextChunkNumber].map((_, i, a) => a[(i % 4) * 4 + Math.floor(i / 4)]);
+            let isMobile = ('ontouchstart' in document.documentElement);
+            const element = isMobile ? cunkedGameList[nextChunkNumber] : cunkedGameList[nextChunkNumber].map((_, i, a) => a[(i % 4) * 4 + Math.floor(i / 4)]);
 
             gamesHTML += `<div class="columns" id="gamesDiv${nextChunkNumber}">`;
 
