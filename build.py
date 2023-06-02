@@ -108,10 +108,10 @@ global_replacements = [
         'src="assets/js/skel.min.js"',
         'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/assets/js/skel.min.js"'
     ],
-    # [
-    #     'src="emu/emu.js"',
-    #     'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/emu/emu.min.js"'
-    # ],
+    [
+        'src="emu/emu.js"',
+        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/emu/emu.min.js"'
+    ],
     [
         'src="lib/gamepad.js"',
         'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/lib/gamepad.min.js"'
@@ -209,14 +209,12 @@ CHANGES = [
 
 TOCPY = [change['file'] for change in CHANGES] + [
     'favicon.ico',
-    'lib/gamelist.js',
-    'emu/emu.js'
+    'lib/gamelist.js'
 ]
 
 
 shutil.rmtree(OUTPUT_DIR, ignore_errors=True)
 # shutil.copytree('src/', OUTPUT_DIR)
-os.makedirs(os.path.dirname(f"{OUTPUT_DIR}emu/"), exist_ok=True)
 os.makedirs(os.path.dirname(f"{OUTPUT_DIR}lib/"), exist_ok=True)
 os.makedirs(os.path.dirname(f"{OUTPUT_DIR}source/"), exist_ok=True)
 for f in set(TOCPY):
@@ -279,8 +277,8 @@ for index, slug in enumerate(slugs):
         ['"game.html?" + preG.toString()', f'"{games[preG][3]}"'],
         ['<title>Game Loading...</title>',
             f'<title>{games[index][0]}</title>'],
-        ['gameNameArray[para][1]', f'"{games[index][1]}"'],
-        ['gameNameArray[para][0]', f'"{games[index][0]}"'],
+        ["document.getElementById('gameName').innerHTML = window.EJS_gameUrl = gameNameArray[para][1]", f'window.EJS_gameUrl = "{games[index][1]}"'],
+        ["document.getElementById('gameTitle').innerHTML = document.title = window.EJS_gameName = gameNameArray[para][0]", f'window.EJS_gameName = "{games[index][3]}"'],
         ['gameNameArray[para][2]', f'"{games[index][2]}"'],
         ['<h2 id="gameTitle">&nbsp;</h2>',
             f'<h2 id="gameTitle">{games[index][0]}</h2>'],
@@ -295,8 +293,6 @@ for index, slug in enumerate(slugs):
     isGBA = games[index][1].endswith('.gba')
 
     if isGBA or isGBC:
-        slug_contents = slug_contents.replace(
-            'setTimeout(checkandchange, 1000)', 'checkandchange()')
         slug_contents = slug_contents.replace(
             'isMobile && !initial_gamepads', 'true')
         slug_contents = slug_contents.replace(

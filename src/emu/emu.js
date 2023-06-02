@@ -1,7 +1,7 @@
 window.EJS_player = "#game"
 window.EJS_gameName = "Super Mario Bros."
 window.EJS_biosUrl = ""
-window.EJS_gameUrl = "https://cdn.jsdelivr.net/gh/omssp/nesscraper/local-roms/Mario.nes.txt"
+// window.EJS_gameUrl = "https://cdn.jsdelivr.net/gh/omssp/nesscraper/local-roms/Mario.nes.txt"
 window.EJS_core = "nes"
 window.EJS_pathtodata = "emu/data/"
 window.EJS_oldCores = true;
@@ -73,39 +73,39 @@ window.EJS_VirtualGamepadSettings = [
         block: true,
         input_value: 2
     },
-    {
-        type: "button",
-        text: "State",
-        id: "state",
-        location: "left",
-        left: 50,
-        top: -100,
-        fontSize: 10,
-        block: true,
-        input_value: 26
-    },
-    {
-        type: "button",
-        text: "Save",
-        id: "save",
-        location: "left",
-        left: 50,
-        top: -50,
-        fontSize: 1,
-        block: true,
-        input_value: 24
-    },
-    {
-        type: "button",
-        text: "Load",
-        id: "load",
-        location: "right",
-        left: 30,
-        top: -45,
-        fontSize: 10,
-        block: true,
-        input_value: 25
-    }
+    // {
+    //     type: "button",
+    //     text: "State",
+    //     id: "state",
+    //     location: "left",
+    //     left: 50,
+    //     top: -100,
+    //     fontSize: 10,
+    //     block: true,
+    //     input_value: 26
+    // },
+    // {
+    //     type: "button",
+    //     text: "Save",
+    //     id: "save",
+    //     location: "left",
+    //     left: 50,
+    //     top: -50,
+    //     fontSize: 10,
+    //     block: true,
+    //     input_value: 24
+    // },
+    // {
+    //     type: "button",
+    //     text: "Load",
+    //     id: "load",
+    //     location: "right",
+    //     left: 30,
+    //     top: -45,
+    //     fontSize: 10,
+    //     block: true,
+    //     input_value: 25
+    // }
 ];
 window.EJS_Buttons = {
     playPause: true,
