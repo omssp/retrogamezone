@@ -318,8 +318,8 @@
                     this.updateBackgrounds('');
                     $('.image').css('pointer-events', 'auto');
                 }
-                setCookie('curr_x', this.curr_x)
-                setCookie('curr_y', this.curr_y)
+                setCookie('curr_x', this.curr_x, 365)
+                setCookie('curr_y', this.curr_y, 365)
             }
             updateBackgrounds = (backgroundColorRGB) => {
                 $('#header').css('background', `rgba(${backgroundColorRGB}, 0.85)`)
@@ -581,7 +581,7 @@
                 $('.leftGameName').text('no matching nostalgia found');
             }
 
-            setCookie('lastVal', lastVal)
+            setCookie('lastVal', lastVal, 365)
 
             try {
                 window.moveAudio.playclip()
