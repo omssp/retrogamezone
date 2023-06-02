@@ -3930,7 +3930,7 @@ window.EJS_main = function(_0xa88a13, _0x17edbf, _0x2c1832) {
                         style += blockCSS;
                     }
                     if (['top', 'center', 'left', 'right'].includes(info[i].location)) {
-                        dataHTML[info[i].location] += '<div class="'+getClass(opts)+'" style="'+style+'"'+info[i].on_touchstart?` ontouchstart="${info[i].on_touchstart}"`:''+'>'+info[i].text+'</div>';
+                        dataHTML[info[i].location] += '<div class="'+getClass(opts)+'" style="'+style+'"'+(info[i].on_touchstart?` ontouchstart="${info[i].on_touchstart}"`:'')+'>'+info[i].text+'</div>';
                     }
                 }
                 html += '<div class="'+getClass({'virtual-gamepad': true})+'" style="display: block;">';
