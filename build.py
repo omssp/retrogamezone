@@ -108,10 +108,10 @@ global_replacements = [
         'src="assets/js/skel.min.js"',
         'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/assets/js/skel.min.js"'
     ],
-    [
-        'src="emu/emu.js"',
-        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/emu/emu.min.js"'
-    ],
+    # [
+    #     'src="emu/emu.js"',
+    #     'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/emu/emu.min.js"'
+    # ],
     [
         'src="lib/gamepad.js"',
         'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/lib/gamepad.min.js"'
@@ -172,11 +172,11 @@ CHANGES = [
     },
     {
         "file": "index2.html",
-        "replacements": global_replacements 
+        "replacements": global_replacements
     },
     {
         "file": "source/omssp.js",
-        "replacements": global_replacements 
+        "replacements": global_replacements
     },
     {
         "file": "source/nes.js",
@@ -209,12 +209,14 @@ CHANGES = [
 
 TOCPY = [change['file'] for change in CHANGES] + [
     'favicon.ico',
-    'lib/gamelist.js'
+    'lib/gamelist.js',
+    'emu/emu.js'
 ]
 
 
 shutil.rmtree(OUTPUT_DIR, ignore_errors=True)
 # shutil.copytree('src/', OUTPUT_DIR)
+os.makedirs(os.path.dirname(f"{OUTPUT_DIR}emu/"), exist_ok=True)
 os.makedirs(os.path.dirname(f"{OUTPUT_DIR}lib/"), exist_ok=True)
 os.makedirs(os.path.dirname(f"{OUTPUT_DIR}source/"), exist_ok=True)
 for f in set(TOCPY):
@@ -227,6 +229,10 @@ with open(f"{OUTPUT_DIR}lib/gamelist.js", "r+") as list_js:
     obj = data[data.find('['): data.rfind(';')]
     obj = re.sub(r"\/\/\s.*", '', obj, re.MULTILINE)
     games = ast.literal_eval(obj)
+
+    with open('src/gbac.json', 'r') as ff:
+        gbac_list = json.load(ff)
+        games.extend(gbac_list)
 
     for game in games:
         slug = slugify.slugify(game[0], replacements=[['&', 'and']])
@@ -284,6 +290,17 @@ for index, slug in enumerate(slugs):
     slug_contents = '%s' % contents
     for pair in replacements:
         slug_contents = slug_contents.replace(pair[0], pair[1])
+
+    isGBC = games[index][1].endswith('.gbc')
+    isGBA = games[index][1].endswith('.gba')
+
+    if isGBA or isGBC:
+        slug_contents = slug_contents.replace(
+            'setTimeout(checkandchange, 1000)', 'checkandchange()')
+        slug_contents = slug_contents.replace(
+            'isMobile && !initial_gamepads', 'true')
+        slug_contents = slug_contents.replace(
+            'window.EJS_pathtodata', 'window.EJS_core = "{}"; window.EJS_pathtodata'.format('gb' if isGBC else 'gba'))
 
     with open(slug, 'w') as out:
         out.write(slug_contents)

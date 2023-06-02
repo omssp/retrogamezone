@@ -72,6 +72,39 @@ window.EJS_VirtualGamepadSettings = [
         fontSize: 15,
         block: true,
         input_value: 2
+    },
+    {
+        type: "button",
+        text: "State",
+        id: "state",
+        location: "left",
+        left: 50,
+        top: -100,
+        fontSize: 10,
+        block: true,
+        input_value: 26
+    },
+    {
+        type: "button",
+        text: "Save",
+        id: "save",
+        location: "left",
+        left: 50,
+        top: -50,
+        fontSize: 1,
+        block: true,
+        input_value: 24
+    },
+    {
+        type: "button",
+        text: "Load",
+        id: "load",
+        location: "right",
+        left: 30,
+        top: -45,
+        fontSize: 10,
+        block: true,
+        input_value: 25
     }
 ];
 window.EJS_Buttons = {
@@ -80,8 +113,8 @@ window.EJS_Buttons = {
     mute: false,
     settings: false,
     fullscreen: true,
-    saveState: false,
-    loadState: false,
+    saveState: true,
+    loadState: true,
     screenRecord: false,
     gamepad: true,
     cheat: false,
