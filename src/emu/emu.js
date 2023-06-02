@@ -11,6 +11,15 @@ window.EJS_Settings = {
     volume:1,
 }
 
+
+window.save_state = () => {
+    $('button[data-btn="save-state"]').click();
+}
+
+window.load_state = () => {
+    $('button[data-btn="load-state"]').click();
+}
+
 window.EJS_VirtualGamepadSettings = [
     {
         type: "button",
@@ -84,28 +93,31 @@ window.EJS_VirtualGamepadSettings = [
     //     block: true,
     //     input_value: 26
     // },
-    // {
-    //     type: "button",
-    //     text: "Save",
-    //     id: "save",
-    //     location: "left",
-    //     left: 50,
-    //     top: -50,
-    //     fontSize: 10,
-    //     block: true,
-    //     input_value: 24
-    // },
-    // {
-    //     type: "button",
-    //     text: "Load",
-    //     id: "load",
-    //     location: "right",
-    //     left: 30,
-    //     top: -45,
-    //     fontSize: 10,
-    //     block: true,
-    //     input_value: 25
-    // }
+    {
+        type: "button",
+        text: "Save",
+        id: "save",
+        location: "left",
+        fontSize: 10,
+        left: 50,
+        top: -70,
+        block: true,
+        input_value: 122,
+        on_touchstart: "window.save_state()"
+    },
+    {
+        type: "button",
+        text: "Load",
+        id: "load",
+        location: "right",
+        left: 30,
+        top: -65,
+        fontSize: 10,
+        block: true,
+        input_value: 25,
+        input_new_cores: 123,
+        on_touchstart: "window.load_state()"
+    }
 ];
 window.EJS_Buttons = {
     playPause: true,

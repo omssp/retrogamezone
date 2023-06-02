@@ -3930,7 +3930,7 @@ window.EJS_main = function(_0xa88a13, _0x17edbf, _0x2c1832) {
                         style += blockCSS;
                     }
                     if (['top', 'center', 'left', 'right'].includes(info[i].location)) {
-                        dataHTML[info[i].location] += '<div class="'+getClass(opts)+'" style="'+style+'">'+info[i].text+'</div>';
+                        dataHTML[info[i].location] += '<div class="'+getClass(opts)+'" style="'+style+'"'+info[i].on_touchstart?` ontouchstart="${info[i].on_touchstart}"`:''+'>'+info[i].text+'</div>';
                     }
                 }
                 html += '<div class="'+getClass({'virtual-gamepad': true})+'" style="display: block;">';
@@ -3957,7 +3957,7 @@ window.EJS_main = function(_0xa88a13, _0x17edbf, _0x2c1832) {
                     });
                 if (! _0x59aa33.isIos) {
                     _0x1093f4.call(this, _0x530042.call(this, '.' .concat(_0x2c1832)), 'touchmove', function(event) {
-                        // event.stopPropagation();
+                        event.stopPropagation();
                     });
                 }
                 function createDPad(config) {
