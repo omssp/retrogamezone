@@ -158,6 +158,8 @@ global_replacements = [
     ]
 ]
 
+GBAGAMEPAD = """window.EJS_VirtualGamepadSettings=[{type:"button",text:"A",id:"a",location:"right",fontSize:40,left:45,top:70,bold:!0,input_value:8},{type:"button",text:"B",id:"b",location:"right",left:-25,top:140,fontSize:40,bold:!0,input_value:0},{type:"dpad",location:"left",left:"65%",top:"91%",joystickInput:!1,inputValues:[4,5,6,7]},{type:"button",text:"Start",id:"start",location:"right",left:0,top:5,fontSize:15,block:!0,input_value:3},{type:"button",text:"Select",id:"select",location:"left",left:80,top:0,fontSize:15,block:!0,input_value:2},{type:"button",text:"Save",id:"save",location:"left",fontSize:10,left:20,top:-70,block:!0,input_value:122,input_new_cores:122,on_touchstart:"window.save_state()"},{type:"button",text:"Load",id:"load",location:"right",left:60,top:-65,fontSize:10,block:!0,input_value:123,input_new_cores:123,on_touchstart:"window.load_state()"},{type:"button",text:"L",id:"l1",location:"left",fontSize:20,left:110,top:-70,block:!0,input_value:10,input_new_cores:10},{type:"button",text:"R",id:"r1",location:"right",left:-30,top:-65,fontSize:20,block:!0,input_value:11,input_new_cores:11}];"""
+
 CHANGES = [
     {
         "file": "index.html",
@@ -277,8 +279,10 @@ for index, slug in enumerate(slugs):
         ['"game.html?" + preG.toString()', f'"{games[preG][3]}"'],
         ['<title>Game Loading...</title>',
             f'<title>{games[index][0]}</title>'],
-        ["document.getElementById('gameName').innerHTML = window.EJS_gameUrl = gameNameArray[para][1]", f'window.EJS_gameUrl = "{games[index][1]}"'],
-        ["document.getElementById('gameTitle').innerHTML = document.title = window.EJS_gameName = gameNameArray[para][0]", f'window.EJS_gameName = "{games[index][3]}"'],
+        ["document.getElementById('gameName').innerHTML = window.EJS_gameUrl = gameNameArray[para][1]",
+         f'window.EJS_gameUrl = "{games[index][1]}"'],
+        ["document.getElementById('gameTitle').innerHTML = document.title = window.EJS_gameName = gameNameArray[para][0]",
+         f'window.EJS_gameName = "{games[index][3]}"'],
         ['gameNameArray[para][2]', f'"{games[index][2]}"'],
         ['<h2 id="gameTitle">&nbsp;</h2>',
             f'<h2 id="gameTitle">{games[index][0]}</h2>'],
@@ -296,7 +300,7 @@ for index, slug in enumerate(slugs):
         slug_contents = slug_contents.replace(
             'isMobile && !initial_gamepads', 'true')
         slug_contents = slug_contents.replace(
-            'window.EJS_pathtodata', 'window.EJS_core = "{}"; window.EJS_pathtodata'.format('gb' if isGBC else 'gba'))
+            'window.EJS_pathtodata', 'window.EJS_core = "{}";{} window.EJS_pathtodata'.format('gb' if isGBC else 'gba', GBAGAMEPAD if isGBA else ''))
 
     with open(slug, 'w') as out:
         out.write(slug_contents)
