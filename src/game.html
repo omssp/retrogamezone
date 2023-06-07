@@ -155,11 +155,11 @@
                 </header>
                 <div class="inputDiv">
                     <form class="myForm" onsubmit="return validateForm()">
-                        <input style="text-align: center;" type="text" id="save_name"
+                        <input style="text-align: center;" type="search" id="save_name"
                             placeholder="enter a unique save name"
                             pattern="^(?=.{1,20}$)(?![_\-])(?!.*[_\-]{2})[a-zA-Z0-9\-_]+(?<![_\-])"
                             title="only alphabets followed by numbers or hyphen(-) are allowed, don't use spaces or special characters"
-                            maxlength="20">
+                            maxlength="20" autocorrect="off" autocapitalize="none">
                     </form>
                 </div>
                 <div class="infoDiv chrome">
