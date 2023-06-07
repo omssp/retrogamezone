@@ -12,7 +12,7 @@ class SaveHandler {
         if (!this.validate_names())
             throw new Error('validation falied in game name or save name');
 
-        this.put_url = `${this.baseURL}/${this.save_name}/${this.game_slug}.json`
+        this.put_url = `${this.baseURL}/${this.save_name}/${this.game_slug}.json?print=silent`
         this.get_url = `${this.baseURL}/${this.save_name}/${this.game_slug}/state.json`
 
     }
