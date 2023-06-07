@@ -24,7 +24,7 @@ class SaveHandler {
 
         const data = {
             time: Date.now(),
-            state: state_obj.state
+            state: JSON.stringify([...state_obj.state])
         }
 
         $.ajax({
@@ -47,7 +47,7 @@ class SaveHandler {
             success: function (resp) {
                 if (resp) {
                     console.log('saved state found')
-                    window.EJS_loadState(new Uint8Array(resp))
+                    window.EJS_loadState(new Uint8Array(JSON.parse(resp)))
                 } else {
                     console.error('no saved state found')
                 }
