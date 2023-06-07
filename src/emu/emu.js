@@ -8,7 +8,7 @@ window.EJS_oldCores = true;
 window.EJS_startOnLoaded = true;
 
 window.EJS_Settings = {
-    volume:1,
+    volume: 1,
 }
 
 
@@ -122,18 +122,18 @@ window.EJS_VirtualGamepadSettings = [
 window.EJS_Buttons = {
     playPause: true,
     restart: true,
-    mute: false,
+    mute: true,
     settings: false,
     fullscreen: true,
     saveState: true,
     loadState: true,
-    screenRecord: false,
+    screenRecord: true,
     gamepad: true,
     cheat: false,
     volume: true,
     quickSave: true,
     quickLoad: true,
-    screenshot: false,
+    screenshot: true,
     cacheManager: false
 }
 window.EJS_defaultOptions = {

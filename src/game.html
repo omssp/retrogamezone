@@ -46,11 +46,72 @@
             display: inline-block;
             transition: all 1s ease
         }
+
+        .inputDiv {
+            padding: 0;
+            max-height: 0;
+            margin: 1em 0;
+            overflow: hidden;
+            transition: all 1s ease;
+        }
+
+        .myForm {
+            margin: 0;
+            transition: all 1s ease;
+        }
+
+        #save_name:invalid {
+            box-shadow: 0 0 0 1px #e74c3c;
+        }
+
+        #save_name:valid:focus {
+            border-color: #8bc34a;
+            box-shadow: 0 0 0 1px #8bc34a;
+        }
+
+        #save_name:disabled {
+            border-color: #535353;
+            box-shadow: none;
+            border-style: dashed solid;
+            border-width: medium;
+        }
+
+        @-webkit-keyframes pulse {
+            0% {
+                -webkit-box-shadow: 0 0 0 0 rgba(139, 195, 74, 0.4);
+            }
+
+            70% {
+                -webkit-box-shadow: 0 0 0 10px rgba(139, 195, 74, 0);
+            }
+
+            100% {
+                -webkit-box-shadow: 0 0 0 0 rgba(139, 195, 74, 0);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                -moz-box-shadow: 0 0 0 0 rgba(139, 195, 74, 0.4);
+                box-shadow: 0 0 0 0 rgba(139, 195, 74, 0.4);
+            }
+
+            70% {
+                -moz-box-shadow: 0 0 0 10px rgba(139, 195, 74, 0);
+                box-shadow: 0 0 0 10px rgba(139, 195, 74, 0);
+            }
+
+            100% {
+                -moz-box-shadow: 0 0 0 0 rgba(139, 195, 74, 0);
+                box-shadow: 0 0 0 0 rgba(139, 195, 74, 0);
+            }
+        }
     </style>
+    <style id="temp_style"></style>
 </head>
 
 <body
-    onkeydown="$('html, body').scrollTop(0); $('.infoDiv').fadeOut(1000); document.getElementById('gameFrame')?.contentWindow.focusMe();">
+    onkeydown="$('#save_name').is(':focus') ? '' : ($('.image.fit > div, iframe')[0]?.scrollIntoView(), document.getElementById('gameFrame')?.contentWindow.focusMe()); $('.infoDiv').fadeOut(1000);">
     <img src="fullS.png" width="24" height="24" title="FullScreen"
         style="display: inline; top: 0.3em; position: fixed; z-index:+1; right: 0.3em; cursor: pointer; fill: #f44336"
         id="fsbutton" onclick="document.getElementById('gameFrame')?.contentWindow.clickMe();">
@@ -84,10 +145,19 @@
             <div class="content">
                 <header>
                     <center>
-                        <h2 id="gameTitle">&nbsp;</h2>
+                        <h2 id="gameTitle" style="cursor: pointer;">&nbsp;</h2>
                     </center>
                     <div id="gameName" style="display: none;">&nbsp;</div>
                 </header>
+                <div class="inputDiv">
+                    <form class="myForm" onsubmit="return validateForm()">
+                        <input style="text-align: center;" type="text" id="save_name"
+                            placeholder="enter a unique save name"
+                            pattern="^(?=.{1,20}$)(?![_\-])(?!.*[_\-]{2})[a-zA-Z0-9\-_]+(?<![_\-])"
+                            title="only alphabets followed by numbers or hyphen(-) are allowed, don't use spaces or special characters"
+                            maxlength="20">
+                    </form>
+                </div>
                 <div class="infoDiv chrome">
                     <center>
                         <span class="infoSpn">!</span>
@@ -206,6 +276,9 @@
     <script src="lib/gamelist.js"></script>
     <script src="lib/swapplayers.js"></script>
     <script src="lib/audioUI.js"></script>
+    <script src="lib/slugify.js"></script>
+    <script src="lib/cookie.js"></script>
+    <script src="emu/save.js"></script>
     <script src="emu/emu.js"></script>
     <script>
 
@@ -272,6 +345,11 @@
             }, 1300);
         });
         $(document).ready(function () {
+            const saveName = getCookie('save_name')?.trim()
+            if (saveName) {
+                save_name.val(saveName)
+                save_name.blur()
+            }
             if (window.history && window.history.pushState) {
                 window.history.pushState('forward', null, '');
                 $(window).on('popstate', function () {
@@ -380,7 +458,14 @@
                 document.body.appendChild(script)
                 $('#fsbutton').click(function () {
                     $('button[data-btn="fullscreen"]').click();
-                })
+                });
+
+                const saveName = getCookie('save_name')?.trim()
+                if (saveName) {
+                    window.saver = new SaveHandler(saveName);
+                    window.EJS_onSaveState = (e) => window.saver.saveToOnline(e)
+                    window.EJS_onGameStart = (e) => window.saver.loadFromOnline(e)
+                }
             }
         }
 
@@ -394,6 +479,53 @@
                 <div id="game"></div>`);
             }
         }
+        let debounce_input;
+        let old_input;
+        const save_name = $('#save_name').on('keyup blur paste', debounceChange);
+        const inputDiv = $('.inputDiv');
+        function validateForm() {
+            if (debounce_input)
+                clearTimeout(debounce_input)
+            if (save_name.is(':valid')) {
+                old_input = save_name.css('animation', 'none').val().trim();
+                save_name.attr('disabled', true).css('cursor', 'copy').attr('title', 'click to edit')
+
+                setCookie('save_name', old_input, 365)
+
+                window.saver = new SaveHandler(old_input);
+                window.EJS_onSaveState = (e) => window.saver.saveToOnline(e)
+                window.EJS_onGameStart = (e) => window.saver.loadFromOnline(e)
+                saver.loadFromOnline()
+
+            }
+            return false;
+        }
+        function debounceChange() {
+            let new_input = save_name.val().replaceAll(' ', '-');
+            save_name.val(new_input);
+            if (old_input != new_input) {
+                save_name.css('animation', 'pulse 1s infinite')
+                if (debounce_input)
+                    clearTimeout(debounce_input)
+                debounce_input = setTimeout(() => {
+                    validateForm();
+                }, 2000);
+            }
+        }
+        $('.inputDiv .myform').on('click', () => {
+            if (save_name.is(':disabled')) {
+                save_name.attr('disabled', false).css('cursor', 'auto').attr('title', "only alphabets followed by numbers or hyphen(-) are allowed, don't use spaces or special characters")
+            }
+        });
+        $('#gameTitle').on('click', () => {
+            if (inputDiv.css('max-height') == "200px") {
+                inputDiv.css('max-height', "0");
+                inputDiv.css('padding', "0");
+            } else {
+                inputDiv.css('max-height', "200px");
+                inputDiv.css('padding', "1em");
+            }
+        });
     </script>
     <script src="assets/js/skel.min.js"></script>
     <script src="assets/js/util.js"></script>

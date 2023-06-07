@@ -6686,7 +6686,7 @@ window.EJS_main = function(_0xa88a13, _0x17edbf, _0x2c1832) {
                                 _0x2c1832 = _0xdcec2a.getScreenData();
                             
                             if (_0x378b5c.saveLoadDB.call(_0x17edbf, 'save')) {
-                                return;
+                                //return;
                             }
                             if (_0x1e2c68.function(_0x17edbf.config.onsavestate)) _0x17edbf.config.onsavestate.call(null, {
                                 'screenshot': _0x2c1832,
