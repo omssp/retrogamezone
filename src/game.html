@@ -485,7 +485,7 @@
         }
         let debounce_input;
         let old_input;
-        const save_name = $('#save_name').on('keyup blur paste', debounceChange);
+        const save_name = $('#save_name').on('keyup blur paste search', debounceChange);
         const inputDiv = $('.inputDiv');
         function validateForm() {
             if (debounce_input)

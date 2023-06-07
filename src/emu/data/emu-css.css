@@ -706,7 +706,7 @@ a.ejs--73f9b4e94a7a1fe74e11107d5ab2ef:hover{
     transform:translate(0, 0) scale(1)
 }
 .ejs--d5f430a99a1619b3434bf58e34a99c{
-    background:#000;
+    background:#00000000;
     color:#bcbcbc;
     overflow:hidden
 }
@@ -1440,7 +1440,7 @@ a.ejs--73f9b4e94a7a1fe74e11107d5ab2ef:hover{
     right:.025rem
 }
 .ejs--7a5f920ceffb2913f6dbda780573cf:fullscreen{
-    background:#000;
+    background:#00000000;
     border-radius:0 !important;
     height:100%;
     margin:0;
@@ -1463,7 +1463,7 @@ a.ejs--73f9b4e94a7a1fe74e11107d5ab2ef:hover{
     display:none
 }
 .ejs--7a5f920ceffb2913f6dbda780573cf:-webkit-full-screen{
-    background:#000;
+    background:#00000000;
     border-radius:0 !important;
     height:100%;
     margin:0;
@@ -1486,7 +1486,7 @@ a.ejs--73f9b4e94a7a1fe74e11107d5ab2ef:hover{
     display:none
 }
 .ejs--7a5f920ceffb2913f6dbda780573cf:-moz-full-screen{
-    background:#000;
+    background:#00000000;
     border-radius:0 !important;
     height:100%;
     margin:0;
@@ -1509,7 +1509,7 @@ a.ejs--73f9b4e94a7a1fe74e11107d5ab2ef:hover{
     display:none
 }
 .ejs--7a5f920ceffb2913f6dbda780573cf:-ms-fullscreen{
-    background:#000;
+    background:#00000000;
     border-radius:0 !important;
     height:100%;
     margin:0;
@@ -1532,7 +1532,7 @@ a.ejs--73f9b4e94a7a1fe74e11107d5ab2ef:hover{
     display:none
 }
 .ejs--412041671de21945d3e028b6ae84c9{
-    background:#000;
+    background:#00000000;
     border-radius:0 !important;
     height:100%;
     margin:0;

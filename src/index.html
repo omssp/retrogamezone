@@ -527,7 +527,7 @@
                 setTimeout(gridNav.selectGame, 500);
             }
 
-            $("#search_bar").on("keyup paste", function () {
+            $("#search_bar").on("keyup blur paste search", function () {
                 let value = slugify($(this).val());
                 if (value == lastVal) return;
                 if (time) clearTimeout(time);
