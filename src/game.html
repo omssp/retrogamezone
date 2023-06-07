@@ -492,7 +492,7 @@
                 clearTimeout(debounce_input)
             if (save_name.is(':valid')) {
                 old_input = save_name.css('animation', 'none').val().trim();
-                save_name.attr('disabled', true).css('cursor', 'copy').attr('title', 'click to edit')
+                save_name.attr('disabled', true).css('cursor', 'copy').attr('title', 'click to edit').blur();
 
                 setCookie('save_name', old_input, 365)
 
@@ -500,7 +500,6 @@
                 window.EJS_onSaveState = (e) => window.saver.saveToOnline(e)
                 window.EJS_onGameStart = (e) => window.saver.loadFromOnline(e)
                 saver.loadFromOnline()
-
             }
             return false;
         }
