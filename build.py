@@ -291,7 +291,9 @@ for index, slug in enumerate(slugs):
         ['<h2 id="gameTitle">&nbsp;</h2>',
             f'<h2 id="gameTitle">{games[index][0]}</h2>'],
         ['<div id="gameName" style="display: none;">&nbsp;</div>',
-            f'<div id="gameName" style="display: none;">{games[index][1]}</div>']
+            f'<div id="gameName" style="display: none;">{games[index][1]}</div>'],
+        ['window.EJS_pathtodata',
+            f"window.EJS_gameUrl = '{games[index][1]}';window.EJS_pathtodata"]
     ]
     slug_contents = '%s' % contents
     for pair in replacements:
