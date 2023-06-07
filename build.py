@@ -113,6 +113,10 @@ global_replacements = [
         'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/emu/emu.min.js"'
     ],
     [
+        'src="emu/save.js"',
+        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/emu/save.min.js"'
+    ],
+    [
         'src="lib/gamepad.js"',
         'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/lib/gamepad.min.js"'
     ],
