@@ -490,6 +490,8 @@
                     window.saver = new SaveHandler(saveName);
                     window.EJS_onSaveState = (e) => window.saver.saveToOnline(e)
                     window.EJS_onGameStart = (e) => window.saver.loadFromOnline(e)
+                } else {
+                    window.EJS_onSaveState = () => {}
                 }
             }
         }
