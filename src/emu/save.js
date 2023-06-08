@@ -12,9 +12,12 @@ class SaveHandler {
         if (!this.validate_names())
             throw new Error('validation falied in game name or save name');
 
-        this.put_url = `${this.baseURL}/${this.save_name}/${this.game_slug}.json?print=silent`
-        this.get_url = `${this.baseURL}/${this.save_name}/${this.game_slug}/state.json`
+        this.base_link = `${this.baseURL}/${this.save_name}/${this.game_slug}`
+        this.put_url = `${this.base_link}.json?print=silent`
+        this.get_state_url = `${this.base_link}/state.json`
+        this.get_time_url = `${this.base_link}/time.json`
 
+        this.store_slug = `${this.save_name}-${this.game_slug}`
     }
 
     saveToOnline = (state_obj) => {
@@ -26,6 +29,8 @@ class SaveHandler {
             time: Date.now(),
             state: JSON.stringify([...state_obj.state])
         }
+
+        const save = [`${this.store_slug}`, data.time]
 
         $.ajax({
             type: 'PUT',
@@ -39,6 +44,7 @@ class SaveHandler {
             },
             success: function (resp) {
                 console.log('saved online')
+                setCookie(save[0], save[1])
             }
         });
     }
@@ -47,9 +53,12 @@ class SaveHandler {
         // console.log(e)
         if (!window.EJS_loadState)
             return;
+
+        const save = [this.fetchStateAndLoad, `${this.store_slug}`]
+
         $.ajax({
             type: 'GET',
-            url: this.get_url,
+            url: this.get_time_url,
             beforeSend: (a) => {
                 $('#header .inner').css('animation', 'pulse 1s infinite');
             },
@@ -58,13 +67,38 @@ class SaveHandler {
             },
             success: function (resp) {
                 if (resp) {
-                    console.log('saved state found')
-                    window.EJS_loadState(new Uint8Array(JSON.parse(resp)))
+                    if (JSON.parse(resp) != getCookie(save[1])) {
+                        save[0]();
+                        console.log('saved time fetched : new state available')
+                    } else {
+                        window.load_state()
+                        console.log('saved time fetched : no new state')
+                    }
                 } else {
-                    console.error('no saved state found')
+                    console.log('no saved time found')
                 }
             }
         });
     }
 
+    fetchStateAndLoad = () => {
+        $.ajax({
+            type: 'GET',
+            url: this.get_state_url,
+            beforeSend: (a) => {
+                $('#header .inner').css('animation', 'pulse 1s infinite');
+            },
+            complete: (a) => {
+                $('#header .inner').css('animation', 'none');
+            },
+            success: function (resp) {
+                if (resp) {
+                    window.EJS_loadState(new Uint8Array(JSON.parse(resp)))
+                    console.log('saved state fetched and loaded')
+                } else {
+                    console.log('no saved state found')
+                }
+            }
+        });
+    }
 }

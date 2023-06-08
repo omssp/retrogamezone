@@ -574,7 +574,7 @@
         const dwnSaveState = () => {
             if (window.EJS_emulator) {
                 window.EJS_emulator.config.onsavestate = null;
-                $('button[data-btn="save-state"]').click();
+                window.save_state();
                 setTimeout(() => {
                     window.EJS_emulator.config.onsavestate = (e) => window.saver.saveToOnline(e);
                 }, 500);

@@ -486,7 +486,8 @@
 
         $(document).ready(() => {
 
-            lastVal = getCookie('lastVal');
+            lastVal = getCookie('last-search');
+            lastVal = lastVal ? lastVal : '';
             filterGames();
 
             $('#search_bar').val(lastVal).focus(function () {
@@ -583,7 +584,7 @@
                 $('.leftGameName').text('no matching nostalgia found');
             }
 
-            setCookie('lastVal', lastVal, 365)
+            setCookie('last-search', lastVal, 365)
 
             try {
                 window.moveAudio.playclip()
