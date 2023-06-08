@@ -12,7 +12,9 @@ function setCookie(cname, cvalue, exdays) {
 function getCookie(cname) {
     let return_value = null
     if (typeof (Storage) !== "undefined") {
-        return_value = JSON.parse(localStorage.getItem(cname));
+        try {
+            return_value = JSON.parse(localStorage.getItem(cname));
+        } catch (error) {}
     }
     if (!return_value) {
         let name = cname + "=";

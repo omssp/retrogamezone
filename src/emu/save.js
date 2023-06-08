@@ -67,8 +67,9 @@ class SaveHandler {
             },
             success: function (resp) {
                 if (resp) {
-                    if (JSON.parse(resp) != getCookie(save[1])) {
-                        save[0]();
+                    let time = JSON.parse(resp);
+                    if (time != getCookie(save[1])) {
+                        save[0](save[1], time);
                         console.log('saved time fetched : new state available')
                     } else {
                         window.load_state()
@@ -81,7 +82,7 @@ class SaveHandler {
         });
     }
 
-    fetchStateAndLoad = () => {
+    fetchStateAndLoad = (slug, time) => {
         $.ajax({
             type: 'GET',
             url: this.get_state_url,
@@ -94,6 +95,12 @@ class SaveHandler {
             success: function (resp) {
                 if (resp) {
                     window.EJS_loadState(new Uint8Array(JSON.parse(resp)))
+                    window.EJS_emulator.config.onsavestate = () => {};
+                    window.save_state();
+                    setCookie(slug, time);
+                    setTimeout(() => {
+                        window.EJS_emulator.config.onsavestate = (e) => window.saver.saveToOnline(e);
+                    }, 500);
                     console.log('saved state fetched and loaded')
                 } else {
                     console.log('no saved state found')
