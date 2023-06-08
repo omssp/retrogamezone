@@ -53,11 +53,28 @@
             margin: 1em 0;
             overflow: hidden;
             transition: all 1s ease;
+            text-align: center;
         }
 
         .myForm {
-            margin: 0;
+            margin: 0 0 2em 0;
             transition: all 1s ease;
+        }
+
+        .btn {
+            width: 42%;
+            margin: .4em 1em;
+        }
+
+        @media (max-width: 600px) {
+            .btn-text {
+                display: none;
+            }
+
+            .btn {
+                width: 90%;
+                margin: .4em 1em;
+            }
         }
 
         #gameTitle {
@@ -161,6 +178,10 @@
                             title="only alphabets followed by numbers or hyphen(-) are allowed, don't use spaces or special characters"
                             maxlength="20" autocorrect="off" autocapitalize="none">
                     </form>
+                    <button class="btn" onclick="dwnSaveState()"><i class="fa fa-lg fa-floppy-o" aria-hidden="true"></i>
+                        <span class="btn-text">Download Save File</span></button>
+                    <button class="btn" onclick="opnSaveState()"><i class="fa fa-lg fa-cloud-upload"
+                            aria-hidden="true"></i> <span class="btn-text">Upload Save File</span></button>
                 </div>
                 <div class="infoDiv chrome">
                     <center>
@@ -484,6 +505,7 @@
             }
         }
         let debounce_input;
+        let debounce_toggle;
         let old_input;
         const save_name = $('#save_name').on('keyup blur paste search', debounceChange);
         const inputDiv = $('.inputDiv');
@@ -497,9 +519,17 @@
                 setCookie('save_name', old_input, 365)
 
                 window.saver = new SaveHandler(old_input);
-                window.EJS_onSaveState = (e) => window.saver.saveToOnline(e)
-                window.EJS_onGameStart = (e) => window.saver.loadFromOnline(e)
-                saver.loadFromOnline()
+                if (window.EJS_emulator) {
+                    window.EJS_emulator.config.onsavestate = old_input ? (e) => window.saver.saveToOnline(e) : null;
+                    window.EJS_emulator.on('start-game', window.saver.loadFromOnline)
+                    saver.loadFromOnline()
+                }
+
+                if (debounce_toggle)
+                    clearTimeout(debounce_toggle)
+                setTimeout(() => {
+                    toggleSecretSave('hide');
+                }, 15000);
             }
             return false;
         }
@@ -510,6 +540,8 @@
                 save_name.css('animation', 'pulse 1s infinite')
                 if (debounce_input)
                     clearTimeout(debounce_input)
+                if (debounce_toggle)
+                    clearTimeout(debounce_toggle)
                 debounce_input = setTimeout(() => {
                     validateForm();
                 }, 2000);
@@ -520,15 +552,48 @@
                 save_name.attr('disabled', false).css('cursor', 'auto').attr('title', "only alphabets followed by numbers or hyphen(-) are allowed, don't use spaces or special characters")
             }
         });
-        $('#gameTitle').on('click', () => {
-            if (inputDiv.css('max-height') == "200px") {
+
+        const toggleSecretSave = (hide) => {
+            if (inputDiv.css('max-height') == "200px" || hide === 'hide') {
                 inputDiv.css('max-height', "0");
                 inputDiv.css('padding', "0");
             } else {
                 inputDiv.css('max-height', "200px");
                 inputDiv.css('padding', "1em");
+                if (debounce_toggle)
+                    clearTimeout(debounce_toggle)
+                setTimeout(() => {
+                    toggleSecretSave('hide');
+                }, 15000);
             }
-        });
+        }
+
+        $('#gameTitle').on('click', toggleSecretSave);
+
+        const dwnSaveState = () => {
+            if (window.EJS_emulator) {
+                window.EJS_emulator.config.onsavestate = null;
+                $('button[data-btn="save-state"]').click();
+                setTimeout(() => {
+                    window.EJS_emulator.config.onsavestate = (e) => window.saver.saveToOnline(e);
+                }, 500);
+                if (debounce_toggle)
+                    clearTimeout(debounce_toggle)
+                setTimeout(() => {
+                    toggleSecretSave('hide');
+                }, 15000);
+            }
+        }
+        const opnSaveState = () => {
+            if (window.EJS_emulator) {
+                window.EJS_emulator.game.stateloadField.click()
+                if (debounce_toggle)
+                    clearTimeout(debounce_toggle)
+                setTimeout(() => {
+                    toggleSecretSave('hide');
+                }, 15000);
+            }
+        }
     </script>
     <script src="assets/js/skel.min.js"></script>
     <script src="assets/js/util.js"></script>

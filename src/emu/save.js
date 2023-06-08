@@ -31,6 +31,12 @@ class SaveHandler {
             type: 'PUT',
             url: this.put_url,
             data: JSON.stringify(data),
+            beforeSend: (a) => {
+                $('#header .inner').css('animation', 'pulse 1s infinite');
+            },
+            complete: (a) => {
+                $('#header .inner').css('animation', 'none');
+            },
             success: function (resp) {
                 console.log('saved online')
             }
@@ -44,6 +50,12 @@ class SaveHandler {
         $.ajax({
             type: 'GET',
             url: this.get_url,
+            beforeSend: (a) => {
+                $('#header .inner').css('animation', 'pulse 1s infinite');
+            },
+            complete: (a) => {
+                $('#header .inner').css('animation', 'none');
+            },
             success: function (resp) {
                 if (resp) {
                     console.log('saved state found')
