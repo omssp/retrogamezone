@@ -4,8 +4,16 @@ import ast
 import json
 import shutil
 import slugify
+from datetime import datetime
+import xml.etree.ElementTree as ET
 
 OUTPUT_DIR = "dist/retrogamezone/"
+
+BASE_URL = 'https://omssp.dev/'
+
+MODIFIED = datetime.today().strftime('%Y-%m-%d')
+FREQ = "weekly"
+
 
 global_replacements = [
     [
@@ -234,6 +242,15 @@ with open(f"{OUTPUT_DIR}lib/gamelist.js", "r+") as list_js:
     obj = re.sub(r"\/\/\s.*", '', obj, re.MULTILINE)
     games = ast.literal_eval(obj)
 
+    urlset = ET.Element(
+        'urlset', {'xmlns': 'http://www.sitemaps.org/schemas/sitemap/0.9'})
+
+    url = ET.SubElement(urlset, 'url')
+    ET.SubElement(url, 'loc').text = BASE_URL
+    ET.SubElement(url, 'lastmod').text = MODIFIED
+    ET.SubElement(url, 'changefreq').text = FREQ
+    ET.SubElement(url, 'priority').text = '1.0'
+
     with open('src/gbac.json', 'r') as ff:
         gbac_list = json.load(ff)
         games.extend(gbac_list)
@@ -249,6 +266,16 @@ with open(f"{OUTPUT_DIR}lib/gamelist.js", "r+") as list_js:
                 f"WARNING!!! Duplicate found in gamelist.js : {slug} : {game}")
         slugs.append(slug_file)
         game.append(slug)
+
+        url = ET.SubElement(urlset, 'url')
+        ET.SubElement(url, 'loc').text = f"{BASE_URL}{slug}"
+        ET.SubElement(url, 'lastmod').text = MODIFIED
+        ET.SubElement(url, 'changefreq').text = FREQ
+        ET.SubElement(url, 'priority').text = '0.9'
+
+    tree = ET.ElementTree(urlset)
+    tree.write(f'{OUTPUT_DIR}sitemap.xml',
+               xml_declaration=True, encoding='utf-8')
 
     # print(len(set(slugs)))
     # print(games)
