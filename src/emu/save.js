@@ -68,7 +68,7 @@ class SaveHandler {
             success: function (resp) {
                 if (resp) {
                     let time = JSON.parse(resp);
-                    if (time != getCookie(save[1])) {
+                    if (time > getCookie(save[1])) {
                         save[0](save[1], time);
                         console.log('saved time fetched : new state available')
                     } else {
