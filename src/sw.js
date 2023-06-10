@@ -8,6 +8,7 @@ const CACHE_NAMESPACE = 'rgz-'
 const PRECACHE = CACHE_NAMESPACE + 'precache-v1'
 const PRECACHE_LIST = [
   './',
+  './404',
   './index2',
   './source/nes.js',
   './lib/gamelist.js',
@@ -51,6 +52,11 @@ const PRECACHE_LIST = [
   "https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/controls/nespad.ico",
   "https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/assets/css/main.css",
 ]
+
+const HOSTNAME_BLACKLIST = [
+  "retrogz-default-rtdb.asia-southeast1.firebasedatabase.app"
+]
+
 const RUNTIME = CACHE_NAMESPACE + 'runtime-v1'
 const expectedCaches = [PRECACHE, RUNTIME]
 
@@ -80,29 +86,33 @@ self.onactivate = (event) => {
 }
 
 self.onfetch = (event) => {
-  // Fastest-while-revalidate 
-  const cached = caches.match(event.request);
-  const fixedUrl = `${event.request.url}?${Date.now()}`;
-  const fetched = fetch(fixedUrl, {cache: "no-store"});
-  const fetchedCopy = fetched.then(resp => resp.clone());
-  console.log(`fetch ${fixedUrl}`)
-  
-  // Call respondWith() with whatever we get first.
-  // If the fetch fails (e.g disconnected), wait for the cache.
-  // If there’s nothing in cache, wait for the fetch. 
-  // If neither yields a response, return offline pages.
-  event.respondWith(
-    Promise.race([fetched.catch(_ => cached), cached])
-      .then(resp => resp || fetched)
-      .catch(_ => caches.match('index.html'))
-  );
+  // Skip blacklisted cross-origin requests, like those for Google Analytics.
+  if (!(HOSTNAME_BLACKLIST.indexOf(new URL(event.request.url).hostname) > -1)) {
+    // Fastest-while-revalidate 
+    const cached = caches.match(event.request);
+    const fixedUrl = event.request.url;
+    // const fixedUrl = `${event.request.url}?${Date.now()}`;
+    const fetched = fetch(fixedUrl, {cache: "no-store"});
+    const fetchedCopy = fetched.then(resp => resp.clone());
+    console.log(`fetch ${fixedUrl}`)
+    
+    // Call respondWith() with whatever we get first.
+    // If the fetch fails (e.g disconnected), wait for the cache.
+    // If there’s nothing in cache, wait for the fetch. 
+    // If neither yields a response, return offline pages.
+    event.respondWith(
+      Promise.race([fetched.catch(_ => cached), cached])
+        .then(resp => resp || fetched)
+        .catch(_ => caches.match('404'))
+    );
 
-  // Update the cache with the version we fetched (only for ok status)
-  event.waitUntil(
-    Promise.all([fetchedCopy, caches.open(RUNTIME)])
-      .then(([response, cache]) => response.ok && cache.put(event.request, response))
-      .catch(_ => {/* eat any errors */})
-  );
+    // Update the cache with the version we fetched (only for ok status)
+    event.waitUntil(
+      Promise.all([fetchedCopy, caches.open(RUNTIME)])
+        .then(([response, cache]) => response.ok && cache.put(event.request, response))
+        .catch(_ => {/* eat any errors */})
+    );
+  }
 }
 
 

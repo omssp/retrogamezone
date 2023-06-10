@@ -344,7 +344,7 @@ for index, slug in enumerate(slugs):
         ['<div id="gameName" style="display: none;">&nbsp;</div>',
             f'<div id="gameName" style="display: none;">{games[index][1]}</div>'],
         ['window.EJS_pathtodata',
-            f"window.EJS_gameUrl = '{games[index][1]}';window.EJS_pathtodata"],
+            f"window.EJS_gameUrl = 'https:{games[index][1]}';window.EJS_pathtodata"],
         ['Retro Game Zone - By Shardul Pakhale',
             f'{games[index][0]} - Retro Game Zone'],
         ['//cdn.jsdelivr.net/gh/omssp/nesscraper/nesicon.png', games[index][2]],
