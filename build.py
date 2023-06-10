@@ -366,7 +366,7 @@ for index, slug in enumerate(slugs):
     with open(slug, 'w') as out:
         out.write(slug_contents)
 
-    with open(f"{OUTPUT_DIR}{games[index][3]}.json") as out:
+    with open(f"{OUTPUT_DIR}{games[index][3]}.json", 'w') as out:
         temp_manifest = MANIFEST
         temp_manifest['name'] = f"{games[index][0]} - Retro Game Zone"
         temp_manifest['short_name'] = games[index][0]
