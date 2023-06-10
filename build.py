@@ -307,7 +307,7 @@ with open(f"{OUTPUT_DIR}lib/gamelist.js", "r+") as list_js:
 
 
 with open(f"{OUTPUT_DIR}manifest.json", 'w') as out:
-    out.write(MANIFEST)
+    out.write(json.dumps(MANIFEST, indent=4))
 
 contents = ""
 for change in CHANGES:
@@ -372,7 +372,7 @@ for index, slug in enumerate(slugs):
         temp_manifest['short_name'] = games[index][0]
         temp_manifest['icons'][0]['src'] = f"https:{games[index][2]}"
         temp_manifest['start_url'] = f"{BASE_URL}{games[index][3]}"
-        out.write(temp_manifest)
+        out.write(json.dumps(temp_manifest, indent=4))
 
 for k, v in os.environ.items():
     print(f'{k}={v}')
