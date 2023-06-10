@@ -9,10 +9,27 @@ import xml.etree.ElementTree as ET
 
 OUTPUT_DIR = "dist/retrogamezone/"
 
-BASE_URL = 'https://omssp.dev/'
+BASE_URL = 'https://retrogamezone.blynkomssp.eu.org/'
 
 MODIFIED = datetime.today().strftime('%Y-%m-%d')
 FREQ = "weekly"
+
+MANIFEST = {
+  "name": "Retro Game Zone",
+  "short_name": "RGZ",
+  "description": "A place for all nostalgic gamers to relive old memories. ReLived by Shardul Pakhale.",
+  "icons": [
+    {
+    "src": "https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/nesicon.png",
+    "sizes": "512x512",
+    "type": "image/png"
+    }
+  ],
+  "start_url": BASE_URL,
+  "display": "standalone",
+  "theme_color": "#e74c3c",
+  "background_color": "#efebe9"
+}
 
 
 global_replacements = [
@@ -225,7 +242,8 @@ CHANGES = [
 
 TOCPY = [change['file'] for change in CHANGES] + [
     'favicon.ico',
-    'lib/gamelist.js'
+    'lib/gamelist.js',
+    'sw.js'
 ]
 
 
@@ -287,6 +305,10 @@ with open(f"{OUTPUT_DIR}lib/gamelist.js", "r+") as list_js:
     list_js.write(
         f"const numSetLen=16; var gameNameArray={json.dumps(games, indent=4)}")
 
+
+with open(f"{OUTPUT_DIR}manifest.json", 'w') as out:
+    out.write(MANIFEST)
+
 contents = ""
 for change in CHANGES:
     with open(f"{OUTPUT_DIR}{change['file']}", "r+") as f:
@@ -325,7 +347,8 @@ for index, slug in enumerate(slugs):
             f"window.EJS_gameUrl = '{games[index][1]}';window.EJS_pathtodata"],
         ['Retro Game Zone - By Shardul Pakhale',
             f'{games[index][0]} - Retro Game Zone'],
-        ['//cdn.jsdelivr.net/gh/omssp/nesscraper/nesicon.png', games[index][2]]
+        ['//cdn.jsdelivr.net/gh/omssp/nesscraper/nesicon.png', games[index][2]],
+        ['./manifest.json', f'./{games[index][3]}.json']
     ]
     slug_contents = '%s' % contents
     for pair in replacements:
@@ -343,6 +366,13 @@ for index, slug in enumerate(slugs):
     with open(slug, 'w') as out:
         out.write(slug_contents)
 
+    with open(f"{OUTPUT_DIR}{games[index][3]}.json") as out:
+        temp_manifest = MANIFEST
+        temp_manifest['name'] = f"{games[index][0]} - Retro Game Zone"
+        temp_manifest['short_name'] = games[index][0]
+        temp_manifest['icons'][0]['src'] = f"https:{games[index][2]}"
+        temp_manifest['start_url'] = f"{BASE_URL}{games[index][3]}"
+        out.write(temp_manifest)
 
 for k, v in os.environ.items():
     print(f'{k}={v}')
