@@ -350,7 +350,7 @@ for index, slug in enumerate(slugs):
         ['//cdn.jsdelivr.net/gh/omssp/nesscraper/nesicon.png', games[index][2]],
         ['./manifest.json', f'./{games[index][3]}.json'],
         ['src="index2.html"','src="index2"'],
-        ['src="index.html"','src="/"'],
+        ['index.html','/'],
     ]
     slug_contents = '%s' % contents
     for pair in replacements:
