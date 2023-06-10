@@ -8,8 +8,7 @@ const CACHE_NAMESPACE = 'rgz-'
 const PRECACHE = CACHE_NAMESPACE + 'precache-v1'
 const PRECACHE_LIST = [
   './',
-  './index.html',
-  './index2.html',
+  './index2',
   './source/nes.js',
   './lib/gamelist.js',
   './source/omssp.js',
