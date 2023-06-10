@@ -354,6 +354,7 @@
                         e.preventDefault();
                         break;
                     case 65:
+                    case 37:
                         gridNav.left();
                         e.preventDefault();
                         break;
@@ -362,6 +363,7 @@
                         e.preventDefault();
                         break;
                     case 68:
+                    case 39:
                         gridNav.right();
                         e.preventDefault();
                         break;
@@ -396,16 +398,8 @@
                     gridNav.up();
                     e.preventDefault();
                     break;
-                case 37:
-                    gridNav.left();
-                    e.preventDefault();
-                    break;
                 case 40:
                     gridNav.down();
-                    e.preventDefault();
-                    break;
-                case 39:
-                    gridNav.right();
                     e.preventDefault();
                     break;
             }
