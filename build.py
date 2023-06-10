@@ -188,7 +188,11 @@ global_replacements = [
     [
         'href="assets/css/main.css"',
         'href="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/assets/css/main.css"'
-    ]
+    ],
+    [
+        'index.html',
+        '/'
+    ],
 ]
 
 GBAGAMEPAD = """window.EJS_VirtualGamepadSettings=[{type:"button",text:"A",id:"a",location:"right",fontSize:40,left:45,top:70,bold:!0,input_value:8},{type:"button",text:"B",id:"b",location:"right",left:-25,top:140,fontSize:40,bold:!0,input_value:0},{type:"dpad",location:"left",left:"65%",top:"91%",joystickInput:!1,inputValues:[4,5,6,7]},{type:"button",text:"Start",id:"start",location:"right",left:0,top:5,fontSize:15,block:!0,input_value:3},{type:"button",text:"Select",id:"select",location:"left",left:80,top:0,fontSize:15,block:!0,input_value:2},{type:"button",text:"Save",id:"save",location:"left",fontSize:10,left:20,top:-70,block:!0,input_value:122,input_new_cores:122,on_touchstart:"window.save_state()"},{type:"button",text:"Load",id:"load",location:"right",left:60,top:-65,fontSize:10,block:!0,input_value:123,input_new_cores:123,on_touchstart:"window.load_state()"},{type:"button",text:"L",id:"l1",location:"left",fontSize:20,left:110,top:-70,block:!0,input_value:10,input_new_cores:10},{type:"button",text:"R",id:"r1",location:"right",left:-30,top:-65,fontSize:20,block:!0,input_value:11,input_new_cores:11}];"""
@@ -205,6 +209,10 @@ CHANGES = [
     },
     {
         "file": "index2.html",
+        "replacements": global_replacements
+    },
+    {
+        "file": "404.html",
         "replacements": global_replacements
     },
     {
@@ -350,7 +358,6 @@ for index, slug in enumerate(slugs):
         ['//cdn.jsdelivr.net/gh/omssp/nesscraper/nesicon.png', games[index][2]],
         ['./manifest.json', f'./{games[index][3]}.json'],
         ['src="index2.html"','src="index2"'],
-        ['index.html','/'],
     ]
     slug_contents = '%s' % contents
     for pair in replacements:
