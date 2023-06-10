@@ -30,7 +30,7 @@ class SaveHandler {
             state: JSON.stringify([...state_obj.state])
         }
 
-        const save = [`${this.store_slug}`, data.time]
+        setCookie(this.store_slug, data.time);
 
         $.ajax({
             type: 'PUT',
@@ -44,7 +44,6 @@ class SaveHandler {
             },
             success: function (resp) {
                 console.log('saved online')
-                setCookie(save[0], save[1])
             }
         });
     }
