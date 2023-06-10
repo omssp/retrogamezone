@@ -599,6 +599,18 @@
             }
         }
     </script>
+    <script type="text/javascript">
+        if(navigator.serviceWorker){
+            navigator.serviceWorker
+                .register('./sw.js')
+                .then((reg) => {
+                    console.log('Service Worker Registered. ', reg)
+                })
+                .catch((error) => {
+                    console.log('Service Worker registration failed: ', error)
+                })
+        }
+    </script>
     <script src="assets/js/skel.min.js"></script>
     <script src="assets/js/util.js"></script>
     <script src="assets/js/main.js"></script>
