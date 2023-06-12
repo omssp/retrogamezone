@@ -13,12 +13,12 @@ window.EJS_Settings = {
 
 
 window.save_state = () => {
-    navigator.vibrate([50]);
+    if (navigator.vibrate) navigator.vibrate([50]);
     $('button[data-btn="save-state"]').click();
 }
 
 window.load_state = () => {
-    navigator.vibrate([50]);
+    if (navigator.vibrate) navigator.vibrate([50]);
     $('button[data-btn="load-state"]').click();
 }
 

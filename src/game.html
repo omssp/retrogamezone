@@ -63,18 +63,13 @@
         }
 
         .btn {
-            width: 42%;
+            width: 40%;
             margin: .4em 1em;
         }
 
         @media (max-width: 600px) {
             .btn-text {
                 display: none;
-            }
-
-            .btn {
-                width: 90%;
-                margin: .4em 1em;
             }
         }
 
@@ -525,6 +520,7 @@
 
                 window.saver = new SaveHandler(old_input);
                 if (window.EJS_emulator) {
+                    if (navigator.vibrate) navigator.vibrate([50]);
                     window.EJS_emulator.config.onsavestate = old_input ? (e) => window.saver.saveToOnline(e) : null;
                     window.EJS_emulator.on('start-game', window.saver.loadFromOnline)
                     saver.loadFromOnline()

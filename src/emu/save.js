@@ -44,7 +44,7 @@ class SaveHandler {
             },
             success: function (resp) {
                 console.log('saved online')
-                navigator.vibrate([50, 50, 100]);
+                if (navigator.vibrate) navigator.vibrate([50, 50, 100]);
             }
         });
     }
@@ -74,7 +74,7 @@ class SaveHandler {
                     } else {
                         window.load_state()
                         console.log('saved time fetched : no new state')
-                        navigator.vibrate([100, 50, 50]);
+                        if (navigator.vibrate) navigator.vibrate([100, 50, 50]);
                     }
                 } else {
                     console.log('no saved time found')
@@ -103,7 +103,7 @@ class SaveHandler {
                         window.EJS_emulator.config.onsavestate = (e) => window.saver.saveToOnline(e);
                     }, 500);
                     console.log('saved state fetched and loaded')
-                    navigator.vibrate([50, 50, 100]);
+                    if (navigator.vibrate) navigator.vibrate([50, 50, 100]);
                 } else {
                     console.log('no saved state found')
                 }
