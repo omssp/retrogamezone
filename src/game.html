@@ -481,7 +481,7 @@
                 const script = document.createElement("script");
                 script.src = "emu/data/loader.js";
                 script.id = 'loaderJS';
-                document.body.appendChild(script)
+
                 $('#fsbutton').click(function () {
                     $('button[data-btn="fullscreen"]').click();
                 });
@@ -494,6 +494,8 @@
                 } else {
                     window.EJS_onSaveState = () => {}
                 }
+                
+                document.body.appendChild(script);
             }
         }
 
