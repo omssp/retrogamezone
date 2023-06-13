@@ -4,7 +4,7 @@ class SaveHandler {
     validate_names = () => this.save_name_regex.test(this.save_name) && this.save_name_regex.test(this.game_slug);
 
     constructor(save_name) {
-        this.baseURL = `https://retrogz-default-rtdb.asia-southeast1.firebasedatabase.app/retrogamezone`;
+        this.baseURL = `https://saver.omssp2.workers.dev/retrogamezone`;
         this.save_name_regex = /^(?=.{1,20}$)(?![_-])(?!.*[_-]{2})[a-zA-Z0-9-_]+(?<![_-])$/;
         this.game_slug = slugify(document.title).replaceAll(' ', '-');
         this.save_name = save_name;
@@ -13,7 +13,7 @@ class SaveHandler {
             throw new Error('validation falied in game name or save name');
 
         this.base_link = `${this.baseURL}/${this.save_name}/${this.game_slug}`
-        this.put_url = `${this.base_link}.json?print=silent`
+        this.put_url = `${this.base_link}/.json?print=silent`
         this.get_state_url = `${this.base_link}/state.json`
         this.get_time_url = `${this.base_link}/time.json`
 

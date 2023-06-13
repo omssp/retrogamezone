@@ -54,7 +54,8 @@ const PRECACHE_LIST = [
 ]
 
 const HOSTNAME_BLACKLIST = [
-  "retrogz-default-rtdb.asia-southeast1.firebasedatabase.app"
+  "retrogz-default-rtdb.asia-southeast1.firebasedatabase.app",
+  "saver.omssp2.workers.dev",
 ]
 
 const RUNTIME = CACHE_NAMESPACE + 'runtime-v1'
