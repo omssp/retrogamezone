@@ -34,12 +34,11 @@ export default {
             const SLUG = PATH.join('/').replace(FILE_NAME, '').replace(/^\/+|\/+$/g, '').replace(/\//g, '-')
             const KEY_NAME = FILE_NAME.replace('.json', '')
 
+            // if (SUPPORTED_KEYS.indexOf(KEY_NAME) < 0) throw "wrong key" 
 
             console.log(PATH, SLUG, method)
 
             if (method == "GET") {
-
-                // if (SUPPORTED_KEYS.indexOf(KEY_NAME) < 0) throw "wrong key" 
 
                 let data = JSON.parse(await getCache(SLUG))
 
@@ -52,9 +51,15 @@ export default {
 
                 const payload = await request.json()
 
-                console.log(payload)
+                let data = payload
+                // console.log(data)
+                if (KEY_NAME) {
+                    data = JSON.parse(await getCache(SLUG))
+                    data = data ? data : {}
+                    data[KEY_NAME] = payload
+                }
 
-                await setCache(SLUG, JSON.stringify(payload))
+                await setCache(SLUG, JSON.stringify(data))
 
                 if (PRINT == 'silent') {
                     return new Response("", { headers: DEFAULT_HEADERS, status: 204 })
