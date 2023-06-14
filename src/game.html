@@ -299,6 +299,7 @@
     <script src="lib/audioUI.js"></script>
     <script src="lib/slugify.js"></script>
     <script src="lib/cookie.js"></script>
+    <script src="emu/pako.js"></script>
     <script src="emu/save.js"></script>
     <script src="emu/emu.js"></script>
     <script>
@@ -522,7 +523,7 @@
                 if (window.EJS_emulator) {
                     if (navigator.vibrate) navigator.vibrate([50]);
                     window.EJS_emulator.config.onsavestate = old_input ? (e) => window.saver.saveToOnline(e) : null;
-                    window.EJS_emulator.on('start-game', window.saver.loadFromOnline)
+                    // window.EJS_emulator.on('start-game', window.saver.loadFromOnline)
                     saver.loadFromOnline()
                 }
 

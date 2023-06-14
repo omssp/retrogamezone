@@ -1,3 +1,10 @@
+// TODO : redis upstack api instead of kv
+// https://redis.io/commands/append/
+// https://console.upstash.com/redis/b09176c4-59c9-4a2b-b2f9-7fcf07207d11
+// https://docs.upstash.com/redis/features/restapi#api-semantics
+// curl -X POST -d '["SET", "foo", "bar", "EX", 100]' https://us1-merry-cat-32748.upstash.io \
+//  -H "Authorization: Bearer 2553feg6a2d9842h2a0gcdb5f8efe9934"
+
 export default {
     async fetch(request, env, ctx) {
         const DEFAULT_HEADERS = {

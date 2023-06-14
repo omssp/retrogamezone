@@ -4,7 +4,8 @@ class SaveHandler {
     validate_names = () => this.save_name_regex.test(this.save_name) && this.save_name_regex.test(this.game_slug);
 
     constructor(save_name) {
-        this.baseURL = `https://saver.omssp2.workers.dev/retrogamezone`;
+        // this.baseURL = `https://saver.omssp.workers.dev/retrogamezone`;
+        this.baseURL = `https://retrogz-default-rtdb.asia-southeast1.firebasedatabase.app/retrogamezone`;
         this.save_name_regex = /^(?=.{1,20}$)(?![_-])(?!.*[_-]{2})[a-zA-Z0-9-_]+(?<![_-])$/;
         this.game_slug = slugify(document.title).replaceAll(' ', '-');
         this.save_name = save_name;
@@ -27,7 +28,7 @@ class SaveHandler {
 
         const data = {
             time: Date.now(),
-            state: JSON.stringify([...state_obj.state])
+            state: JSON.stringify([...pako.deflate(state_obj.state)])
         }
 
         setCookie(this.store_slug, data.time);
@@ -95,7 +96,7 @@ class SaveHandler {
             },
             success: function (resp) {
                 if (resp) {
-                    window.EJS_loadState(new Uint8Array(JSON.parse(resp)))
+                    window.EJS_loadState(pako.inflate(JSON.parse(resp)));
                     window.EJS_emulator.config.onsavestate = () => {};
                     window.save_state();
                     setCookie(slug, time);
