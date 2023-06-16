@@ -46,8 +46,6 @@ class SaveHandler {
 
         setCookie(this.store_slug, data.time);
 
-        const mutex_flag = this.mutex_flag
-
         $.ajax({
             type: 'PUT',
             url: this.put_url,
@@ -69,10 +67,6 @@ class SaveHandler {
         // console.log(e)
         if (!window.EJS_loadState) return;
 
-        const save = [this.fetchStateAndLoad, `${this.store_slug}`]
-
-        const mutex_flag = this.mutex_flag
-
         $.ajax({
             type: 'GET',
             url: this.get_time_url,
@@ -82,8 +76,9 @@ class SaveHandler {
             success: function (resp) {
                 if (resp) {
                     let time = JSON.parse(resp);
-                    if (time > getCookie(save[1])) {
-                        save[0](save[1], time);
+                    if (time > getCookie(this.store_slug)) {
+                        this.mutex_flag = false;
+                        this.fetchStateAndLoad(this.store_slug, time);
                         console.log('saved time fetched : new state available')
                     } else {
                         window.load_state()
