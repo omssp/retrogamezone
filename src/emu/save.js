@@ -35,9 +35,7 @@ class SaveHandler {
 
     saveToOnline = (state_obj) => {
 
-        if (this.mutex_flag) return;
-
-        if (!(state_obj && state_obj.state)) return;
+        if (this.mutex_flag || !(state_obj && state_obj.state)) return;
 
         const data = {
             time: Date.now(),
@@ -62,10 +60,7 @@ class SaveHandler {
 
     loadFromOnline = (e) => {
 
-        if (this.mutex_flag) return;
-
-        // console.log(e)
-        if (!window.EJS_loadState) return;
+        if (this.mutex_flag || !window.EJS_loadState) return;
 
         $.ajax({
             type: 'GET',
