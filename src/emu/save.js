@@ -19,12 +19,25 @@ class SaveHandler {
         this.get_time_url = `${this.base_link}/time.json`
 
         this.store_slug = `${this.save_name}-${this.game_slug}`
+
+        this.mutex_flag = false
+    }
+
+    beforeSend = () => {
+        $('#header .inner').css('animation', 'pulse 1s infinite');
+        this.mutex_flag = true;
+    }
+
+    complete = () => {
+        $('#header .inner').css('animation', 'none');
+        this.mutex_flag = false;
     }
 
     saveToOnline = (state_obj) => {
 
-        if (!(state_obj && state_obj.state))
-            return;
+        if (this.mutex_flag) return;
+
+        if (!(state_obj && state_obj.state)) return;
 
         const data = {
             time: Date.now(),
@@ -33,16 +46,15 @@ class SaveHandler {
 
         setCookie(this.store_slug, data.time);
 
+        const mutex_flag = this.mutex_flag
+
         $.ajax({
             type: 'PUT',
             url: this.put_url,
             data: JSON.stringify(data),
-            beforeSend: (a) => {
-                $('#header .inner').css('animation', 'pulse 1s infinite');
-            },
-            complete: (a) => {
-                $('#header .inner').css('animation', 'none');
-            },
+            context: this,
+            beforeSend: this.beforeSend,
+            complete: this.complete,
             success: function (resp) {
                 console.log('saved online')
                 if (navigator.vibrate) navigator.vibrate([50, 50, 100]);
@@ -51,21 +63,22 @@ class SaveHandler {
     }
 
     loadFromOnline = (e) => {
+
+        if (this.mutex_flag) return;
+
         // console.log(e)
-        if (!window.EJS_loadState)
-            return;
+        if (!window.EJS_loadState) return;
 
         const save = [this.fetchStateAndLoad, `${this.store_slug}`]
+
+        const mutex_flag = this.mutex_flag
 
         $.ajax({
             type: 'GET',
             url: this.get_time_url,
-            beforeSend: (a) => {
-                $('#header .inner').css('animation', 'pulse 1s infinite');
-            },
-            complete: (a) => {
-                $('#header .inner').css('animation', 'none');
-            },
+            context: this,
+            beforeSend: this.beforeSend,
+            complete: this.complete,
             success: function (resp) {
                 if (resp) {
                     let time = JSON.parse(resp);
@@ -85,19 +98,19 @@ class SaveHandler {
     }
 
     fetchStateAndLoad = (slug, time) => {
+
+        if (this.mutex_flag) return;
+
         $.ajax({
             type: 'GET',
             url: this.get_state_url,
-            beforeSend: (a) => {
-                $('#header .inner').css('animation', 'pulse 1s infinite');
-            },
-            complete: (a) => {
-                $('#header .inner').css('animation', 'none');
-            },
+            context: this,
+            beforeSend: this.beforeSend,
+            complete: this.complete,
             success: function (resp) {
                 if (resp) {
                     window.EJS_loadState(pako.inflate(JSON.parse(resp)));
-                    window.EJS_emulator.config.onsavestate = () => {};
+                    window.EJS_emulator.config.onsavestate = () => { };
                     window.save_state();
                     setCookie(slug, time);
                     setTimeout(() => {
