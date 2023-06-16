@@ -57,7 +57,7 @@ const HOSTNAME_BLACKLIST = [
   "retrogz-default-rtdb.asia-southeast1.firebasedatabase.app",
   "saver.omssp.workers.dev",
   "cloudflareinsights.com",
-  "*.cloudflareinsights.com",
+  "static.cloudflareinsights.com",
 ]
 
 const RUNTIME = CACHE_NAMESPACE + 'runtime-v1'
