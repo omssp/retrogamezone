@@ -516,7 +516,7 @@
 
             lastVal = getCookie('last-search');
             lastVal = lastVal ? lastVal : '';
-            filterGames();
+            filterGames(true);
 
             $('#search_bar').val(lastVal).focus(function () {
                 $(this)[0].scrollIntoView({
@@ -576,7 +576,7 @@
             }, 1000);
         }
 
-        function filterGames() {
+        function filterGames(first) {
 
             gridNav.curr_x = -1;
             gridNav.curr_y = -1;
@@ -612,7 +612,7 @@
                 window.moveAudio.playclip()
             } catch (error) { }
 
-            keyb = setTimeout(hideKeyboard, 2000);
+            if (first) keyb = setTimeout(hideKeyboard, 2000);
         }
 
         function hideKeyboard() {
