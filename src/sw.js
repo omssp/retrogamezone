@@ -103,7 +103,7 @@ self.onfetch = (event) => {
     // const fixedUrl = `${event.request.url}?${Date.now()}`;
     const fetched = fetch(fixedUrl, {cache: "no-store"});
     const fetchedCopy = fetched.then(resp => resp.clone());
-    console.log(`fetch ${fixedUrl}`)
+    // console.log(`fetch ${fixedUrl}`)
     
     // Call respondWith() with whatever we get first.
     // If the fetch fails (e.g disconnected), wait for the cache.
@@ -113,9 +113,7 @@ self.onfetch = (event) => {
       Promise.race([fetched.catch(_ => cached), cached])
         .then(resp => resp || fetched)
         .catch(_ => {
-          if (isImage(event.request)) {
-            return caches.match('offlineImage.png')
-          }
+          // if (isImage(event.request)) return caches.match('offlineImage.png')
           return caches.match('offline')
         })
     );

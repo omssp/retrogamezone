@@ -54,6 +54,8 @@
         .columns .fit img {
             object-fit: cover;
             object-position: top;
+            font-size: 2rem;
+            font-family: 'Pattaya', sans-serif;
         }
 
         .columns .fit:nth-child(1) img,
@@ -327,7 +329,7 @@
                 $('#header').css('background', `rgba(${backgroundColorRGB}, 0.85)`)
                 $('body').css("background-color", `rgb(${backgroundColorRGB})`);
                 $('#header .inner').css("box-shadow", `0 0 0 1em rgb(${backgroundColorRGB})`);
-                $('#footer > a, .leftGameName, #search_bar').css("color", `rgb(${backgroundColorRGB})`);
+                $('#footer > a, .leftGameName, #search_bar, img').css("color", `rgb(${backgroundColorRGB})`);
                 $('#header.hide a.button.hidden, #header.preview a.button.big.alt').attr('data-content', `rgb(${backgroundColorRGB})`)
             }
             go = () => {
