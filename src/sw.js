@@ -113,7 +113,7 @@ self.onfetch = (event) => {
       Promise.race([fetched.catch(_ => cached), cached])
         .then(resp => resp || fetched)
         .catch(_ => {
-          // if (isImage(event.request)) return caches.match('offlineImage.png')
+          if (isImage(event.request)) return caches.match('offlineImage.png')
           return caches.match('offline')
         })
     );

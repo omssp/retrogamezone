@@ -6,7 +6,7 @@ class SaveHandler {
     constructor(save_name) {
         this.baseURL = `https://saver.omssp.workers.dev/retrogamezone`;
         // this.baseURL = `https://retrogz-default-rtdb.asia-southeast1.firebasedatabase.app/retrogamezone`;
-        this.save_name_regex = /^(?=.{1,20}$)(?![_-])(?!.*[_-]{2})[a-zA-Z0-9-_]+(?<![_-])$/;
+        this.save_name_regex = /^(?=.{1,70}$)(?![_-])(?!.*[_-]{2})[a-zA-Z0-9-_]+(?<![_-])$/;
         this.game_slug = slugify(document.title).replaceAll(' ', '-');
         this.save_name = save_name;
 

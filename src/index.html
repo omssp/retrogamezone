@@ -57,6 +57,23 @@
             font-family: 'Pattaya', sans-serif;
         }
 
+        .columns .fit::after {
+            content: attr(data-alt);
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 1.5em;
+            width: 100%;
+            background: inherit;
+            z-index: 2;
+            color: inherit;
+            filter: invert(1);
+            font-family: 'Pattaya', sans-serif;
+            text-align: center;
+            line-height: 1.5em;
+            animation: leftMarquee 2.4s linear infinite;
+        }
+
         .columns .fit:nth-child(1) img,
         .columns .fit:nth-child(3) img,
         .columns .fit:nth-child(6) img,
@@ -443,7 +460,7 @@
             for (let j = 0; j < element.length; j++) {
 
                 const gameInfo = element[j];
-                gamesHTML += `<div class="image fit">
+                gamesHTML += `<div class="image fit" data-alt="${gameInfo[0]}">
                                     <a gameid="${gameInfo[3]}">
                                         <img src="${gameInfo[2]}" alt="${gameInfo[0]}" title="${gameInfo[0]}" crossorigin="anonymous">
                                     </a>
@@ -455,8 +472,18 @@
             $('#main .inner').append(gamesHTML);
 
             $(".image a").each(function () {
-                $(this).css("cursor", "pointer");
-                $(this).unbind("click").on("click", function () {
+                this.firstElementChild.onload = function () {
+                    let backgroundColorRGBFont, backgroundColorRGBBack;
+                    if (gridNav.darkMode) {
+                        backgroundColorRGBBack = materialColorThief.getDarkestMaterialColor(this).join(',')
+                        backgroundColorRGBFont = materialColorThief.getBrightestMaterialColor(this).join(',')
+                    } else {
+                        backgroundColorRGBFont = materialColorThief.getDarkestMaterialColor(this).join(',')
+                        backgroundColorRGBBack = materialColorThief.getBrightestMaterialColor(this).join(',')
+                    }
+                    $(this).parent().parent().css('background', `rgba(${backgroundColorRGBFont}, 0.7)`).css("color", `rgb(${backgroundColorRGBBack})`);
+                };
+                $(this).css("cursor", "pointer").unbind("click").on("click", function () {
                     window.selectAudio.playclip();
                     window.setTimeout(() => {
                         window.location.replace(`game.html?${$(this).attr('gameid')}`);
@@ -482,6 +509,12 @@
 
         $(document).ready(() => {
 
+            let currHrs = new Date().getHours();
+            gridNav.darkMode = (currHrs > 18 || currHrs < 6) || window.matchMedia("(prefers-color-scheme: dark)").matches;
+            if (gridNav.darkMode) {
+                gridNav.updateBackgrounds('62,39,35')
+            }
+
             lastVal = getCookie('last-search');
             lastVal = lastVal ? lastVal : '';
             filterGames();
@@ -499,12 +532,6 @@
                     window.selectAudio.playclip();
                 } catch (error) { }
             });
-
-            let currHrs = new Date().getHours();
-            gridNav.darkMode = (currHrs > 18 || currHrs < 6) || window.matchMedia("(prefers-color-scheme: dark)").matches;
-            if (gridNav.darkMode) {
-                gridNav.updateBackgrounds('62,39,35')
-            }
 
             $('body').on('mousemove', () => {
                 $('.image').css('pointer-events', 'auto');
@@ -595,7 +622,7 @@
         }
     </script>
     <script type="text/javascript">
-        if(navigator.serviceWorker){
+        if (navigator.serviceWorker) {
             navigator.serviceWorker
                 .register('./sw.js')
                 .then((reg) => {
