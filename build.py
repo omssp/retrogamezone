@@ -220,6 +220,10 @@ CHANGES = [
         "replacements": global_replacements
     },
     {
+        "file": "offline.html",
+        "replacements": global_replacements
+    },
+    {
         "file": "source/omssp.js",
         "replacements": global_replacements
     },
@@ -255,7 +259,8 @@ CHANGES = [
 TOCPY = [change['file'] for change in CHANGES] + [
     'favicon.ico',
     'lib/gamelist.js',
-    'sw.js'
+    'sw.js',
+    'offlineImage.png',
 ]
 
 

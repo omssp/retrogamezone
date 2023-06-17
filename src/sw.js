@@ -10,9 +10,11 @@ const PRECACHE_LIST = [
   './',
   './404',
   './index2',
+  './offline',
   './source/nes.js',
   './lib/gamelist.js',
   './source/omssp.js',
+  './offlineImage.png',
   "https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/MaterialColorThief.min.js",
   "https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/lib/dynamicaudio-min.js",
   "https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/source/ppu.min.js",
@@ -63,6 +65,10 @@ const HOSTNAME_BLACKLIST = [
 const RUNTIME = CACHE_NAMESPACE + 'runtime-v1'
 const expectedCaches = [PRECACHE, RUNTIME]
 
+const isImage = (fetchRequest) => {
+  return fetchRequest.method === "GET"
+         && fetchRequest.destination === "image";
+}
 
 self.oninstall = (event) => {
   event.waitUntil(
@@ -106,7 +112,12 @@ self.onfetch = (event) => {
     event.respondWith(
       Promise.race([fetched.catch(_ => cached), cached])
         .then(resp => resp || fetched)
-        .catch(_ => caches.match('404'))
+        .catch(_ => {
+          if (isImage(event.request)) {
+            return caches.match('offlineImage.png')
+          }
+          return caches.match('offline')
+        })
     );
 
     // Update the cache with the version we fetched (only for ok status)
