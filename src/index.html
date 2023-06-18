@@ -614,7 +614,7 @@
                 window.moveAudio.playclip()
             } catch (error) { }
 
-            if (first) keyb = setTimeout(hideKeyboard, 2000);
+            if (!first) keyb = setTimeout(hideKeyboard, 2000);
         }
 
         function hideKeyboard() {
