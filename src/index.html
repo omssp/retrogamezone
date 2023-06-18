@@ -508,6 +508,8 @@
 
         $(document).ready(() => {
 
+            $(document).on("contextmenu", function(e){ e.preventDefault(); return false; });
+
             let currHrs = new Date().getHours();
             gridNav.darkMode = (currHrs > 18 || currHrs < 6) || window.matchMedia("(prefers-color-scheme: dark)").matches;
             if (gridNav.darkMode) {
