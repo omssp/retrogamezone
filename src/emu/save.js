@@ -30,7 +30,7 @@ class SaveHandler {
 
     complete = () => {
         $('#header .inner').css('animation', 'none');
-        this.mutex_flag = false;
+        setTimeout(() => { this.mutex_flag = false; }, 2000);
     }
 
     saveToOnline = (state_obj) => {
