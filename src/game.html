@@ -370,6 +370,9 @@
             }, 1300);
         });
         $(document).ready(function () {
+
+            $(document).on("contextmenu", function(e){ e.preventDefault(); return false; });
+
             const saveName = getCookie('save_name')?.trim()
             if (saveName) {
                 save_name.val(saveName)
