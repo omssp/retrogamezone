@@ -508,7 +508,7 @@
 
         $(document).ready(() => {
 
-            $(document).on("contextmenu", function(e){ e.preventDefault(); return false; });
+            $(document).on("contextmenu", function (e) { e.preventDefault(); return false; });
 
             let currHrs = new Date().getHours();
             gridNav.darkMode = (currHrs > 18 || currHrs < 6) || window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -614,7 +614,11 @@
                 window.moveAudio.playclip()
             } catch (error) { }
 
-            if (!first) keyb = setTimeout(hideKeyboard, 2000);
+            if (!first) {
+                keyb = setTimeout(hideKeyboard, 2000);
+                setCookie('curr_x', this.curr_x, 365)
+                setCookie('curr_y', this.curr_y, 365)
+            }
         }
 
         function hideKeyboard() {
