@@ -371,6 +371,7 @@ const gameNameArray = [
     ["Whomp Em", "//cdn.jsdelivr.net/gh/omssp/nesscraper/roms/518-whomp-em.nes", "//cdn.jsdelivr.net/gh/omssp/nesscraper/roms/518-whomp-em.jpg"],
     ["Wizardry - Proving Grounds of the Mad Overlord", "//cdn.jsdelivr.net/gh/omssp/nesscraper/roms/521-wizardry-proving-grounds-of-the-mad-overlord.nes", "//cdn.jsdelivr.net/gh/omssp/nesscraper/roms/521-wizardry-proving-grounds-of-the-mad-overlord.jpg"],
     ["Wolverine", "//cdn.jsdelivr.net/gh/omssp/nesscraper/roms/524-wolverine.nes", "//cdn.jsdelivr.net/gh/omssp/nesscraper/roms/524-wolverine.jpg"],
+    ["2048", "//cdn.jsdelivr.net/gh/omssp/nesscraper/roms/2048.nes", "//cdn.jsdelivr.net/gh/omssp/nesscraper/roms/2048.jpg"],
     // ["Xenophobe", "//cdn.jsdelivr.net/gh/omssp/nesscraper/roms/532-xenophobe.nes", "//cdn.jsdelivr.net/gh/omssp/nesscraper/roms/532-xenophobe.jpg"],
     // ["Xevious","//cdn.jsdelivr.net/gh/omssp/nesscraper/roms/533-xevious.nes","//cdn.jsdelivr.net/gh/omssp/nesscraper/roms/533-xevious.jpg"],
     // ["Yo  Noid","//cdn.jsdelivr.net/gh/omssp/nesscraper/roms/535-yo-noid.nes","//cdn.jsdelivr.net/gh/omssp/nesscraper/roms/535-yo-noid.jpg"],

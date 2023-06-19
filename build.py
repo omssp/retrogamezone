@@ -15,20 +15,20 @@ MODIFIED = datetime.today().strftime('%Y-%m-%d')
 FREQ = "weekly"
 
 MANIFEST = {
-  "name": "Retro Game Zone",
-  "short_name": "RGZ",
-  "description": "A place for all nostalgic gamers to relive old memories. ReLived by Shardul Pakhale.",
-  "icons": [
-    {
-    "src": "https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/nesicon.png",
-    "sizes": "512x512",
-    "type": "image/png"
-    }
-  ],
-  "start_url": BASE_URL,
-  "display": "standalone",
-  "theme_color": "#e74c3c",
-  "background_color": "#efebe9"
+    "name": "Retro Game Zone",
+    "short_name": "RGZ",
+    "description": "A place for all nostalgic gamers to relive old memories. ReLived by Shardul Pakhale.",
+    "icons": [
+        {
+            "src": "https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/nesicon.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ],
+    "start_url": BASE_URL,
+    "display": "standalone",
+    "theme_color": "#e74c3c",
+    "background_color": "#efebe9"
 }
 
 
@@ -352,7 +352,7 @@ for index, slug in enumerate(slugs):
         ['<title>Game Loading...</title>',
             f'<title>{games[index][0]}</title>'],
         ["document.getElementById('gameName').innerHTML = window.EJS_gameUrl = gameNameArray[para][1]",
-         f'window.EJS_gameUrl = "{games[index][1]}"'],
+         f'window.EJS_gameUrl = "https:{games[index][1]}.7z"'],
         ["document.getElementById('gameTitle').innerHTML = document.title = window.EJS_gameName = gameNameArray[para][0]",
          f'window.EJS_gameName = "{games[index][3]}"'],
         ['gameNameArray[para][2]', f'"{games[index][2]}"'],
@@ -361,12 +361,12 @@ for index, slug in enumerate(slugs):
         ['<div id="gameName" style="display: none;">&nbsp;</div>',
             f'<div id="gameName" style="display: none;">{games[index][1]}</div>'],
         ['window.EJS_pathtodata',
-            f"window.EJS_gameUrl = 'https:{games[index][1]}';window.EJS_oldCores = 'ontouchstart' in document.documentElement;window.EJS_pathtodata"],
+            f"window.EJS_gameUrl = 'https:{games[index][1]}.7z';window.EJS_oldCores = 'ontouchstart' in document.documentElement;window.EJS_pathtodata"],
         ['Retro Game Zone - By Shardul Pakhale',
             f'{games[index][0]} - Retro Game Zone'],
         ['//cdn.jsdelivr.net/gh/omssp/nesscraper/nesicon.png', games[index][2]],
         ['./manifest.json', f'./{games[index][3]}.json'],
-        ['src="index2.html"','src="index2"'],
+        ['src="index2.html"', 'src="index2"'],
     ]
     slug_contents = '%s' % contents
     for pair in replacements:
