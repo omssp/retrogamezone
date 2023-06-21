@@ -479,9 +479,8 @@
 
         function checkandchange() {
             const initial_gamepads = window.navigator.getGamepads().filter(o => o).length;
-            const isMobile = ('ontouchstart' in document.documentElement);
             console.log(initial_gamepads)
-            if (isMobile && !initial_gamepads) {
+            if (!initial_gamepads) {
                 loadEMU();
             } else if (!$('#gameFrame').length) {
                 unLoadEMU();

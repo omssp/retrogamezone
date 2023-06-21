@@ -15,6 +15,7 @@ const PRECACHE_LIST = [
   './lib/gamelist.js',
   './source/omssp.js',
   './offlineImage.png',
+  "https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/preloader.gif",
   "https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/MaterialColorThief.min.js",
   "https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/lib/dynamicaudio-min.js",
   "https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/source/ppu.min.js",
@@ -67,15 +68,15 @@ const expectedCaches = [PRECACHE, RUNTIME]
 
 const isImage = (fetchRequest) => {
   return fetchRequest.method === "GET"
-         && fetchRequest.destination === "image";
+    && fetchRequest.destination === "image";
 }
 
 self.oninstall = (event) => {
   event.waitUntil(
     caches.open(PRECACHE)
-    .then(cache => cache.addAll(PRECACHE_LIST))
-    .then(self.skipWaiting())
-    .catch(err => console.log(err))
+      .then(cache => cache.addAll(PRECACHE_LIST))
+      .then(self.skipWaiting())
+      .catch(err => console.log(err))
   )
 }
 
@@ -101,10 +102,10 @@ self.onfetch = (event) => {
     const cached = caches.match(event.request);
     const fixedUrl = event.request.url;
     // const fixedUrl = `${event.request.url}?${Date.now()}`;
-    const fetched = fetch(fixedUrl, {cache: "no-store"});
+    const fetched = fetch(fixedUrl, { cache: "no-store" });
     const fetchedCopy = fetched.then(resp => resp.clone());
     // console.log(`fetch ${fixedUrl}`)
-    
+
     // Call respondWith() with whatever we get first.
     // If the fetch fails (e.g disconnected), wait for the cache.
     // If there’s nothing in cache, wait for the fetch. 
@@ -122,7 +123,7 @@ self.onfetch = (event) => {
     event.waitUntil(
       Promise.all([fetchedCopy, caches.open(RUNTIME)])
         .then(([response, cache]) => response.ok && cache.put(event.request, response))
-        .catch(_ => {/* eat any errors */})
+        .catch(_ => {/* eat any errors */ })
     );
   }
 }
