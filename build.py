@@ -293,7 +293,10 @@ with open(f"{OUTPUT_DIR}lib/gamelist.js", "r+") as list_js:
         games.extend(gbac_list)
 
     for game in games:
-        slug = slugify.slugify(game[0], replacements=[['&', 'and']])
+        try:
+            slug = game[3]
+        except Exception as e:
+            slug = slugify.slugify(game[0], replacements=[['&', 'and']])
         slug_file = f"{OUTPUT_DIR}{slug}.html"
         repeated = slugs.count(slug_file)
         if repeated > 0:

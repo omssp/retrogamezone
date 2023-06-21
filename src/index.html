@@ -181,7 +181,11 @@
             </div>
         </div>
     </footer>
-
+    <!-- <div id="preloaderWrapper">
+        <div id="preloader">
+            <img src="preloader.gif">
+        </div>
+    </div> -->
     <script src="assets/js/jquery.min.js"></script>
     <script src="MaterialColorThief.js"></script>
     <script src="lib/gamelist.js"></script>
@@ -189,6 +193,8 @@
     <script src="lib/cookie.js"></script>
     <script src="lib/slugify.js"></script>
     <script type="text/javascript">
+        const one_go = getCookie('one-go');
+        if (one_go && one_go == getCookie('two-go')) window.location.replace(one_go);
 
         class MoveMat {
 
@@ -485,7 +491,13 @@
                 $(this).css("cursor", "pointer").unbind("click").on("click", function () {
                     window.selectAudio.playclip();
                     window.setTimeout(() => {
-                        window.location.replace(`game.html?${$(this).attr('gameid')}`);
+                        let toGo = `game.html?${$(this).attr('gameid')}`;
+                        if (toGo == getCookie('one-go')) {
+                            setCookie('two-go', toGo);
+                        } else {
+                            setCookie('one-go', toGo);
+                        }
+                        window.location.replace(toGo);
                     }, window.selectAudio.duration * 1000);
                 });
 

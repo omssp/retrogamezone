@@ -71,9 +71,14 @@
             .btn-text {
                 display: none;
             }
+
             .btn {
                 width: 30%;
             }
+        }
+
+        .container {
+            padding-top: 2em;
         }
 
         #gameTitle {
@@ -156,12 +161,14 @@
             </a>
         </div>
     </header>
+    <div class="container">
+        <div id="game"></div>
+    </div>
     <div id="preview">
         <div class="inner">
             <div class="image fit">
                 <iframe name="gameFrame" id="gameFrame" src="index2.html"
-                    style="width: 100%; height: 693px; transition: all 0.9s; margin-top: 15px;" scrolling="no"></iframe>
-                <div id="game"></div>
+                    style="width: 100%; height: 693px; transition: all 0.9s;" scrolling="no"></iframe>
             </div>
             <div class="content">
                 <header>
@@ -296,6 +303,11 @@
             </div>
         </div>
     </footer>
+    <div id="preloaderWrapper">
+        <div id="preloader">
+            <img src="preloader.gif">
+        </div>
+    </div>
     <script src="assets/js/jquery.min.js"></script>
     <script src="MaterialColorThief.js"></script>
     <script src="lib/gamelist.js"></script>
@@ -372,7 +384,7 @@
         });
         $(document).ready(function () {
 
-            $(document).on("contextmenu", function(e){ e.preventDefault(); return false; });
+            $(document).on("contextmenu", function (e) { e.preventDefault(); return false; });
 
             const saveName = getCookie('save_name')?.trim()
             if (saveName) {
@@ -437,6 +449,7 @@
                     $(this).css("cursor", "pointer");
                     $(this).unbind("click").on("click", function () {
                         window.selectAudio.playclip();
+                        setCookie('two-go', null);
                         window.setTimeout(() => {
                             window.location.replace(thref);
                         }, window.selectAudio.duration * 1000);
@@ -458,9 +471,9 @@
             currentScroll = $(window).scrollTop();
             if (currentScroll > 20) {
                 window.focus();
-                $('#header.preview').css("z-index", '0');
+                $('#header.preview, #previousGame, #nextGame').css("z-index", '-1');
             } else {
-                $('#header.preview').css("z-index", '1');
+                $('#header.preview, #previousGame, #nextGame').css("z-index", '1');
             }
         });
 
@@ -472,6 +485,8 @@
                 loadEMU();
             } else if (!$('#gameFrame').length) {
                 unLoadEMU();
+            } else {
+                $('#preloaderWrapper').fadeOut()
             }
         }
 
@@ -493,11 +508,14 @@
                 if (saveName) {
                     window.saver = new SaveHandler(saveName);
                     window.EJS_onSaveState = (e) => window.saver.saveToOnline(e)
-                    window.EJS_onGameStart = (e) => window.saver.loadFromOnline(e)
+                    window.EJS_onGameStart = (e) => {
+                        $('#preloaderWrapper').fadeOut()
+                        window.saver.loadFromOnline(e)
+                    }
                 } else {
-                    window.EJS_onSaveState = () => {}
+                    window.EJS_onSaveState = () => { }
                 }
-                
+
                 document.body.appendChild(script);
             }
         }
@@ -606,7 +624,7 @@
         }
     </script>
     <script type="text/javascript">
-        if(navigator.serviceWorker){
+        if (navigator.serviceWorker) {
             navigator.serviceWorker
                 .register('./sw.js')
                 .then((reg) => {

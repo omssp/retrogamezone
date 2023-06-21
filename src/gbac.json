@@ -482,21 +482,25 @@
     [
         "Pokemon Girls Hunter Halloween",
         "//cdn.jsdelivr.net/gh/omssp/nesscraper/roms-gba/Pokemon%20Girls%20Hunter%20Halloween.gba",
-        "//cdn.jsdelivr.net/gh/omssp/nesscraper/roms-gba/Pokemon%20Girls%20Hunter%20Halloween.jpg"
+        "//cdn.jsdelivr.net/gh/omssp/nesscraper/roms-gba/Pokemon%20Girls%20Hunter%20Halloween.jpg",
+        "739-girlh"
     ],
     [
         "Pokemon Girls Hunter 3",
         "//cdn.jsdelivr.net/gh/omssp/nesscraper/roms-gba/Pokemon%20Girls%20Hunter%203.gba",
-        "//cdn.jsdelivr.net/gh/omssp/nesscraper/roms-gba/Pokemon%20Girls%20Hunter%203.jpg"
+        "//cdn.jsdelivr.net/gh/omssp/nesscraper/roms-gba/Pokemon%20Girls%20Hunter%203.jpg",
+        "739-girl3"
     ],
     [
         "Pokemon Girls Hunter 2",
         "//cdn.jsdelivr.net/gh/omssp/nesscraper/roms-gba/Pokemon%20Girls%20Hunter%202.gba",
-        "//cdn.jsdelivr.net/gh/omssp/nesscraper/roms-gba/Pokemon%20Girls%20Hunter%202.jpg"
+        "//cdn.jsdelivr.net/gh/omssp/nesscraper/roms-gba/Pokemon%20Girls%20Hunter%202.jpg",
+        "739-girl2"
     ],
     [
         "Pokemon Girls Hunter",
         "//cdn.jsdelivr.net/gh/omssp/nesscraper/roms-gba/Pokemon%20Girls%20Hunter.gba",
-        "//cdn.jsdelivr.net/gh/omssp/nesscraper/roms-gba/Pokemon%20Girls%20Hunter.jpg"
+        "//cdn.jsdelivr.net/gh/omssp/nesscraper/roms-gba/Pokemon%20Girls%20Hunter.jpg",
+        "739-girl"
     ]
 ]
