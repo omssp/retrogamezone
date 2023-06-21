@@ -512,7 +512,9 @@
                         window.saver.loadFromOnline(e)
                     }
                 } else {
-                    window.EJS_onSaveState = () => { }
+                    window.EJS_onSaveState = () => {
+                        $('#preloaderWrapper').fadeOut()
+                    }
                 }
 
                 document.body.appendChild(script);
