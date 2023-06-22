@@ -147,14 +147,15 @@
         }
     </style>
     <style id="temp_style">
-        #game canvas {
-            width: 100% !important;
+        :fullscreen {
+            #game canvas {
+                width: 100% !important;
+            }
         }
     </style>
 </head>
 
-<body
-    onkeydown="$('#save_name').is(':focus') ? '' : ($('#game, iframe')[0]?.scrollIntoView(), document.getElementById('gameFrame')?.contentWindow.focusMe()); $('.infoDiv').fadeOut(1000);">
+<body>
     <img src="fullS.png" width="24" height="24" title="FullScreen"
         style="display: inline; top: 0.3em; position: fixed; z-index:+1; right: 0.3em; cursor: pointer; fill: #f44336"
         id="fsbutton" onclick="document.getElementById('gameFrame')?.contentWindow.clickMe();">
@@ -397,7 +398,7 @@
             debounce = setTimeout(() => {
                 // alert($(window).width());
                 checkWidth(document.documentElement.offsetWidth);
-            }, 1300);
+            }, 500);
         });
         $(document).ready(function () {
 
@@ -508,6 +509,61 @@
             }
         }
 
+        $(document).bind('keydown', function (e) {
+            if (e.keyCode == 32) {
+                window.play_toggle();
+                e.preventDefault();
+            }
+            if (e.keyCode == 82) {
+                window.reset_game();
+                e.preventDefault();
+            }
+            if ((e.keyCode == 8) ||
+                (e.keyCode == 38 && (e.altKey || e.shiftKey))) {
+                document.getElementById('homeButton').click();
+                e.preventDefault();
+            }
+            if ((e.keyCode == 78 && (e.altKey || e.shiftKey)) ||
+                (e.keyCode == 39 && (e.altKey || e.shiftKey))) {
+                document.getElementById('nextGame').click();
+                e.preventDefault();
+            }
+            if ((e.keyCode == 80 && (e.altKey || e.shiftKey)) ||
+                (e.keyCode == 37 && (e.altKey || e.shiftKey))) {
+                document.getElementById('previousGame').click();
+                e.preventDefault();
+            }
+            if (e.keyCode == 80) {
+                // keybPrimaryPlayer.toggle();
+                e.preventDefault();
+            }
+            if (e.keyCode == 77 || e.keyCode == 173) {
+                window.mute_toggle();
+                e.preventDefault();
+            }
+            if (e.keyCode == 90) {
+                toggleStretchMode();
+                e.preventDefault();
+            }
+            if (e.keyCode == 122 || e.keyCode == 70) {
+                window.fulls_toggle();
+                e.preventDefault();
+            }
+            $('#save_name').is(':focus') ? '' : ($('#game, iframe')[0]?.scrollIntoView(),
+                document.getElementById('gameFrame')?.contentWindow.focusMe());
+            $('.infoDiv').fadeOut(1000);
+        });
+
+
+        function toggleStretchMode() {
+            const tempCSS = $('#temp_style')
+            if (tempCSS.html()) {
+                tempCSS.html('');
+            } else {
+                tempCSS.html(`#game canvas { width: 100% !important; }`);
+            }
+        }
+
         function loadEMU() {
             const gameFrame = document.getElementById('gameFrame');
             if (gameFrame) {
@@ -518,9 +574,7 @@
                 script.src = "emu/data/loader.js";
                 script.id = 'loaderJS';
 
-                $('#fsbutton').click(function () {
-                    $('button[data-btn="fullscreen"]').click();
-                });
+                $('#fsbutton').click(window.fulls_toggle);
 
                 const saveName = getCookie('save_name')?.trim()
                 if (saveName) {
@@ -544,7 +598,7 @@
         }
 
         function moveUIButtons() {
-            if (window.ejs_media.virtualGamepadContainer) {
+            if ((window.ejs_media || window._0x378b5c).virtualGamepadContainer) {
                 const newButtonsDiv = document.createElement('div');
                 newButtonsDiv.id = "newButtonsDiv";
                 newButtonsDiv.appendChild(window.EJS_emulator.elements.buttons.play[0]);

@@ -8,18 +8,40 @@ window.EJS_oldCores = true;
 window.EJS_startOnLoaded = true;
 
 window.EJS_Settings = {
-    volume: 1,
+    volume: 1.0,
+}
+
+window.mute_toggle = () => {
+    if (navigator.vibrate) navigator.vibrate([50]);
+    window.EJS_emulator.elements.buttons.mute.click();
+}
+
+
+window.play_toggle = () => {
+    if (navigator.vibrate) navigator.vibrate([50]);
+    window.EJS_emulator.elements.buttons.play[0].click();
+}
+
+
+window.reset_game = () => {
+    if (navigator.vibrate) navigator.vibrate([50]);
+    window.EJS_emulator.elements.buttons.restart.click();
 }
 
 
 window.save_state = () => {
     if (navigator.vibrate) navigator.vibrate([50]);
-    $('button[data-btn="save-state"]').click();
+    window.EJS_emulator.elements.buttons.saveState.click();
 }
 
 window.load_state = () => {
     if (navigator.vibrate) navigator.vibrate([50]);
-    $('button[data-btn="load-state"]').click();
+    window.EJS_emulator.elements.buttons.loadState.click();
+}
+
+window.fulls_toggle = () => {
+    if (navigator.vibrate) navigator.vibrate([50]);
+    window.EJS_emulator.elements.buttons.fullscreen.click();
 }
 
 window.EJS_VirtualGamepadSettings = [

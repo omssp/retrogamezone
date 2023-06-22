@@ -6,7 +6,7 @@ window.EJS_main = function(_0xa88a13, _0x17edbf, _0x2c1832) {
     }
     _0x2c1832.r(_0x17edbf);
     let _0x39ca5e = {
-            'volume': 0.5,
+            'volume': 1.0,
             'muted': false,
             'i18n': {
                 'restart': 'Restart',
