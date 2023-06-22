@@ -529,6 +529,7 @@
                     window.EJS_onGameStart = (e) => {
                         $('#preloaderWrapper').fadeOut()
                         window.saver.loadFromOnline(e)
+                        moveUIButtons()
                     }
                 } else {
                     window.EJS_onSaveState = () => { }
