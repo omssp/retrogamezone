@@ -394,6 +394,7 @@
             if (window.history && window.history.pushState) {
                 window.history.pushState('forward', null, '');
                 $(window).on('popstate', function () {
+                    setCookie('two-go', null);
                     window.location.replace('index.html');
                 });
             }
@@ -460,6 +461,7 @@
         });
 
         function checkWidth(curWidth) {
+            $('#save_name').is(':focus') ? '' : ($('.image.fit > div, iframe')[0]?.scrollIntoView(), document.getElementById('gameFrame')?.contentWindow.focusMe());
             let nesCanvas = $('#gameFrame').contents().find('#nescanvas');
             if (curWidth < 500 && nesCanvas[0]?.offsetHeight > 400) {
                 nesCanvas.click();
