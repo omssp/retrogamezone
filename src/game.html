@@ -512,9 +512,8 @@
                         window.saver.loadFromOnline(e)
                     }
                 } else {
-                    window.EJS_onSaveState = () => {
-                        $('#preloaderWrapper').fadeOut()
-                    }
+                    window.EJS_onSaveState = () => { }
+                    window.EJS_onGameStart = () => $('#preloaderWrapper').fadeOut()
                 }
 
                 document.body.appendChild(script);
