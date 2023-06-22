@@ -533,7 +533,10 @@
                     }
                 } else {
                     window.EJS_onSaveState = () => { }
-                    window.EJS_onGameStart = () => $('#preloaderWrapper').fadeOut()
+                    window.EJS_onGameStart = () => {
+                        $('#preloaderWrapper').fadeOut()
+                        moveUIButtons()
+                    }
                 }
 
                 document.body.appendChild(script);
