@@ -89,10 +89,10 @@ global_replacements = [
         'src="source/mappers.js"',
         'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/source/mappers.min.js"'
     ],
-    # [
-    #     'src="source/nes.js"',
-    #     'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/source/nes.min.js"'
-    # ],
+    [
+        'src="source/nes.js"',
+        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/source/nes.min.js"'
+    ],
     [
         'src="source/cpu.js"',
         'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/source/cpu.min.js"'
@@ -231,12 +231,12 @@ CHANGES = [
         "file": "source/omssp.js",
         "replacements": global_replacements
     },
-    {
-        "file": "source/nes.js",
-        "replacements": global_replacements + [
-            ["'lib/'", "'https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/lib/'"]
-        ]
-    },
+    # {
+    #     "file": "source/nes.js",
+    #     "replacements": global_replacements + [
+    #         ["'lib/'", "'https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/lib/'"]
+    #     ]
+    # },
     {
         "file": "game.html",
         "replacements": global_replacements + [

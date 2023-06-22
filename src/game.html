@@ -75,6 +75,14 @@
             .btn {
                 width: 30%;
             }
+
+            #newButtonsDiv {
+                bottom: 0;
+                height: fit-content;
+                margin: auto;
+                width: 100%;
+                text-align: center;
+            }
         }
 
         .container {
@@ -100,6 +108,11 @@
             box-shadow: none;
             border-style: dashed solid;
             border-width: medium;
+        }
+
+        #newButtonsDiv {
+            position: absolute;
+            top: 0;
         }
 
         @-webkit-keyframes pulse {
@@ -133,7 +146,11 @@
             }
         }
     </style>
-    <style id="temp_style"></style>
+    <style id="temp_style">
+        #game canvas {
+            width: 100% !important;
+        }
+    </style>
 </head>
 
 <body
@@ -519,6 +536,22 @@
                 }
 
                 document.body.appendChild(script);
+            }
+        }
+
+        function moveUIButtons() {
+            if (window.ejs_media.virtualGamepadContainer) {
+                const newButtonsDiv = document.createElement('div');
+                newButtonsDiv.id = "newButtonsDiv";
+                newButtonsDiv.appendChild(window.EJS_emulator.elements.buttons.play[0]);
+                newButtonsDiv.appendChild(window.EJS_emulator.elements.buttons.restart);
+                newButtonsDiv.appendChild(window.EJS_emulator.elements.buttons.mute);
+                // newButtonsDiv.appendChild(document.createElement('br'));
+                // newButtonsDiv.appendChild(window.EJS_emulator.elements.buttons.saveState);
+                // newButtonsDiv.appendChild(window.EJS_emulator.elements.buttons.loadState);
+                window.EJS_emulator.elements.container.appendChild(newButtonsDiv)
+                window.EJS_emulator.elements.inputs.volume.hidden = false;
+                window.EJS_emulator.elements.buttons.mute.hidden = false;
             }
         }
 
