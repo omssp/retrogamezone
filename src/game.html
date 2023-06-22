@@ -137,7 +137,7 @@
 </head>
 
 <body
-    onkeydown="$('#save_name').is(':focus') ? '' : ($('.image.fit > div, iframe')[0]?.scrollIntoView(), document.getElementById('gameFrame')?.contentWindow.focusMe()); $('.infoDiv').fadeOut(1000);">
+    onkeydown="$('#save_name').is(':focus') ? '' : ($('#game, iframe')[0]?.scrollIntoView(), document.getElementById('gameFrame')?.contentWindow.focusMe()); $('.infoDiv').fadeOut(1000);">
     <img src="fullS.png" width="24" height="24" title="FullScreen"
         style="display: inline; top: 0.3em; position: fixed; z-index:+1; right: 0.3em; cursor: pointer; fill: #f44336"
         id="fsbutton" onclick="document.getElementById('gameFrame')?.contentWindow.clickMe();">
@@ -461,7 +461,7 @@
         });
 
         function checkWidth(curWidth) {
-            $('#save_name').is(':focus') ? '' : ($('.image.fit > div, iframe')[0]?.scrollIntoView(), document.getElementById('gameFrame')?.contentWindow.focusMe());
+            $('#save_name').is(':focus') ? '' : ($('#game, iframe')[0]?.scrollIntoView(), document.getElementById('gameFrame')?.contentWindow.focusMe());
             let nesCanvas = $('#gameFrame').contents().find('#nescanvas');
             if (curWidth < 500 && nesCanvas[0]?.offsetHeight > 400) {
                 nesCanvas.click();
@@ -528,8 +528,8 @@
                 loaderJS.remove();
                 window.EJS_terminate()
                 $('#fsbutton').off('click');
-                $('.image.fit').css("padding-top", 'auto').html(`<iframe name="gameFrame" id="gameFrame" src="index2.html" style="width: 100%; height: 693px; transition: all 0.9s; margin-top: 15px;" scrolling="no"></iframe>
-                <div id="game"></div>`);
+                $('.image.fit').css("padding-top", 'auto').html(`<iframe name="gameFrame" id="gameFrame" src="index2.html" style="width: 100%; height: 693px; transition: all 0.9s; margin-top: 15px;" scrolling="no"></iframe>`);
+                $('.container').html(`<div id="game"></div>`);
             }
         }
         let debounce_input;
