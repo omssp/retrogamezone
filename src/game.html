@@ -159,7 +159,7 @@
 
 <body>
     <img src="fullS.png" width="24" height="24" title="FullScreen"
-        style="display: inline; top: 0.3em; position: fixed; z-index:+1; right: 0.3em; cursor: pointer; fill: #f44336"
+        style="display: inline; top: 0.3em; position: fixed; z-index: 1001; right: 0.3em; cursor: pointer; fill: #f44336"
         id="fsbutton" onclick="document.getElementById('gameFrame')?.contentWindow.clickMe();">
     <span class="fa-stack" title="GamePads"
         style="display: inline; line-height: 1.15; top: 0.3em; left: 0.15em; position: fixed; z-index:+1; color: #f44336; cursor: pointer;"
@@ -512,47 +512,55 @@
         }
 
         $(document).bind('keydown', function (e) {
-            if (e.keyCode == 32) {
-                window.play_toggle();
-                e.preventDefault();
+            if (!$('#save_name').is(':focus')) {
+                if (e.keyCode == 32) {
+                    window.play_toggle();
+                    e.preventDefault();
+                }
+                if (e.keyCode == 82) {
+                    window.reset_game();
+                    e.preventDefault();
+                }
+                if ((e.keyCode == 8) ||
+                    (e.keyCode == 38 && (e.altKey || e.shiftKey))) {
+                    document.getElementById('homeButton').click();
+                    e.preventDefault();
+                }
+                if ((e.keyCode == 78 && (e.altKey || e.shiftKey)) ||
+                    (e.keyCode == 39 && (e.altKey || e.shiftKey))) {
+                    document.getElementById('nextGame').click();
+                    e.preventDefault();
+                }
+                if ((e.keyCode == 80 && (e.altKey || e.shiftKey)) ||
+                    (e.keyCode == 37 && (e.altKey || e.shiftKey))) {
+                    document.getElementById('previousGame').click();
+                    e.preventDefault();
+                }
+                // if (e.keyCode == 80) {
+                //     keybPrimaryPlayer.toggle();
+                //     e.preventDefault();
+                // }
+                if (e.keyCode == 77 || e.keyCode == 173) {
+                    window.mute_toggle();
+                    e.preventDefault();
+                }
+                if (e.keyCode == 90) {
+                    toggleStretchMode();
+                    e.preventDefault();
+                }
+                if (e.keyCode == 122 || e.keyCode == 70) {
+                    window.fulls_toggle();
+                    e.preventDefault();
+                }
+                if (e.keyCode == 192) {
+                    if (!loadEMU()) {
+                        unLoadEMU()
+                    }
+                    e.preventDefault();
+                }
+                $('#game, iframe')[0]?.scrollIntoView();
+                document.getElementById('gameFrame')?.contentWindow.focusMe();
             }
-            if (e.keyCode == 82) {
-                window.reset_game();
-                e.preventDefault();
-            }
-            if ((e.keyCode == 8) ||
-                (e.keyCode == 38 && (e.altKey || e.shiftKey))) {
-                document.getElementById('homeButton').click();
-                e.preventDefault();
-            }
-            if ((e.keyCode == 78 && (e.altKey || e.shiftKey)) ||
-                (e.keyCode == 39 && (e.altKey || e.shiftKey))) {
-                document.getElementById('nextGame').click();
-                e.preventDefault();
-            }
-            if ((e.keyCode == 80 && (e.altKey || e.shiftKey)) ||
-                (e.keyCode == 37 && (e.altKey || e.shiftKey))) {
-                document.getElementById('previousGame').click();
-                e.preventDefault();
-            }
-            if (e.keyCode == 80) {
-                // keybPrimaryPlayer.toggle();
-                e.preventDefault();
-            }
-            if (e.keyCode == 77 || e.keyCode == 173) {
-                window.mute_toggle();
-                e.preventDefault();
-            }
-            if (e.keyCode == 90) {
-                toggleStretchMode();
-                e.preventDefault();
-            }
-            if (e.keyCode == 122 || e.keyCode == 70) {
-                window.fulls_toggle();
-                e.preventDefault();
-            }
-            $('#save_name').is(':focus') ? '' : ($('#game, iframe')[0]?.scrollIntoView(),
-                document.getElementById('gameFrame')?.contentWindow.focusMe());
             $('.infoDiv').fadeOut(1000);
         });
 
@@ -596,7 +604,9 @@
                 }
 
                 document.body.appendChild(script);
+                return true
             }
+            return false
         }
 
         function moveUIButtons() {
@@ -623,7 +633,9 @@
                 $('#fsbutton').off('click');
                 $('.image.fit').html(`<iframe name="gameFrame" id="gameFrame" src="index2.html" style="width: 100%; height: 693px; transition: all 0.9s; margin-top: 15px;" scrolling="no"></iframe>`);
                 $('.container').css("padding-top", '1em').html(`<div id="game"></div>`);
+                return true;
             }
+            return false;
         }
         let debounce_input;
         let debounce_toggle;

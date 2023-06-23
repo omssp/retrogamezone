@@ -400,24 +400,24 @@
                         }
                         e.preventDefault();
                         break;
+                    case 81:
+                        $('#search_bar').focus().select()[0].scrollIntoView({
+                            behavior: "smooth",
+                            block: "center",
+                            inline: "center"
+                        });
+                        e.preventDefault();
+                        break;
+                    case 27:
+                        gridNav.unselect();
+                        e.preventDefault();
+                        break;
                     default:
                         break;
                 }
             }
 
             switch (e.keyCode) {
-                case 81:
-                    $('#search_bar').focus().select()[0].scrollIntoView({
-                        behavior: "smooth",
-                        block: "center",
-                        inline: "center"
-                    });
-                    e.preventDefault();
-                    break;
-                case 27:
-                    gridNav.unselect();
-                    e.preventDefault();
-                    break;
                 case 38:
                     gridNav.up();
                     e.preventDefault();
