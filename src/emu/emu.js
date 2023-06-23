@@ -34,14 +34,24 @@ window.save_state = () => {
     window.EJS_emulator.elements.buttons.saveState.click();
 }
 
+
 window.load_state = () => {
     if (navigator.vibrate) navigator.vibrate([50]);
     window.EJS_emulator.elements.buttons.loadState.click();
 }
 
+
 window.fulls_toggle = () => {
     if (navigator.vibrate) navigator.vibrate([50]);
     window.EJS_emulator.elements.buttons.fullscreen.click();
+}
+
+window.save_local = () => {
+    window.EJS_emulator.config.onsavestate = () => { };
+    window.EJS_emulator.elements.buttons.saveState.click();
+    setTimeout(() => {
+        window.EJS_emulator.config.onsavestate = (e) => window.saver.saveToOnline(e);
+    }, 1);
 }
 
 window.EJS_VirtualGamepadSettings = [

@@ -154,6 +154,13 @@
                 width: 100% !important;
             }
         }
+        /* body {
+            padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+        }
+
+        .container div {
+            min-height: calc(100vh + env(safe-area-inset-top));
+        } */
     </style>
 </head>
 
@@ -591,22 +598,25 @@
                     window.saver = new SaveHandler(saveName);
                     window.EJS_onSaveState = (e) => window.saver.saveToOnline(e)
                     window.EJS_onGameStart = (e) => {
-                        $('#preloaderWrapper').fadeOut()
                         window.saver.loadFromOnline(e)
-                        moveUIButtons()
+                        onGameStart()
                     }
                 } else {
                     window.EJS_onSaveState = () => { }
-                    window.EJS_onGameStart = () => {
-                        $('#preloaderWrapper').fadeOut()
-                        moveUIButtons()
-                    }
+                    window.EJS_onGameStart = onGameStart;
                 }
 
                 document.body.appendChild(script);
                 return true
             }
             return false
+        }
+
+        function onGameStart() {
+            $('#preloaderWrapper').fadeOut()
+            moveUIButtons()
+            setInterval(window.save_local, 5e4);
+            window.addEventListener("blur", window.save_local);
         }
 
         function moveUIButtons() {
