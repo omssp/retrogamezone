@@ -87,7 +87,7 @@
         }
 
         .container {
-            padding-top: 2em;
+            padding-top: 1em;
         }
 
         #gameTitle {
@@ -570,7 +570,7 @@
             const gameFrame = document.getElementById('gameFrame');
             if (gameFrame) {
                 gameFrame.remove();
-                $('.image.fit').css("padding-top", '4em');
+                $('.container').css("padding-top", '4em');
 
                 const script = document.createElement("script");
                 script.src = "emu/data/loader.js";
@@ -621,8 +621,8 @@
                 loaderJS.remove();
                 window.EJS_terminate()
                 $('#fsbutton').off('click');
-                $('.image.fit').css("padding-top", 'auto').html(`<iframe name="gameFrame" id="gameFrame" src="index2.html" style="width: 100%; height: 693px; transition: all 0.9s; margin-top: 15px;" scrolling="no"></iframe>`);
-                $('.container').html(`<div id="game"></div>`);
+                $('.image.fit').html(`<iframe name="gameFrame" id="gameFrame" src="index2.html" style="width: 100%; height: 693px; transition: all 0.9s; margin-top: 15px;" scrolling="no"></iframe>`);
+                $('.container').css("padding-top", '1em').html(`<div id="game"></div>`);
             }
         }
         let debounce_input;
