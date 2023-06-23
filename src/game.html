@@ -147,20 +147,19 @@
                 box-shadow: 0 0 0 0 rgba(139, 195, 74, 0);
             }
         }
-    </style>
-    <style id="temp_style">
-        :fullscreen {
-            #game canvas {
-                width: 100% !important;
-            }
-        }
-        /* body {
+
+        body {
             padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
         }
 
-        .container div {
+        .container>div {
             min-height: calc(100vh + env(safe-area-inset-top));
-        } */
+        }
+    </style>
+    <style id="temp_style">
+        #game canvas {
+            width: 100% !important;
+        }
     </style>
 </head>
 
@@ -551,10 +550,6 @@
                     window.mute_toggle();
                     e.preventDefault();
                 }
-                if (e.keyCode == 90) {
-                    toggleStretchMode();
-                    e.preventDefault();
-                }
                 if (e.keyCode == 122 || e.keyCode == 70) {
                     window.fulls_toggle();
                     e.preventDefault();
@@ -567,6 +562,9 @@
                 }
                 $('#game, iframe')[0]?.scrollIntoView();
                 document.getElementById('gameFrame')?.contentWindow.focusMe();
+            }
+            if (e.keyCode == 90) {
+                toggleStretchMode();
             }
             $('.infoDiv').fadeOut(1000);
         });
