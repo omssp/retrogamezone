@@ -419,11 +419,6 @@
 
             $(document).on("contextmenu", function (e) { e.preventDefault(); return false; });
 
-            const saveName = getCookie('save_name')?.trim()
-            if (saveName) {
-                save_name.val(saveName)
-                save_name.blur()
-            }
             if (window.history && window.history.pushState) {
                 window.history.pushState('forward', null, '');
                 $(window).on('popstate', function () {
@@ -606,6 +601,7 @@
                         window.saver.loadFromOnline(e)
                         onGameStart()
                     }
+                    save_name.val(saveName).attr('disabled', true).css('cursor', 'copy').attr('title', 'click to edit')
                 } else {
                     window.EJS_onSaveState = () => { }
                     window.EJS_onGameStart = onGameStart;
@@ -659,7 +655,7 @@
         let debounce_input;
         let debounce_toggle;
         let old_input;
-        const save_name = $('#save_name').on('keyup blur paste search', debounceChange);
+        const save_name = $('#save_name').on('keyup paste search', debounceChange);
         const inputDiv = $('.inputDiv');
         function validateForm() {
             if (debounce_input)
