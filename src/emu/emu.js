@@ -164,7 +164,7 @@ window.EJS_Buttons = {
     loadState: true,
     screenRecord: true,
     gamepad: true,
-    cheat: false,
+    cheat: true,
     volume: true,
     quickSave: true,
     quickLoad: true,
