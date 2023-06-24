@@ -152,9 +152,12 @@
             padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
         }
 
-        .container>div {
-            min-height: calc(100vh + env(safe-area-inset-top));
+        @media (min-width: 600px) {
+            .container>div {
+                min-height: calc(100vh + env(safe-area-inset-top));
+            }
         }
+
         .ejs--5e71fd80268afbb1d588e40b993508 input,
         .ejs--5e71fd80268afbb1d588e40b993508 textarea {
             background: #fafafa !important;
@@ -522,7 +525,7 @@
         }
 
         $(document).bind('keydown', function (e) {
-            if (!$('#save_name').is(':focus') && document.activeElement.tagName != "TEXTAREA" &&document.activeElement.tagName != "INPUT" ) {
+            if (!$('#save_name').is(':focus') && document.activeElement.tagName != "TEXTAREA" && document.activeElement.tagName != "INPUT") {
                 if (e.keyCode == 32) {
                     window.play_toggle();
                     e.preventDefault();
@@ -635,7 +638,9 @@
                 window.EJS_emulator.elements.inputs.volume.hidden = false;
                 window.EJS_emulator.elements.buttons.mute.hidden = false;
                 window.EJS_emulator.elements.buttons.cheat.hidden = false;
-                window.EJS_emulator.elements.buttons.restart.addEventListener("click", toggleStretchMode)
+                window.EJS_emulator.elements.buttons.play[0].addEventListener("click", () => {
+                    if (window.EJS_emulator.playing) toggleStretchMode()
+                })
             }
         }
 
