@@ -67,6 +67,20 @@
             margin: .4em 1em;
         }
 
+        .inputDiv input {
+            width: 70%;
+            text-align: center;
+            display: inline-block;
+            margin: 0 .2em;
+        }
+
+        .inputDiv select {
+            margin: 0 .2em;
+            width: 20%;
+            text-align: center;
+            display: inline-block;
+        }
+
         @media (max-width: 600px) {
             .btn-text {
                 display: none;
@@ -83,6 +97,18 @@
                 left: 0 !important;
                 width: 100%;
                 text-align: center;
+            }
+
+            .inputDiv input {
+                width: 100%;
+                display: block;
+                margin: 0 0 .2em 0;
+            }
+
+            .inputDiv select {
+                margin: .2em 0 0 0;
+                width: 100%;
+                display: block;
             }
         }
 
@@ -104,7 +130,8 @@
             box-shadow: 0 0 0 1px #8bc34a;
         }
 
-        #save_name:disabled {
+        #save_name:disabled,
+        #save_slot:disabled {
             border-color: #535353;
             box-shadow: none;
             border-style: dashed solid;
@@ -212,11 +239,20 @@
                 </header>
                 <div class="inputDiv">
                     <form class="myForm" onsubmit="return validateForm()">
-                        <input style="text-align: center;" type="search" id="save_name"
-                            placeholder="enter a unique save name"
+                        <input type="search" id="save_name" placeholder="enter a unique save name"
                             pattern="^(?=.{1,20}$)(?![_\-])(?!.*[_\-]{2})[a-zA-Z0-9\-_]+(?<![_\-])"
                             title="only alphabets followed by numbers or hyphen(-) are allowed, don't use spaces or special characters"
                             maxlength="20" autocorrect="off" autocapitalize="none">
+                        <select id="save_slot">
+                            <option value="">default</option>
+                            <option value="slot1">Slot 1</option>
+                            <option value="slot2">Slot 2</option>
+                            <option value="slot3">Slot 3</option>
+                            <option value="slot4">Slot 4</option>
+                            <option value="slot5">Slot 5</option>
+                            <option value="slot6">Slot 6</option>
+                            <option value="slot7">Slot 7</option>
+                        </select>
                     </form>
                     <button class="btn" onclick="dwnSaveState()"><i class="fa fa-lg fa-floppy-o" aria-hidden="true"></i>
                         <span class="btn-text">Download Save File</span></button>
@@ -520,7 +556,9 @@
         }
 
         $(document).bind('keydown', function (e) {
-            if (!$('#save_name').is(':focus') && document.activeElement.tagName != "TEXTAREA" && document.activeElement.tagName != "INPUT") {
+            if (!$('#save_name').is(':focus') &&
+                document.activeElement.tagName != "TEXTAREA" &&
+                document.activeElement.tagName != "INPUT") {
                 if (e.keyCode == 32) {
                     window.play_toggle();
                     e.preventDefault();
@@ -601,7 +639,10 @@
                         window.saver.loadFromOnline(e)
                         onGameStart()
                     }
-                    save_name.val(saveName).attr('disabled', true).css('cursor', 'copy').attr('title', 'click to edit')
+                    save_name.val(saveName).css('animation', 'none').attr('disabled', true).css('cursor', 'copy').attr('title', 'click to edit')
+                    const saveSlot = getCookie(`${window.saver.game_slug}-save_slot`)
+                    save_slot.val(saveSlot).css('animation', 'none').attr('disabled', true).css('cursor', 'copy').attr('title', 'click to edit')
+                    window.saver.set_slot(saveSlot);
                 } else {
                     window.EJS_onSaveState = () => { }
                     window.EJS_onGameStart = onGameStart;
@@ -655,18 +696,22 @@
         let debounce_input;
         let debounce_toggle;
         let old_input;
+        let old_slot;
         const save_name = $('#save_name').on('keyup paste search', debounceChange);
+        const save_slot = $('#save_slot').on('change', validateForm);
         const inputDiv = $('.inputDiv');
         function validateForm() {
             if (debounce_input)
                 clearTimeout(debounce_input)
             if (save_name.is(':valid')) {
-                old_input = save_name.css('animation', 'none').val().trim();
-                save_name.attr('disabled', true).css('cursor', 'copy').attr('title', 'click to edit').blur();
+                old_input = save_name.css('animation', 'none').attr('disabled', true).css('cursor', 'copy').attr('title', 'click to edit').blur().val().trim();
+                old_slot = save_slot.css('animation', 'none').attr('disabled', true).css('cursor', 'copy').attr('title', 'click to edit').val()
 
                 setCookie('save_name', old_input, 365)
+                setCookie(`${window.saver.game_slug}-save_slot`, old_slot, 365)
 
                 window.saver = new SaveHandler(old_input);
+                window.saver.set_slot(old_slot);
                 if (window.EJS_emulator) {
                     if (navigator.vibrate) navigator.vibrate([50]);
                     window.EJS_emulator.config.onsavestate = old_input ? (e) => window.saver.saveToOnline(e) : null;
@@ -687,6 +732,7 @@
             save_name.val(new_input);
             if (old_input != new_input) {
                 save_name.css('animation', 'pulse 1s infinite')
+                save_slot.css('animation', 'pulse 1s infinite')
                 if (debounce_input)
                     clearTimeout(debounce_input)
                 if (debounce_toggle)
@@ -699,6 +745,7 @@
         $('.inputDiv .myform').on('click', () => {
             if (save_name.is(':disabled')) {
                 save_name.attr('disabled', false).css('cursor', 'auto').attr('title', "only alphabets followed by numbers or hyphen(-) are allowed, don't use spaces or special characters")
+                save_slot.attr('disabled', false).css('cursor', 'auto').attr('title', "select your save game slot")
             }
         });
 

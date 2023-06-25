@@ -96,7 +96,7 @@ export default {
 
             PATH.splice(1, 1)
 
-            const SLUG = PATH.join('/').replace(FILE_NAME, '').replace(/^\/+|\/+$/g, '').replace(/\//g, '-')
+            const SLUG = PATH.join('/').replace(FILE_NAME, '').replace(/^\/+|\/+$/g, '').replace(/\//g, '--')
             const KEY_NAME = FILE_NAME.replace('.json', '')
 
             // if (config.supported_keys.indexOf(KEY_NAME) < 0) throw "wrong key" 

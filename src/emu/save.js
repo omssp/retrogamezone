@@ -14,22 +14,32 @@ class SaveHandler {
             throw new Error('validation falied in game name or save name');
 
         this.base_link = `${this.baseURL}/${this.save_name}/${this.game_slug}`
+        this.store_slug = `${this.save_name}--${this.game_slug}`
+
+        this.mutex_flag = false
+        this.make_urls()
+    }
+
+    make_urls = () => {
         this.put_url = `${this.base_link}/.json?print=silent`
         this.get_state_url = `${this.base_link}/state.json`
         this.get_time_url = `${this.base_link}/time.json`
+    }
 
-        this.store_slug = `${this.save_name}-${this.game_slug}`
-
-        this.mutex_flag = false
+    set_slot = (save_slot) => {
+        this.save_slot = save_slot;
+        this.base_link += this.save_slot ? `/${this.save_slot}` : ''
+        this.store_slug += this.save_slot ? `--${this.save_slot}` : ''
+        this.make_urls()
     }
 
     beforeSend = () => {
-        $('#header .inner').css('animation', 'pulse 1s infinite');
+        $('.b_save').css('animation', 'pulse 1s infinite');
         this.mutex_flag = true;
     }
 
     complete = () => {
-        $('#header .inner').css('animation', 'none');
+        $('.b_save').css('animation', 'none');
         setTimeout(() => { this.mutex_flag = false; }, 2000);
     }
 
