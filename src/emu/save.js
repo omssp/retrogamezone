@@ -30,7 +30,6 @@ class SaveHandler {
         this.save_slot = save_slot;
         if (this.save_slot) {
             this.base_link += `/${this.save_slot}`;
-            this.store_slug += `--${this.save_slot}`;
             this.make_urls();
         }
     }
