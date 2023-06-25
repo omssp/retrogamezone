@@ -525,7 +525,11 @@
         });
 
         function checkWidth(curWidth) {
-            $('#save_name').is(':focus') ? '' : ($('#game, iframe')[0]?.scrollIntoView(), document.getElementById('gameFrame')?.contentWindow.focusMe());
+            $('#save_name').is(':focus') ? '' : ($('#game, iframe')[0]?.scrollIntoView({
+                behavior: "smooth",
+                block: "center",
+                inline: "center"
+            }), document.getElementById('gameFrame')?.contentWindow.focusMe());
             let nesCanvas = $('#gameFrame').contents().find('#nescanvas');
             if (curWidth < 500 && nesCanvas[0]?.offsetHeight > 400) {
                 nesCanvas.click();
@@ -600,7 +604,11 @@
                     }
                     e.preventDefault();
                 }
-                $('#game, iframe')[0]?.scrollIntoView();
+                $('#game, iframe')[0]?.scrollIntoView({
+                    behavior: "smooth",
+                    block: "center",
+                    inline: "center"
+                });
                 document.getElementById('gameFrame')?.contentWindow.focusMe();
             }
             if (e.keyCode == 90) {
