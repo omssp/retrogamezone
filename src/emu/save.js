@@ -28,9 +28,11 @@ class SaveHandler {
 
     set_slot = (save_slot) => {
         this.save_slot = save_slot;
-        this.base_link += this.save_slot ? `/${this.save_slot}` : ''
-        this.store_slug += this.save_slot ? `--${this.save_slot}` : ''
-        this.make_urls()
+        if (this.save_slot) {
+            this.base_link += `/${this.save_slot}`;
+            this.store_slug += `--${this.save_slot}`;
+            this.make_urls();
+        }
     }
 
     beforeSend = () => {
