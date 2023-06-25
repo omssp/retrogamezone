@@ -716,10 +716,10 @@
                 old_slot = save_slot.css('animation', 'none').attr('disabled', true).css('cursor', 'copy').attr('title', 'click to edit').val()
 
                 setCookie('save_name', old_input, 365)
-                setCookie(`${window.saver.game_slug}-save_slot`, old_slot, 365)
-
+                
                 window.saver = new SaveHandler(old_input);
                 window.saver.set_slot(old_slot);
+                setCookie(`${window.saver.game_slug}-save_slot`, old_slot, 365)
                 if (window.EJS_emulator) {
                     if (navigator.vibrate) navigator.vibrate([50]);
                     window.EJS_emulator.config.onsavestate = old_input ? (e) => window.saver.saveToOnline(e) : null;

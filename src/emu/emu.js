@@ -49,10 +49,12 @@ window.fulls_toggle = () => {
 window.save_local = () => {
     window.EJS_emulator.config.onsavestate = () => { };
     window.EJS_emulator.elements.buttons.saveState.click();
-    setCookie(window.saver.store_slug, Date.now());
-    setTimeout(() => {
-        window.EJS_emulator.config.onsavestate = (e) => window.saver.saveToOnline(e);
-    }, 1);
+    if (window.saver) {
+        setCookie(window.saver.store_slug, Date.now());
+        setTimeout(() => {
+            window.EJS_emulator.config.onsavestate = (e) => window.saver.saveToOnline(e);
+        }, 1);
+    }
 }
 
 window.EJS_VirtualGamepadSettings = [
