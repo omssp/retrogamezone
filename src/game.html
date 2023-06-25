@@ -58,7 +58,7 @@
         }
 
         .myForm {
-            margin: 0 0 2em 0;
+            margin: .5em 0 1em 0;
             transition: all 1s ease;
         }
 
@@ -237,6 +237,9 @@
                     <div id="gameName" style="display: none;">&nbsp;</div>
                 </header>
                 <div class="inputDiv">
+                    <center>
+                        <h4 style="color: inherit;">Cloud Save</h4>
+                    </center>
                     <form class="myForm" onsubmit="return validateForm()">
                         <input type="search" id="save_name" placeholder="enter a unique save name"
                             pattern="^(?=.{1,20}$)(?![_\-])(?!.*[_\-]{2})[a-zA-Z0-9\-_]+(?<![_\-])"
@@ -655,7 +658,9 @@
                     save_name.val(saveName).css('animation', 'none').attr('disabled', true).attr('title', 'click to edit')
                     const saveSlot = getCookie(`${window.saver.game_slug}-save_slot`)
                     save_slot.val(saveSlot).css('animation', 'none').attr('disabled', true).attr('title', 'click to edit')
-                    window.saver.set_slot(saveSlot);
+                    window.saver.set_slot(saveSlot)
+                    old_slot = saveSlot
+                    old_input = saveName
                 } else {
                     window.EJS_onSaveState = () => { }
                     window.EJS_onGameStart = onGameStart;
@@ -727,7 +732,7 @@
                 setCookie(`${window.saver.game_slug}-save_slot`, old_slot, 365)
                 if (window.EJS_emulator) {
                     if (navigator.vibrate) navigator.vibrate([50]);
-                    window.EJS_emulator.config.onsavestate = old_input ? (e) => window.saver.saveToOnline(e) : null;
+                    window.EJS_emulator.config.onsavestate = old_input ? (e) => window.saver.saveToOnline(e) : () => {};
                     // window.EJS_emulator.on('start-game', window.saver.loadFromOnline)
                     saver.loadFromOnline()
                 }
@@ -765,12 +770,10 @@
         const toggleSecretSave = (hide) => {
             if (!window.EJS_emulator) return;
             if (inputDiv.css('max-height') == "200px" || hide === 'hide') {
-                inputDiv.css('max-height', "0");
-                inputDiv.css('padding', "0");
+                inputDiv.css('max-height', "0").css('padding', "0");
                 $('#forceLoad').attr('disabled', 'true');
             } else {
-                inputDiv.css('max-height', "200px");
-                inputDiv.css('padding', "1em");
+                inputDiv.css('max-height', "200px").css('padding', "0 1em");
                 if (debounce_toggle)
                     clearTimeout(debounce_toggle)
                 setTimeout(() => {
