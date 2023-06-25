@@ -63,8 +63,8 @@
         }
 
         .btn {
-            width: 40%;
-            margin: .4em 1em;
+            width: 27%;
+            margin: .4em .1em;
         }
 
         .inputDiv input {
@@ -84,10 +84,6 @@
         @media (max-width: 600px) {
             .btn-text {
                 display: none;
-            }
-
-            .btn {
-                width: 30%;
             }
 
             #newButtonsDiv {
@@ -256,8 +252,10 @@
                     </form>
                     <button class="btn" onclick="dwnSaveState()"><i class="fa fa-lg fa-floppy-o" aria-hidden="true"></i>
                         <span class="btn-text">Download Save File</span></button>
-                    <button class="btn" onclick="opnSaveState()"><i class="fa fa-lg fa-cloud-upload"
+                    <button class="btn" onclick="opnSaveState()"><i class="fa fa-lg fa-folder-open-o"
                             aria-hidden="true"></i> <span class="btn-text">Upload Save File</span></button>
+                    <button class="btn" onclick="saver.fetchStateAndLoad()"><i class="fa fa-lg fa-cloud-download"
+                            aria-hidden="true"></i> <span class="btn-text">Load from Cloud</span></button>
                 </div>
                 <div class="infoDiv chrome">
                     <center>
@@ -522,6 +520,8 @@
                 }
             });
             setTimeout(checkandchange, 1000);
+
+            $('#gameTitle').append(' <i class="fa fa-share-square-o"></i>')
         });
 
         function checkWidth(curWidth) {
@@ -716,7 +716,7 @@
                 old_slot = save_slot.css('animation', 'none').attr('disabled', true).css('cursor', 'copy').attr('title', 'click to edit').val()
 
                 setCookie('save_name', old_input, 365)
-                
+
                 window.saver = new SaveHandler(old_input);
                 window.saver.set_slot(old_slot);
                 setCookie(`${window.saver.game_slug}-save_slot`, old_slot, 365)
@@ -770,6 +770,14 @@
                 setTimeout(() => {
                     toggleSecretSave('hide');
                 }, 6e4);
+                if (navigator.share) {
+                    navigator.share({
+                        title: document.title,
+                        url: document.location.href
+                    }).then(() => {
+                        console.log('Thanks for sharing!');
+                    }).catch(console.error);
+                }
             }
         }
 
