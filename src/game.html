@@ -127,11 +127,14 @@
         }
 
         #save_name:disabled,
-        #save_slot:disabled {
+        #save_slot:disabled,
+        #forceLoad:disabled {
             border-color: #535353;
             box-shadow: none;
             border-style: dashed solid;
             border-width: medium;
+            color: inherit;
+            cursor: copy;
         }
 
         #newButtonsDiv {
@@ -252,10 +255,12 @@
                     </form>
                     <button class="btn" onclick="dwnSaveState()"><i class="fa fa-lg fa-floppy-o" aria-hidden="true"></i>
                         <span class="btn-text">Download Save File</span></button>
+                    <span class="wrap" onclick="$('#forceLoad').attr('disabled', false)">
+                        <button class="btn" id="forceLoad" onclick="saver.fetchStateAndLoad();" disabled>
+                            <i class="fa fa-lg fa-cloud-download" aria-hidden="true"></i> <span class="btn-text">Load
+                                from Cloud</span></button></span>
                     <button class="btn" onclick="opnSaveState()"><i class="fa fa-lg fa-folder-open-o"
                             aria-hidden="true"></i> <span class="btn-text">Upload Save File</span></button>
-                    <button class="btn" onclick="saver.fetchStateAndLoad()"><i class="fa fa-lg fa-cloud-download"
-                            aria-hidden="true"></i> <span class="btn-text">Load from Cloud</span></button>
                 </div>
                 <div class="infoDiv chrome">
                     <center>
@@ -647,9 +652,9 @@
                         window.saver.loadFromOnline(e)
                         onGameStart()
                     }
-                    save_name.val(saveName).css('animation', 'none').attr('disabled', true).css('cursor', 'copy').attr('title', 'click to edit')
+                    save_name.val(saveName).css('animation', 'none').attr('disabled', true).attr('title', 'click to edit')
                     const saveSlot = getCookie(`${window.saver.game_slug}-save_slot`)
-                    save_slot.val(saveSlot).css('animation', 'none').attr('disabled', true).css('cursor', 'copy').attr('title', 'click to edit')
+                    save_slot.val(saveSlot).css('animation', 'none').attr('disabled', true).attr('title', 'click to edit')
                     window.saver.set_slot(saveSlot);
                 } else {
                     window.EJS_onSaveState = () => { }
@@ -712,8 +717,8 @@
             if (debounce_input)
                 clearTimeout(debounce_input)
             if (save_name.is(':valid')) {
-                old_input = save_name.css('animation', 'none').attr('disabled', true).css('cursor', 'copy').attr('title', 'click to edit').blur().val().trim();
-                old_slot = save_slot.css('animation', 'none').attr('disabled', true).css('cursor', 'copy').attr('title', 'click to edit').val()
+                old_input = save_name.css('animation', 'none').attr('disabled', true).attr('title', 'click to edit').blur().val().trim();
+                old_slot = save_slot.css('animation', 'none').attr('disabled', true).attr('title', 'click to edit').val()
 
                 setCookie('save_name', old_input, 365)
 
@@ -762,6 +767,7 @@
             if (inputDiv.css('max-height') == "200px" || hide === 'hide') {
                 inputDiv.css('max-height', "0");
                 inputDiv.css('padding', "0");
+                $('#forceLoad').attr('disabled', 'true');
             } else {
                 inputDiv.css('max-height', "200px");
                 inputDiv.css('padding', "1em");
