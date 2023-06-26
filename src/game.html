@@ -529,7 +529,7 @@
             });
             setTimeout(checkandchange, 1000);
 
-            $('#gameTitle').append(' <i class="fa fa-share-square-o"></i>')
+            if (navigator.share) $('#gameTitle').append(' <i class="fa fa-share-square-o"></i>')
         });
 
         function checkWidth(curWidth) {
