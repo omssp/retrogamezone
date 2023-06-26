@@ -63,6 +63,10 @@ const HOSTNAME_BLACKLIST = [
   "static.cloudflareinsights.com",
 ]
 
+const REGEX_BLACKLIST = [
+  "https://retrogamezone.blynkomssp.eu.org/retrogamezone/.*",
+]
+
 const RUNTIME = CACHE_NAMESPACE + 'runtime-v1'
 const expectedCaches = [PRECACHE, RUNTIME]
 
@@ -97,7 +101,8 @@ self.onactivate = (event) => {
 
 self.onfetch = (event) => {
   // Skip blacklisted cross-origin requests, like those for Google Analytics.
-  if (!(HOSTNAME_BLACKLIST.indexOf(new URL(event.request.url).hostname) > -1)) {
+  const regex_blacklisted = REGEX_BLACKLIST.map(o => (new RegExp(o, 'i').test(event.request.url))).filter(o => o).length
+  if (!(HOSTNAME_BLACKLIST.indexOf(new URL(event.request.url).hostname) > -1) && !regex_blacklisted) {
     // Fastest-while-revalidate 
     const cached = caches.match(event.request);
     const fixedUrl = event.request.url;
