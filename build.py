@@ -265,6 +265,7 @@ TOCPY = [change['file'] for change in CHANGES] + [
     'lib/gamelist.js',
     'sw.js',
     'offlineImage.png',
+    'functions/retrogamezone/[[index]].js'
 ]
 
 
@@ -272,6 +273,7 @@ shutil.rmtree(OUTPUT_DIR, ignore_errors=True)
 # shutil.copytree('src/', OUTPUT_DIR)
 os.makedirs(os.path.dirname(f"{OUTPUT_DIR}lib/"), exist_ok=True)
 os.makedirs(os.path.dirname(f"{OUTPUT_DIR}source/"), exist_ok=True)
+os.makedirs(os.path.dirname(f"{OUTPUT_DIR}functions/retrogamezone/"), exist_ok=True)
 for f in set(TOCPY):
     shutil.copy2(f"src/{f}", f"{OUTPUT_DIR}{f}")
 
