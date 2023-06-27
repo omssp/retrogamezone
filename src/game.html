@@ -725,6 +725,7 @@
                 old_input = save_name.css('animation', 'none').attr('disabled', true).attr('title', 'click to edit').blur().val().trim();
                 old_slot = save_slot.css('animation', 'none').attr('disabled', true).attr('title', 'click to edit').val()
 
+                window.save_local()
                 setCookie('save_name', old_input, 365)
 
                 window.saver = new SaveHandler(old_input);
