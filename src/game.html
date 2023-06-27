@@ -190,8 +190,10 @@
         }
     </style>
     <style id="temp_style">
-        #game canvas {
-            width: 100% !important;
+        @media (min-width: 600px) {
+            #game canvas {
+                width: 100% !important;
+            }
         }
     </style>
 </head>
@@ -631,7 +633,7 @@
             if (tempCSS.html()) {
                 tempCSS.html('');
             } else {
-                tempCSS.html(`#game canvas { width: 100% !important; }`);
+                tempCSS.html(`@media (min-width: 600px) { #game canvas { width: 100% !important; } }`);
             }
         }
 
