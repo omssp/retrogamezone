@@ -73,7 +73,7 @@ function toggleStretchMode() {
 }
 
 $("body").keydown(function (e) {
-    parent.$('.infoDiv.mob').fadeOut(1000);
+    // parent.$('.infoDiv.mob').fadeOut(1000);
     //alert(e.keyCode);
     if (e.keyCode == 32) {
         $("#ppbutton").click();

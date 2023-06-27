@@ -34,12 +34,12 @@ class SaveHandler {
     }
 
     beforeSend = () => {
-        $('.b_save').css('animation', 'pulse 1s infinite');
+        $('.b_save, #forceLoad').css('animation', 'pulse 1s infinite');
         this.mutex_flag = true;
     }
 
     complete = () => {
-        $('.b_save').css('animation', 'none');
+        $('.b_save, #forceLoad').css('animation', 'none');
         setTimeout(() => { this.mutex_flag = false; }, 2000);
     }
 

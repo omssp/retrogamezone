@@ -24,15 +24,6 @@
     <link rel="Bookmark" href="favicon.ico">
     <link rel="stylesheet" href="assets/css/main.css" />
     <style>
-        .infoDiv {
-            padding: 1em;
-            border: dashed 2px rgba(211, 47, 47, 0.5);
-            margin: 1em;
-            background: rgba(255, 205, 210, 0.5);
-            transition: all 1s ease;
-            display: none;
-        }
-
         .infoSpn {
             font-size: 1.6em;
             font-weight: bolder;
@@ -182,15 +173,15 @@
             .container>div {
                 min-height: calc(100vh + env(safe-area-inset-top));
             }
+
+            .ios_fs {
+                overflow: hidden !important;
+            }
         }
 
         .ejs--5e71fd80268afbb1d588e40b993508 input,
         .ejs--5e71fd80268afbb1d588e40b993508 textarea {
             background: #fafafa !important;
-        }
-
-        .ios_fs {
-            overflow: hidden !important;
         }
 
         #toTop {
@@ -200,6 +191,7 @@
             top: auto !important;
             left: auto;
             right: 1em;
+            transform: scale(1.5);
         }
     </style>
     <style id="temp_style">
@@ -279,20 +271,6 @@
                                 from Cloud</span></button></span>
                     <button class="btn" onclick="opnSaveState()"><i class="fa fa-lg fa-folder-open-o"
                             aria-hidden="true"></i> <span class="btn-text">Upload Save File</span></button>
-                </div>
-                <div class="infoDiv chrome">
-                    <center>
-                        <span class="infoSpn">!</span>
-                        <div style="display: inline-block; color: #212121;">Please Use the <big>Chrome</big> Browser
-                            Only. Don't use any other Browser.</div>
-                    </center>
-                </div>
-                <div class="infoDiv mob">
-                    <center>
-                        <span class="infoSpn">!</span>
-                        <div style="display: inline-block; color: #212121;">You Can Connect USB OTG or Bluetooth
-                            KEYBOARD to your Device to Play The Game.</div>
-                    </center>
                 </div>
                 <h4 style="font-size: x-large; color: #e74c3c;">
                     Controls
@@ -486,22 +464,16 @@
                     window.location.replace('index.html');
                 });
             }
-            var isMobile = ('ontouchstart' in document.documentElement);
-            if (isMobile == true) {
-                $(".infoDiv.mob").fadeIn(1000);
+            const isMobile = ('ontouchstart' in document.documentElement);
+            const isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+            if (!isChrome && isMobile &&
+                !(document.documentElement.requestFullscreen ||
+                    document.documentElement.mozRequestFullScreen ||
+                    document.documentElement.webkitRequestFullscreen ||
+                    document.documentElement.msRequestFullscreen)) {
+                $('#fsbutton').fadeOut("slow");
             }
-            var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
-            if (isChrome == false) {
-                $(".infoDiv.chrome").fadeIn(1000);
 
-                if (isMobile &&
-                    !(document.documentElement.requestFullscreen ||
-                        document.documentElement.mozRequestFullScreen ||
-                        document.documentElement.webkitRequestFullscreen ||
-                        document.documentElement.msRequestFullscreen)) {
-                    $('#fsbutton').fadeOut("slow");
-                }
-            }
             window.addEventListener("gamepadconnected", (event) => {
                 $('#gamepadicon').fadeIn("slow");
                 keybPrimaryPlayer.setSwapped();
@@ -658,7 +630,6 @@
             if (e.keyCode == 90) {
                 toggleStretchMode();
             }
-            $('.infoDiv').fadeOut(1000);
         });
 
 
