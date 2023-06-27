@@ -188,6 +188,19 @@
         .ejs--5e71fd80268afbb1d588e40b993508 textarea {
             background: #fafafa !important;
         }
+
+        .ios_fs {
+            overflow: hidden !important;
+        }
+
+        #toTop {
+            filter: none !important;
+            background-color: rgb(0, 0, 0, 0) !important;
+            bottom: 1em;
+            top: auto !important;
+            left: auto;
+            right: 1em;
+        }
     </style>
     <style id="temp_style">
         @media (min-width: 600px) {
@@ -361,6 +374,9 @@
         <a href="game.html" class="nav next" id="nextGame">
             <span class="fa fa-chevron-right"></span>
         </a>
+        <a class="nav top" id="toTop">
+            <span class="fa fa-chevron-up"></span>
+        </a>
     </div>
     <footer id="footer">
         <a style="cursor: pointer!important;" class="info fa fa-info-circle">
@@ -532,6 +548,19 @@
             setTimeout(checkandchange, 1000);
 
             if (navigator.share) $('#gameTitle').append(' <i class="fa fa-share-square-o"></i>')
+
+            const isIpad = /Macintosh/i.test(navigator.userAgent) && navigator.maxTouchPoints && navigator.maxTouchPoints > 1;
+            if (/(iPad|iPhone|iPod)/gi.test(navigator.userAgent) || isIpad) {
+                $('body').addClass('ios_fs')
+            }
+        });
+
+        $('#toTop').click(() => {
+            $('#game')[0].scrollIntoView({
+                behavior: "smooth",
+                block: "center",
+                inline: "center"
+            })
         });
 
         function checkWidth(curWidth) {
@@ -554,6 +583,11 @@
                 $('#header.preview, #previousGame, #nextGame').css("z-index", '-1');
             } else {
                 $('#header.preview, #previousGame, #nextGame').css("z-index", '1');
+            }
+            if (currentScroll > 100) {
+                $('#toTop').fadeIn();
+            } else {
+                $('#toTop').fadeOut();
             }
         });
 
@@ -735,7 +769,7 @@
                 setCookie(`${window.saver.game_slug}-save_slot`, old_slot, 365)
                 if (window.EJS_emulator) {
                     if (navigator.vibrate) navigator.vibrate([50]);
-                    window.EJS_emulator.config.onsavestate = old_input ? (e) => window.saver.saveToOnline(e) : () => {};
+                    window.EJS_emulator.config.onsavestate = old_input ? (e) => window.saver.saveToOnline(e) : () => { };
                     // window.EJS_emulator.on('start-game', window.saver.loadFromOnline)
                     saver.loadFromOnline()
                 }
