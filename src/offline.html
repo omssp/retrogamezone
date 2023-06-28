@@ -51,6 +51,7 @@
     </header>
     <div id="main">
     </div>
+    <script src="lib/cookie.js"></script>
     <script src="assets/js/jquery.min.js"></script>
     <script>
         const updateBackgrounds = (backgroundColorRGB) => {
@@ -65,6 +66,8 @@
             updateBackgrounds('62,39,35')
         }
         window.setTimeout(o => {
+            setCookie('one-go', null);
+            setCookie('two-go', null);
             $('#header .inner').click();
         }, 2000);
     </script>
