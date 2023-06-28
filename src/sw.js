@@ -5,7 +5,7 @@
 // A namespace can prevent potential name conflicts and mis-deletion.
 const CACHE_NAMESPACE = 'rgz-'
 
-const PRECACHE = CACHE_NAMESPACE + 'precache-v1'
+const PRECACHE = CACHE_NAMESPACE + 'precache-v2'
 const PRECACHE_LIST = [
   './',
   './404',
@@ -14,7 +14,6 @@ const PRECACHE_LIST = [
   './source/omssp.js',
   './lib/gamelist.js',
   './offlineImage.png',
-  "https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/source/nes.min.js",
   "https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/preloader.gif",
   "https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/MaterialColorThief.min.js",
   "https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/lib/dynamicaudio-min.js",
@@ -67,7 +66,7 @@ const REGEX_BLACKLIST = [
   "https://retrogamezone.blynkomssp.eu.org/retrogamezone/.*",
 ]
 
-const RUNTIME = CACHE_NAMESPACE + 'runtime-v1'
+const RUNTIME = CACHE_NAMESPACE + 'runtime-v2'
 const expectedCaches = [PRECACHE, RUNTIME]
 
 const isImage = (fetchRequest) => {
