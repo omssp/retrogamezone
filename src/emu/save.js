@@ -93,7 +93,8 @@ class SaveHandler {
                 } else {
                     console.log('no saved time found')
                 }
-            }
+            },
+            error: window.load_state
         });
     }
 
