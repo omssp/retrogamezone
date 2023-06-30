@@ -670,7 +670,10 @@
                     old_input = saveName
                 } else {
                     window.EJS_onSaveState = () => { }
-                    window.EJS_onGameStart = onGameStart;
+                    window.EJS_onGameStart = () => {
+                        onGameStart();
+                        window.load_state();
+                    }
                 }
 
                 document.body.appendChild(script);
