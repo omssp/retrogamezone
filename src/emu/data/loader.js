@@ -49,18 +49,15 @@
         })
     }
     const isIpad = /Macintosh/i.test(navigator.userAgent) && navigator.maxTouchPoints && navigator.maxTouchPoints > 1;
-    if (('undefined' != typeof EJS_DEBUG_XX && true === EJS_DEBUG_XX) ||
-        /(iPad|iPhone|iPod)/gi.test(navigator.userAgent) || isIpad) {
+    // if (('undefined' != typeof EJS_DEBUG_XX && true === EJS_DEBUG_XX) ||
+    //     /(iPad|iPhone|iPod)/gi.test(navigator.userAgent) || isIpad) {
         await loadStyle('emu-css.css');
         await loadScript('emu-main.js');
         await loadScript('emulator.js');
-    } else {
-        await loadStyle('emu-css.css');
-        await loadScript('emu-main.js');
-        await loadScript('emulator.js');
-        // await loadStyle('emu-css.min.css');
-        // await loadScript('emulator.min.js');
-    }
+    // } else {
+    //     await loadStyle('emu-css.min.css');
+    //     await loadScript('emulator.min.js');
+    // }
     let config = {};
     config.gameUrl = EJS_gameUrl;
     'undefined' != typeof EJS_mameCore && (config.mameCore = EJS_mameCore);
