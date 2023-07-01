@@ -55,8 +55,11 @@
         await loadScript('emu-main.js');
         await loadScript('emulator.js');
     } else {
-        await loadStyle('emu-css.min.css');
-        await loadScript('emulator.min.js');
+        await loadStyle('emu-css.css');
+        await loadScript('emu-main.js');
+        await loadScript('emulator.js');
+        // await loadStyle('emu-css.min.css');
+        // await loadScript('emulator.min.js');
     }
     let config = {};
     config.gameUrl = EJS_gameUrl;
