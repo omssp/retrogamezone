@@ -60,6 +60,7 @@ const HOSTNAME_BLACKLIST = [
   "saver.omssp.workers.dev",
   "cloudflareinsights.com",
   "static.cloudflareinsights.com",
+  "www.google-analytics.com",
 ]
 
 const REGEX_BLACKLIST = [
