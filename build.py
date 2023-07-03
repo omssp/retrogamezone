@@ -255,7 +255,7 @@ CHANGES = [
             ['    <script src="lib/gamelist.js"></script>\n', ''],
             ['script.src = "emu/data/loader.js";',
              """script.src = "https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/emu/data/loader.min.js";
-             window.EJS_pathtodata = "https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/emu/data/";"""],
+             window.EJS_pathtodata;"""],
         ],
     },
 ]
@@ -270,6 +270,7 @@ TOCPY = [change['file'] for change in CHANGES] + [
 
 shutil.rmtree(OUTPUT_DIR, ignore_errors=True)
 # shutil.copytree('src/', OUTPUT_DIR)
+shutil.copytree('src/emu/data/', f"{OUTPUT_DIR}emu/data/")
 os.makedirs(os.path.dirname(f"{OUTPUT_DIR}lib/"), exist_ok=True)
 os.makedirs(os.path.dirname(f"{OUTPUT_DIR}source/"), exist_ok=True)
 for f in set(TOCPY):
