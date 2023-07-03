@@ -259,7 +259,7 @@
                     </center>
                     <form class="myForm" onsubmit="return validateForm()">
                         <input type="search" id="save_name" placeholder="enter a unique save name"
-                            pattern="^(?=.{1,20}$)(?![_\-])(?!.*[_\-]{2})[a-zA-Z0-9\-_]+(?<![_\-])"
+                            pattern="^(?=[a-zA-Z0-9\-_]{1,70}$)(?![_\-])(?!.*[_\-]{2})([a-zA-Z0-9\-_]*[a-zA-Z0-9])"
                             title="only alphabets followed by numbers or hyphen(-) are allowed, don't use spaces or special characters"
                             maxlength="20" autocorrect="off" autocapitalize="none">
                         <select id="save_slot">
@@ -778,7 +778,7 @@
                     clearTimeout(debounce_toggle)
                 debounce_input = setTimeout(() => {
                     validateForm();
-                }, 2000);
+                }, 4000);
             }
         }
         $('.inputDiv .myform').on('click', () => {
