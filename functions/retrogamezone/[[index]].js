@@ -17,11 +17,11 @@ saveHandler.storage_cfkv = class {
             store = store ? store : {}
             store[subkey] = data
         }
-        return await this.env.RETROGZ.put(key, JSON.stringify(store))
+        return await this.env.RETROGAMEZONE.put(key, JSON.stringify(store))
     }
 
     getKV = async (key, subkey) => {
-        const data = JSON.parse(await this.env.RETROGZ.get(key))
+        const data = JSON.parse(await this.env.RETROGAMEZONE.get(key))
         return subkey ? data[subkey] ? data[subkey] : null : data
     }
 }
@@ -29,14 +29,14 @@ saveHandler.storage_cfkv = class {
 saveHandler.storage_upstash = class {
     constructor(env) {
         this.env = env
-        this.upstash_url = env.UPSTASH_URL
+        this.redis_url = env.UPSTASH_REDIS_REST_URL
     }
 
     requestOptions = (command) => ({
         "method": 'POST',
         "headers": {
             "content-type": "application/json;charset=UTF-8",
-            "Authorization": `Bearer ${this.env.UPSTASH_TOKEN}`
+            "Authorization": `Bearer ${this.env.UPSTASH_REDIS_REST_TOKEN}`
         },
         "body": JSON.stringify(command),
         "redirect": 'follow'
@@ -44,7 +44,7 @@ saveHandler.storage_upstash = class {
 
 
     executeCommand = async (command) => {
-        const resp = await fetch(this.upstash_url, this.requestOptions(command.filter(o => o)))
+        const resp = await fetch(this.redis_url, this.requestOptions(command.filter(o => o)))
         const json = await resp.json()
         return json.error ? JSON.stringify([json.error]) : json.result
     }
