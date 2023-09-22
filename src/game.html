@@ -194,6 +194,10 @@
             right: 1em;
             transform: scale(2);
         }
+
+        input[type="text"]:disabled {
+            pointer-events: none;
+        }
     </style>
     <style id="temp_style">
         @media (min-width: 600px) {
@@ -560,13 +564,13 @@
         }
         $(window).scroll(function () {
             currentScroll = $(window).scrollTop();
-            if (currentScroll > 20) {
+            if (20 < currentScroll && currentScroll < 120) {
                 window.focus();
-                $('#header.preview, #previousGame, #nextGame').css("z-index", '-1');
+                $('#header.preview, #previousGame, #nextGame, #footer').css("z-index", '-1');
             } else {
-                $('#header.preview, #previousGame, #nextGame').css("z-index", '1');
+                $('#header.preview, #previousGame, #nextGame, #footer').css("z-index", '1');
             }
-            if (currentScroll > 100) {
+            if (currentScroll > 120) {
                 $('#toTop').fadeIn();
             } else {
                 $('#toTop').fadeOut();
