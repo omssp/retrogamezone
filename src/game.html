@@ -577,7 +577,8 @@
         function checkandchange() {
             const initial_gamepads = window.navigator.getGamepads().filter(o => o).length;
             console.log(initial_gamepads)
-            if (!initial_gamepads) {
+            // if (!initial_gamepads) {
+            if (!0) {
                 loadEMU();
             } else if (!$('#gameFrame').length) {
                 unLoadEMU();
@@ -596,6 +597,14 @@
                 }
                 if (e.keyCode == 82) {
                     window.reset_game();
+                    e.preventDefault();
+                }
+                if (e.keyCode == 192) {
+                    window.save_state();
+                    e.preventDefault();
+                }
+                if (e.keyCode == 49) {
+                    window.load_state();
                     e.preventDefault();
                 }
                 if ((e.keyCode == 8) ||
@@ -625,12 +634,12 @@
                     window.fulls_toggle();
                     e.preventDefault();
                 }
-                if (e.keyCode == 192) {
-                    if (!loadEMU()) {
-                        unLoadEMU()
-                    }
-                    e.preventDefault();
-                }
+                // if (e.keyCode == 192) {
+                //     if (!loadEMU()) {
+                //         unLoadEMU()
+                //     }
+                //     e.preventDefault();
+                // }
                 $('#game, iframe')[0]?.scrollIntoView({
                     behavior: "smooth",
                     block: "center",
