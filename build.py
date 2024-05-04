@@ -14,13 +14,15 @@ BASE_URL = 'https://retrogamezone.blynkomssp.eu.org/'
 MODIFIED = datetime.today().strftime('%Y-%m-%d')
 FREQ = "weekly"
 
+GHBRANCH = os.environ['CF_PAGES_BRANCH']
+
 MANIFEST = {
     "name": "Retro Game Zone",
     "short_name": "RGZ",
     "description": "A place for all nostalgic gamers to relive old memories. ReLived by Shardul Pakhale.",
     "icons": [
         {
-            "src": "https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/nesicon.png",
+            "src": f"https://cdn.jsdelivr.net/gh/omssp/retrogamezone@{GHBRANCH}/src/nesicon.png",
             "sizes": "512x512",
             "type": "image/png"
         }
@@ -39,159 +41,159 @@ global_replacements = [
     ],
     [
         'src="MaterialColorThief.js"',
-        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/MaterialColorThief.min.js"'
+        f'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone@{GHBRANCH}/src/MaterialColorThief.min.js"'
     ],
     [
         'src="lib/dynamicaudio-min.js"',
-        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/lib/dynamicaudio-min.js"'
+        f'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone@{GHBRANCH}/src/lib/dynamicaudio-min.js"'
     ],
     [
         'src="source/ppu.js"',
-        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/source/ppu.min.js"'
+        f'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone@{GHBRANCH}/src/source/ppu.min.js"'
     ],
     [
         'src="source/keyboard.js"',
-        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/source/keyboard.min.js"'
+        f'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone@{GHBRANCH}/src/source/keyboard.min.js"'
     ],
     [
         'src="assets/js/main.js"',
-        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/assets/js/main.min.js"'
+        f'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone@{GHBRANCH}/src/assets/js/main.min.js"'
     ],
     [
         'src="source/utils.js"',
-        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/source/utils.min.js"'
+        f'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone@{GHBRANCH}/src/source/utils.min.js"'
     ],
     [
         'src="assets/js/jquery.min.js"',
-        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/assets/js/jquery.min.js"'
+        f'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone@{GHBRANCH}/src/assets/js/jquery.min.js"'
     ],
     [
         'src="source/ui.js"',
-        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/source/ui.min.js"'
+        f'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone@{GHBRANCH}/src/source/ui.min.js"'
     ],
     [
         'src="lib/nespad.js"',
-        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/lib/nespad.min.js"'
+        f'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone@{GHBRANCH}/src/lib/nespad.min.js"'
     ],
     [
         'src="lib/fshelper.js"',
-        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/lib/fshelper.min.js"'
+        f'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone@{GHBRANCH}/src/lib/fshelper.min.js"'
     ],
     [
         'src="lib/homepad.js"',
-        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/lib/homepad.min.js"'
+        f'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone@{GHBRANCH}/src/lib/homepad.min.js"'
     ],
     # [
     #     'src="lib/gamelist.js"',
-    #     'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/lib/gamelist.min.js"'
+    #     f'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone@{GHBRANCH}/src/lib/gamelist.min.js"'
     # ],
     [
         'src="source/mappers.js"',
-        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/source/mappers.min.js"'
+        f'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone@{GHBRANCH}/src/source/mappers.min.js"'
     ],
     [
         'src="source/nes.js"',
-        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/source/nes.min.js"'
+        f'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone@{GHBRANCH}/src/source/nes.min.js"'
     ],
     [
         'src="source/cpu.js"',
-        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/source/cpu.min.js"'
+        f'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone@{GHBRANCH}/src/source/cpu.min.js"'
     ],
     [
         'src="source/rom.js"',
-        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/source/rom.min.js"'
+        f'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone@{GHBRANCH}/src/source/rom.min.js"'
     ],
     [
         'src="lib/jquery-3.2.1.min.js"',
-        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/lib/jquery-3.2.1.min.js"'
+        f'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone@{GHBRANCH}/src/lib/jquery-3.2.1.min.js"'
     ],
     [
         'src="lib/swapplayers.js"',
-        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/lib/swapplayers.min.js"'
+        f'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone@{GHBRANCH}/src/lib/swapplayers.min.js"'
     ],
     [
         'src="lib/audioUI.js"',
-        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/lib/audioUI.min.js"'
+        f'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone@{GHBRANCH}/src/lib/audioUI.min.js"'
     ],
     # [
     #     'src="source/omssp.js"',
-    #     'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/source/omssp.min.js"'
+    #     f'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone@{GHBRANCH}/src/source/omssp.min.js"'
     # ],
     [
         'src="lib/cookie.js"',
-        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/lib/cookie.min.js"'
+        f'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone@{GHBRANCH}/src/lib/cookie.min.js"'
     ],
     [
         'src="source/papu.js"',
-        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/source/papu.min.js"'
+        f'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone@{GHBRANCH}/src/source/papu.min.js"'
     ],
     [
         'src="assets/js/util.js"',
-        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/assets/js/util.min.js"'
+        f'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone@{GHBRANCH}/src/assets/js/util.min.js"'
     ],
     [
         'src="lib/slugify.js"',
-        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/lib/slugify.min.js"'
+        f'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone@{GHBRANCH}/src/lib/slugify.min.js"'
     ],
     [
         'src="assets/js/skel.min.js"',
-        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/assets/js/skel.min.js"'
+        f'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone@{GHBRANCH}/src/assets/js/skel.min.js"'
     ],
     [
         'src="emu/emu.js"',
-        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/emu/emu.min.js"'
+        f'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone@{GHBRANCH}/src/emu/emu.min.js"'
     ],
     [
         'src="emu/pako.js"',
-        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/emu/pako.min.js"'
+        f'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone@{GHBRANCH}/src/emu/pako.min.js"'
     ],
     [
         'src="emu/save.js"',
-        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/emu/save.min.js"'
+        f'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone@{GHBRANCH}/src/emu/save.min.js"'
     ],
     [
         'src="lib/gamepad.js"',
-        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/lib/gamepad.min.js"'
+        f'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone@{GHBRANCH}/src/lib/gamepad.min.js"'
     ],
     [
         'src="fullS.png"',
-        'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/fullS.png"'
+        f'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone@{GHBRANCH}/src/fullS.png"'
     ],
     [
         'controls/mute.png',
-        'https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/controls/mute.png'
+        f'https://cdn.jsdelivr.net/gh/omssp/retrogamezone@{GHBRANCH}/src/controls/mute.png'
     ],
     [
         'controls/unmute.png',
-        'https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/controls/unmute.png'
+        f'https://cdn.jsdelivr.net/gh/omssp/retrogamezone@{GHBRANCH}/src/controls/unmute.png'
     ],
     [
         'controls/power.png',
-        'https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/controls/power.png'
+        f'https://cdn.jsdelivr.net/gh/omssp/retrogamezone@{GHBRANCH}/src/controls/power.png'
     ],
     [
         'controls/pause.png',
-        'https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/controls/pause.png'
+        f'https://cdn.jsdelivr.net/gh/omssp/retrogamezone@{GHBRANCH}/src/controls/pause.png'
     ],
     [
         'controls/play.png',
-        'https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/controls/play.png'
+        f'https://cdn.jsdelivr.net/gh/omssp/retrogamezone@{GHBRANCH}/src/controls/play.png'
     ],
     [
         'controls/zoom-in.ico',
-        'https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/controls/zoom-in.ico'
+        f'https://cdn.jsdelivr.net/gh/omssp/retrogamezone@{GHBRANCH}/src/controls/zoom-in.ico'
     ],
     [
         'controls/zoom-out.ico',
-        'https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/controls/zoom-out.ico'
+        f'https://cdn.jsdelivr.net/gh/omssp/retrogamezone@{GHBRANCH}/src/controls/zoom-out.ico'
     ],
     [
         'controls/nespad.ico',
-        'https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/controls/nespad.ico'
+        f'https://cdn.jsdelivr.net/gh/omssp/retrogamezone@{GHBRANCH}/src/controls/nespad.ico'
     ],
     [
         'href="assets/css/main.css"',
-        'href="https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/assets/css/main.css"'
+        f'href="https://cdn.jsdelivr.net/gh/omssp/retrogamezone@{GHBRANCH}/src/assets/css/main.css"'
     ],
     [
         'index.html',
@@ -199,7 +201,7 @@ global_replacements = [
     ],
     [
         'preloader.gif',
-        'https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/preloader.gif'
+        f'https://cdn.jsdelivr.net/gh/omssp/retrogamezone@{GHBRANCH}/src/preloader.gif'
     ],
 ]
 
@@ -234,7 +236,7 @@ CHANGES = [
     # {
     #     "file": "source/nes.js",
     #     "replacements": global_replacements + [
-    #         ["'lib/'", "'https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/lib/'"]
+    #         ["'lib/'", f"'https://cdn.jsdelivr.net/gh/omssp/retrogamezone@{GHBRANCH}/src/lib/'"]
     #     ]
     # },
     {
@@ -254,8 +256,8 @@ CHANGES = [
             ['preG = gameNameArray.length - 1;\n', ''],
             ['    <script src="lib/gamelist.js"></script>\n', ''],
             ['script.src = "emu/data/loader.js";',
-             """script.src = "https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/emu/data/loader.min.js";
-             window.EJS_pathtodata = "https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/emu/data/";"""],
+             f"""script.src = "https://cdn.jsdelivr.net/gh/omssp/retrogamezone@{GHBRANCH}/src/emu/data/loader.min.js";
+             window.EJS_pathtodata = "https://cdn.jsdelivr.net/gh/omssp/retrogamezone@{GHBRANCH}/src/emu/data/";"""],
         ],
     },
 ]
