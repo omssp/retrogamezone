@@ -736,9 +736,10 @@
 
         function loadEMU() {
             const gameFrame = document.getElementById('gameFrame');
+            $('.emucontainer').css("padding-top", '4em');
+            setTimeout(game_into_view, 2000);
             if (gameFrame) {
                 gameFrame.remove();
-                $('.emucontainer').css("padding-top", '2em');
 
                 const script = document.createElement("script");
                 script.src = "emu/data/loader.js";
@@ -764,7 +765,6 @@
                 }
 
                 document.body.appendChild(script);
-                setTimeout(game_into_view, 2000);
                 return true
             }
             return false
