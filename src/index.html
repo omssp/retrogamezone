@@ -29,6 +29,7 @@
             -moz-user-select: -moz-none;
             -ms-user-select: none;
             user-select: none;
+            margin: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
         }
 
         .selected {
@@ -136,6 +137,10 @@
             text-align: center;
             filter: invert(1);
             outline: none;
+        }
+
+        header {
+            margin: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
         }
     </style>
     <!-- Google tag (gtag.js) -->

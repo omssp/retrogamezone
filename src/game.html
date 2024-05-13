@@ -252,7 +252,9 @@
             z-index: 90001;
         }
 
-        a {
+        #nextGame,
+        #previousGame,
+        #toTop {
             color: #e74c3c !important;
             text-decoration: none !important;
         }
@@ -268,6 +270,10 @@
 
         .modal {
             --bs-modal-zindex: 90001;
+            margin: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+        }
+
+        header {
             margin: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
         }
     </style>
