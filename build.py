@@ -9,7 +9,7 @@ import xml.etree.ElementTree as ET
 
 OUTPUT_DIR = "dist/retrogamezone/"
 
-BASE_URL = 'https://retrogamezone.blynkomssp.eu.org/'
+BASE_URL = 'https://rgz.omssp.dev/'
 
 MODIFIED = datetime.today().strftime('%Y-%m-%d')
 FREQ = "weekly"
@@ -66,6 +66,14 @@ global_replacements = [
     [
         'src="assets/js/jquery.min.js"',
         f'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone@{GHBRANCH}/src/assets/js/jquery.min.js"'
+    ],
+    [
+        'src="assets/js/jquery.finger.js"',
+        f'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone@{GHBRANCH}/src/assets/js/jquery.finger.min.js"'
+    ],
+    [
+        'src="assets/js/jquery-ui.js"',
+        f'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone@{GHBRANCH}/src/assets/js/jquery-ui.min.js"'
     ],
     [
         'src="source/ui.js"',
@@ -196,6 +204,10 @@ global_replacements = [
         f'href="https://cdn.jsdelivr.net/gh/omssp/retrogamezone@{GHBRANCH}/src/assets/css/main.css"'
     ],
     [
+        'href="assets/css/jquery-ui.css"',
+        f'href="https://cdn.jsdelivr.net/gh/omssp/retrogamezone@{GHBRANCH}/src/assets/css/jquery-ui.css"'
+    ],
+    [
         'index.html',
         '/'
     ],
@@ -205,7 +217,7 @@ global_replacements = [
     ],
 ]
 
-GBAGAMEPAD = """window.EJS_VirtualGamepadSettings=[{type:"button",text:"A",id:"a",location:"right",fontSize:40,left:45,top:70,bold:!0,input_value:8},{type:"button",text:"B",id:"b",location:"right",left:-25,top:140,fontSize:40,bold:!0,input_value:0},{type:"dpad",location:"left",left:"65%",top:"91%",joystickInput:!1,inputValues:[4,5,6,7]},{type:"button",text:"Start",id:"start",location:"right",left:0,top:5,fontSize:15,block:!0,input_value:3},{type:"button",text:"Select",id:"select",location:"left",left:80,top:0,fontSize:15,block:!0,input_value:2},{type:"button",text:"Save",id:"save",location:"left",fontSize:10,left:20,top:-70,block:!0,input_value:122,input_new_cores:122,on_touchstart:"window.save_state()"},{type:"button",text:"Load",id:"load",location:"right",left:60,top:-65,fontSize:10,block:!0,input_value:123,input_new_cores:123,on_touchstart:"window.load_state()"},{type:"button",text:"L",id:"l1",location:"left",fontSize:20,left:110,top:-70,block:!0,input_value:10,input_new_cores:10},{type:"button",text:"R",id:"r1",location:"right",left:-30,top:-65,fontSize:20,block:!0,input_value:11,input_new_cores:11}];"""
+GBAGAMEPAD = """window.EJS_VirtualGamepadSettings=[{type:"button",text:"A",id:"a",location:"right",fontSize:40,left:45,top:70,bold:!0,input_value:8},{type:"button",text:"B",id:"b",location:"right",left:-25,top:140,fontSize:40,bold:!0,input_value:0},{type:"dpad",location:"left",left:"65%",top:"91%",joystickInput:!1,inputValues:[4,5,6,7]},{type:"button",text:"Start",id:"start",location:"right",left:0,top:5,fontSize:15,block:!0,input_value:3},{type:"button",text:"Select",id:"select",location:"left",left:80,top:0,fontSize:15,block:!0,input_value:2},{type:"button",text:"Save",id:"save",location:"left",fontSize:12,left:20,top:-70,block:!0,input_value:122},{type:"button",text:"Load",id:"load",location:"right",left:60,top:-65,fontSize:12,block:!0,input_value:123},{type:"button",text:"L",id:"l1",location:"left",fontSize:20,left:110,top:-70,block:!0,input_value:10,input_new_cores:10},{type:"button",text:"R",id:"r1",location:"right",left:-30,top:-65,fontSize:20,block:!0,input_value:11,input_new_cores:11},{type:"button",text:"Slot",id:"slot",location:"left",fontSize:15,left:20,top:-120,block:true,input_value:124},{type:"button",text:"PP",id:"pp",location:"right",left:60,top:-115,fontSize:15,block:true,input_value:125}];"""
 
 CHANGES = [
     {
@@ -365,8 +377,10 @@ for index, slug in enumerate(slugs):
         ["document.getElementById('gameTitle').innerHTML = document.title = window.EJS_gameName = gameNameArray[para][0]",
          f'window.EJS_gameName = "{games[index][3]}"'],
         ['gameNameArray[para][2]', f'"{games[index][2]}"'],
-        ['<h2 id="gameTitle">&nbsp;</h2>',
-            f'<h2 id="gameTitle">{games[index][0]}</h2>'],
+        ['<h2 id="gameTitle2">&nbsp;</h2>',
+            f'<h2 id="gameTitle2">{games[index][0]}</h2>'],
+        ['<h1 id="gameTitle">&nbsp;</h1>',
+            f'<h1 id="gameTitle">{games[index][0]}</h1>'],
         ['<div id="gameName" style="display: none;">&nbsp;</div>',
             f'<div id="gameName" style="display: none;">{games[index][1]}</div>'],
         ['window.EJS_pathtodata',

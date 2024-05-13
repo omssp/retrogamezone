@@ -23,6 +23,8 @@
     <link rel="Shortcut Icon" href="favicon.ico" type="image/x-icon">
     <link rel="Bookmark" href="favicon.ico">
     <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/jquery-ui.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .infoSpn {
             font-size: 1.6em;
@@ -32,7 +34,7 @@
             padding: 0.1em;
             padding-left: 0.8em;
             padding-right: 0.8em;
-            margin-right: 1em;
+            /* margin-right: 1em; */
             margin-left: 1em;
             border-radius: 100%;
             display: inline-block;
@@ -100,13 +102,16 @@
             }
         }
 
-        .container {
+        .emucontainer {
             padding-top: 1em;
         }
 
         #gameTitle {
+            margin-bottom: 1em;
+            text-align: center;
             cursor: pointer;
             font-family: 'Pattaya', sans-serif;
+            font-size: 2em;
         }
 
         #save_name:invalid {
@@ -172,7 +177,7 @@
         }
 
         @media (min-width: 600px) {
-            .container>div {
+            .emucontainer>div {
                 min-height: calc(100vh + env(safe-area-inset-top));
             }
 
@@ -181,9 +186,16 @@
             }
         }
 
-        .ejs--5e71fd80268afbb1d588e40b993508 input,
-        .ejs--5e71fd80268afbb1d588e40b993508 textarea {
-            background: #fafafa !important;
+        @media (prefers-color-scheme: dark) {
+
+            .ejs_cheat_main input,
+            .ejs_cheat_main textarea {
+                background: #fafafa !important;
+            }
+
+            .ejs_loading_text_glow {
+                box-shadow: 0 0 30px #FAFAFA !important;
+            }
         }
 
         #toTop {
@@ -194,6 +206,68 @@
             left: auto;
             right: 1em;
             transform: scale(2);
+        }
+
+        .ejs_virtualGamepad_button {
+            transform: scale(1.6);
+        }
+
+        .ejs_dpad_main {
+            transform: scale(1.2);
+            margin-top: 60px !important;
+            margin-left: 25px !important;
+        }
+
+        .ejs_context_menu li:last-child {
+            display: none;
+        }
+
+        .ejs_cheat_row label::after {
+            display: none !important;
+        }
+
+        #game a {
+            text-decoration: none !important;
+        }
+
+        .ejs_popup_body .ejs_menu_button {
+            width: auto !important;
+        }
+
+        .b_slot,
+        .b_pp {
+            transform: none !important;
+        }
+
+        .ejs_message {
+            pointer-events: none;
+        }
+
+        .ejs_virtualGamepad_open {
+            top: auto !important;
+            bottom: 5px;
+        }
+
+        .ejs_loading_text {
+            z-index: 90001;
+        }
+
+        a {
+            color: #e74c3c !important;
+            text-decoration: none !important;
+        }
+
+        #save_name {
+            text-align: center;
+            font-size: x-large;
+        }
+
+        #staticBackdrop .modal-footer {
+            justify-content: space-between;
+        }
+
+        .modal {
+            --bs-modal-zindex: 90000;
         }
     </style>
     <style id="temp_style">
@@ -238,7 +312,7 @@
             </a>
         </div>
     </header>
-    <div class="container">
+    <div class="emucontainer">
         <div id="game"></div>
     </div>
     <div id="preview">
@@ -250,111 +324,10 @@
             <div class="content">
                 <header>
                     <center>
-                        <h2 id="gameTitle">&nbsp;</h2>
+                        <h2 id="gameTitle2">&nbsp;</h2>
                     </center>
                     <div id="gameName" style="display: none;">&nbsp;</div>
                 </header>
-                <div class="inputDiv">
-                    <center>
-                        <h4 style="color: inherit;">The <big>Secret Save</big></h4>
-                    </center>
-                    <form class="myForm" onsubmit="return validateForm()">
-                        <input type="search" id="save_name" placeholder="enter a unique save name"
-                            pattern="^(?=[a-zA-Z0-9\-_]{1,70}$)(?![_\-])(?!.*[_\-]{2})([a-zA-Z0-9\-_]*[a-zA-Z0-9])"
-                            title="only alphabets followed by numbers or hyphen(-) are allowed, don't use spaces or special characters"
-                            maxlength="20" autocorrect="off" autocapitalize="none">
-                        <select id="save_slot">
-                            <option value="">Default Slot</option>
-                            <option value="slot1">Slot 1</option>
-                            <option value="slot2">Slot 2</option>
-                            <option value="slot3">Slot 3</option>
-                            <option value="slot4">Slot 4</option>
-                            <option value="slot5">Slot 5</option>
-                            <option value="slot6">Slot 6</option>
-                            <option value="slot7">Slot 7</option>
-                        </select>
-                    </form>
-                    <button class="btn" onclick="dwnSaveState()"><i class="fa fa-lg fa-floppy-o" aria-hidden="true"></i>
-                        <span class="btn-text">Download Save File</span></button>
-                    <span class="wrap" onclick="$('#forceLoad').attr('disabled', false)">
-                        <button class="btn" id="forceLoad" onclick="saver.fetchStateAndLoad();" disabled>
-                            <i class="fa fa-lg fa-cloud-download" aria-hidden="true"></i> <span class="btn-text">Load
-                                from Cloud</span></button></span>
-                    <button class="btn" onclick="opnSaveState()"><i class="fa fa-lg fa-folder-open-o"
-                            aria-hidden="true"></i> <span class="btn-text">Upload Save File</span></button>
-                </div>
-                <h4 style="font-size: x-large; color: #e74c3c;">
-                    Controls
-                    <i class="fa fa-exchange" onclick="keybPrimaryPlayer.toggle()" title="Swap Players"
-                        style="cursor: pointer; color: rgb(244, 67, 54);"></i>
-                </h4>
-                <img class="controllers" src="//cdn.jsdelivr.net/gh/omssp/nesscraper/images/controller1.png"
-                    alt="Controller 1" />
-                <img class="controllers" src="//cdn.jsdelivr.net/gh/omssp/nesscraper/images/controller2.png"
-                    alt="Controller 2" />
-                <center>
-                    <table id="controls">
-                        <tr>
-                            <th>Button</th>
-                            <th>Player 1</th>
-                            <th>Player 2</th>
-                        </tr>
-                        <tr>
-                            <td>Left</td>
-                            <td>A</td>
-                            <td>Left</td>
-                        <tr>
-                            <td>Right</td>
-                            <td>D</td>
-                            <td>Right</td>
-                        </tr>
-                        <tr>
-                            <td>Up</td>
-                            <td>W</td>
-                            <td>Up</td>
-                        </tr>
-                        <tr>
-                            <td>Down</td>
-                            <td>S</td>
-                            <td>Down</td>
-                        </tr>
-                        <tr>
-                            <td>A</td>
-                            <td>L</td>
-                            <td>NUM - .</td>
-                        </tr>
-                        <tr>
-                            <td>B</td>
-                            <td>K</td>
-                            <td>NUM - 0</td>
-                        </tr>
-                        <tr>
-                            <td>Start</td>
-                            <td>H / Enter</td>
-                            <td>NUM - 2</td>
-                        </tr>
-                        <tr>
-                            <td>Select</td>
-                            <td>G / Ctrl</td>
-                            <td>NUM - 1</td>
-                        </tr>
-                    </table>
-                </center>
-
-                <p>
-                    <br /> Keyboard Shortcuts &nbsp;-<br>
-                    <center>
-                        <span class="infospan">M : Mute/UnMute</span>
-                        <span class="infospan">P : Swap Players</span>
-                        <span class="infospan">R : Power/Reset</span>
-                        <span class="infospan">F : Immersive Mode</span>
-                        <span class="infospan">SHIFT + LEFT : Previous Game</span>
-                        <span class="infospan">SHIFT + RIGHT : Next Game</span>
-                        <span class="infospan">SHIFT + UP : Home</span>
-                        <span class="infospan">SPACEBAR : Pause/Resume</span>
-                        <!--span class="infospan">BACKSPACE : Go To HOME</span-->
-                    </center>
-                </p>
             </div>
         </div>
         <a href="game.html" class="nav previous" id="previousGame">
@@ -390,7 +363,121 @@
             <img src="preloader.gif">
         </div>
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Choose your cloud save name</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form class="myForm" onsubmit="return init_cloud()">
+                        <input type="search" id="save_name" placeholder="enter a unique save name"
+                            pattern="^(?=[a-zA-Z0-9\-_]{1,70}$)(?![_\-])(?!.*[_\-]{2})([a-zA-Z0-9\-_]*[a-zA-Z0-9])"
+                            title="only alphabets followed by numbers or hyphen(-) are allowed, don't use spaces or special characters"
+                            maxlength="20" autocorrect="off" autocapitalize="none">
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#infoModal">Info
+                    </button>
+                    <button type="button" class="btn btn-primary" onclick="window.init_cloud()">Update</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <!-- <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="infoModalLabel">Game Info & Controls</h1>
+                </div> -->
+                <div class="modal-body">
+                    <button type="button" class="btn-close float-end" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                    <h1 id="gameTitle">&nbsp;</h1>
+                    <h4 style="text-align: center; color: #e74c3c;">Controls</h4>
+                    <img class="controllers" src="//cdn.jsdelivr.net/gh/omssp/nesscraper/images/controller1.png"
+                        alt="Controller 1" />
+                    <img class="controllers" src="//cdn.jsdelivr.net/gh/omssp/nesscraper/images/controller2.png"
+                        alt="Controller 2" />
+                    <center>
+                        <table id="controls">
+                            <tr>
+                                <th>Button</th>
+                                <th>Player 1</th>
+                                <th>Player 2</th>
+                            </tr>
+                            <tr>
+                                <td>Left</td>
+                                <td>A</td>
+                                <td>Left</td>
+                            <tr>
+                                <td>Right</td>
+                                <td>D</td>
+                                <td>Right</td>
+                            </tr>
+                            <tr>
+                                <td>Up</td>
+                                <td>W</td>
+                                <td>Up</td>
+                            </tr>
+                            <tr>
+                                <td>Down</td>
+                                <td>S</td>
+                                <td>Down</td>
+                            </tr>
+                            <tr>
+                                <td>A</td>
+                                <td>L</td>
+                                <td>NUM - .</td>
+                            </tr>
+                            <tr>
+                                <td>B</td>
+                                <td>K</td>
+                                <td>NUM - 0</td>
+                            </tr>
+                            <tr>
+                                <td>Start</td>
+                                <td>H</td>
+                                <td>NUM - 2</td>
+                            </tr>
+                            <tr>
+                                <td>Select</td>
+                                <td>G</td>
+                                <td>NUM - 1</td>
+                            </tr>
+                        </table>
+                    </center>
+
+                    <p>
+                        <br /> Keyboard Shortcuts <br>
+                        <span class="infospan">M : Mute/UnMute</span>
+                        <!-- <span class="infospan">P : Swap Players</span> -->
+                        <span class="infospan">R : Power/Reset</span>
+                        <span class="infospan">F : Immersive Mode</span>
+                        <span class="infospan">SHIFT + LEFT : Previous Game</span>
+                        <span class="infospan">SHIFT + RIGHT : Next Game</span>
+                        <span class="infospan">SHIFT + UP : Home</span>
+                        <span class="infospan">SPACEBAR : Pause/Resume</span>
+                        <!--span class="infospan">BACKSPACE : Go To HOME</span-->
+                    </p>
+                </div>
+                <!-- <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div> -->
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.finger.js"></script>
+    <script src="assets/js/jquery-ui.js"></script>
     <script src="MaterialColorThief.js"></script>
     <script src="lib/gamelist.js"></script>
     <script src="lib/swapplayers.js"></script>
@@ -430,13 +517,13 @@
 
                 if (darkMode) {
                     $('body, table th').css('color', '#eeeeee');
+                    $('.btn-close').css('background-color', '#eeeeee')
                     $('#gameFrame').contents().find('.nes-status').css('color', '#eeeeee');
                     $('#fsbutton, #gamepadicon, .nav').css('filter', 'drop-shadow(0 0 1px #fafafa)');
                     $('#gameFrame').contents().find('#mubutton, #powbutton, #ppbutton').css('filter', 'drop-shadow(0 0 2px #9e9e9e)');
-                    $('#gameTitle, h4').css('text-shadow', '0px 0px 20px #9e9e9e');
+                    $('#gameTitle').css('text-shadow', '0px 0px 20px #9e9e9e');
                     rgbVals = materialColorThief.getDarkestMaterialColor(imagetag).join(',');
                 } else {
-
                     rgbVals = materialColorThief.getBrightestMaterialColor(imagetag).join(',');
                 }
 
@@ -446,24 +533,17 @@
 
         };
         const updateBackgrounds = (backgroundColorRGB) => {
-            $('body, .nav').css("background-color", `rgb(${backgroundColorRGB})`);
+            $('body, .nav, .modal-content').css("background-color", `rgb(${backgroundColorRGB})`);
             $('#header .inner').css("box-shadow", `0 0 0 1em rgb(${backgroundColorRGB})`);
             $('#footer > a').css("color", `rgb(${backgroundColorRGB})`);
             $('#header.hide .button.hidden, #header.preview .button.hidden').attr('data-content', `rgb(${backgroundColorRGB})`)
+            window.EJS_backgroundColor = `rgb(${backgroundColorRGB})`
         }
 
         $('.controllers').hover(function () {
             $(this).css('cursor', "url('controls/nespad.ico'), auto");
         });
-        let debounce;
-        $(window).resize(function () {
-            if (debounce)
-                clearTimeout(debounce)
-            debounce = setTimeout(() => {
-                // alert($(window).width());
-                checkWidth(document.documentElement.offsetWidth);
-            }, 500);
-        });
+
         $(document).ready(function () {
 
             $(document).on("contextmenu", function (e) { e.preventDefault(); return false; });
@@ -485,27 +565,21 @@
                 $('#fsbutton').fadeOut("slow");
             }
 
-            window.addEventListener("gamepadconnected", (event) => {
-                $('#gamepadicon').fadeIn("slow");
-                keybPrimaryPlayer.setSwapped();
-                checkandchange();
-                console.log("A gamepad connected:");
-                console.log(event.gamepad);
-            });
-            window.addEventListener("gamepaddisconnected", (event) => {
-                $('#gamepadicon').fadeOut("slow");
-                keybPrimaryPlayer.resetSwapped();
-                checkandchange();
-                console.log("A gamepad disconnected:");
-                console.log(event.gamepad);
-            });
+            // window.addEventListener("gamepadconnected", (event) => {
+            //     $('#gamepadicon').fadeIn("slow");
+            //     keybPrimaryPlayer.setSwapped();
+            //     checkandchange();
+            //     console.log("A gamepad connected:");
+            //     console.log(event.gamepad);
+            // });
+            // window.addEventListener("gamepaddisconnected", (event) => {
+            //     $('#gamepadicon').fadeOut("slow");
+            //     keybPrimaryPlayer.resetSwapped();
+            //     checkandchange();
+            //     console.log("A gamepad disconnected:");
+            //     console.log(event.gamepad);
+            // });
             $('#gamepadicon').fadeOut("slow");
-
-            if (debounce)
-                clearTimeout(debounce)
-            debounce = setTimeout(function () {
-                checkWidth(document.documentElement.offsetWidth);
-            }, 1300);
 
             var nexG = (para + 1) % gameNameArray.length;
             var preG = para - 1;
@@ -528,37 +602,41 @@
                     });
                 }
             });
-            setTimeout(checkandchange, 1000);
+            if (navigator.share) {
+                $('#gameTitle, #gameTitle2')
+                    .append(' <i class="fa fa-share-square-o"></i>')
+                    .on('tap', () => {
+                        navigator.share({
+                            title: document.title,
+                            url: document.location.href
+                        }).then(() => {
+                            console.log('Thanks for sharing!');
+                        }).catch(console.error);
+                    });
+            }
 
-            if (navigator.share) $('#gameTitle').append(' <i class="fa fa-share-square-o"></i>')
+            setTimeout(loadEMU, 1000);
 
             const isIpad = /Macintosh/i.test(navigator.userAgent) && navigator.maxTouchPoints && navigator.maxTouchPoints > 1;
             if (/(iPad|iPhone|iPod)/gi.test(navigator.userAgent) || isIpad) {
                 $('body').addClass('ios_fs')
             }
+
+            window.save_name = $("#save_name");
+            window.myModalAlternative = new bootstrap.Modal('#staticBackdrop')
+            window.infoModal = new bootstrap.Modal('#infoModal')
         });
 
-        $('#toTop').click(() => {
-            $('#game')[0].scrollIntoView({
+        const game_into_view = () => {
+            $('#game')[0]?.scrollIntoView({
                 behavior: "smooth",
                 block: "center",
                 inline: "center"
-            })
-        });
-
-        function checkWidth(curWidth) {
-            $('#save_name').is(':focus') ? '' : ($('#game, iframe')[0]?.scrollIntoView({
-                behavior: "smooth",
-                block: "center",
-                inline: "center"
-            }), document.getElementById('gameFrame')?.contentWindow.focusMe());
-            let nesCanvas = $('#gameFrame').contents().find('#nescanvas');
-            if (curWidth < 500 && nesCanvas[0]?.offsetHeight > 400) {
-                nesCanvas.click();
-            } else if (curWidth > 500 && nesCanvas[0]?.offsetHeight < 245) {
-                nesCanvas.click();
-            }
+            });
         }
+
+        $('#toTop').click(game_into_view);
+
         $(window).scroll(function () {
             currentScroll = $(window).scrollTop();
             if (20 < currentScroll && currentScroll < 120) {
@@ -574,18 +652,6 @@
             }
         });
 
-        function checkandchange() {
-            const initial_gamepads = window.navigator.getGamepads().filter(o => o).length;
-            console.log(initial_gamepads)
-            // if (!initial_gamepads) {
-            if (!0) {
-                loadEMU();
-            } else if (!$('#gameFrame').length) {
-                unLoadEMU();
-            } else {
-                $('#preloaderWrapper').fadeOut()
-            }
-        }
 
         $(document).bind('keydown', function (e) {
             if (!$('#save_name').is(':focus') &&
@@ -622,6 +688,14 @@
                     document.getElementById('previousGame').click();
                     e.preventDefault();
                 }
+                if (e.keyCode == 67 && (e.altKey || e.shiftKey)) {
+                    window.show_prompt();
+                    e.preventDefault();
+                }
+                if (e.keyCode == 192) {
+                    window.infoModal.toggle();
+                    e.preventDefault();
+                }
                 // if (e.keyCode == 80) {
                 //     keybPrimaryPlayer.toggle();
                 //     e.preventDefault();
@@ -634,24 +708,21 @@
                     window.fulls_toggle();
                     e.preventDefault();
                 }
-                // if (e.keyCode == 192) {
-                //     if (!loadEMU()) {
-                //         unLoadEMU()
-                //     }
-                //     e.preventDefault();
-                // }
-                $('#game, iframe')[0]?.scrollIntoView({
-                    behavior: "smooth",
-                    block: "center",
-                    inline: "center"
-                });
-                document.getElementById('gameFrame')?.contentWindow.focusMe();
+                game_into_view();
             }
             if (e.keyCode == 90) {
                 toggleStretchMode();
             }
         });
 
+        let debounce;
+        $(window).resize(function () {
+            if (debounce)
+                clearTimeout(debounce)
+            debounce = setTimeout(() => {
+                game_into_view();
+            }, 500);
+        });
 
         function toggleStretchMode() {
             const tempCSS = $('#temp_style')
@@ -666,7 +737,7 @@
             const gameFrame = document.getElementById('gameFrame');
             if (gameFrame) {
                 gameFrame.remove();
-                $('.container').css("padding-top", '4em');
+                $('.emucontainer').css("padding-top", '4em');
 
                 const script = document.createElement("script");
                 script.src = "emu/data/loader.js";
@@ -677,173 +748,43 @@
                 const saveName = getCookie('save_name')?.trim()
                 if (saveName) {
                     window.saver = new SaveHandler(saveName);
-                    window.EJS_onSaveState = (e) => window.saver.saveToOnline(e)
+                    let saveSlot = getCookie(`${window.saver.game_slug}-save_slot`);
+                    saveSlot = saveSlot >= 0 ? saveSlot : old_slot;
+                    window.saver.set_slot(saveSlot);
                     window.EJS_onGameStart = (e) => {
                         window.saver.loadFromOnline(e)
                         onGameStart()
                     }
-                    save_name.val(saveName).css('animation', 'none').attr('disabled', true).attr('title', 'click to edit')
-                    const saveSlot = getCookie(`${window.saver.game_slug}-save_slot`)
-                    save_slot.val(saveSlot).css('animation', 'none').attr('disabled', true).attr('title', 'click to edit')
-                    window.saver.set_slot(saveSlot)
-                    old_slot = saveSlot
-                    old_input = saveName
+                    old_slot = saveSlot;
+                    old_input = saveName;
                 } else {
-                    window.EJS_onSaveState = () => { }
                     window.EJS_onGameStart = onGameStart;
+                    setTimeout(() => { window.infoModal.show() }, 2000)
                 }
 
                 document.body.appendChild(script);
+                setTimeout(() => game_into_view, 1200);
                 return true
             }
             return false
         }
 
         function onGameStart() {
-            $('#preloaderWrapper').fadeOut()
-            moveUIButtons()
+            $('#preloaderWrapper').fadeOut();
+            $('.b_save').on('tap', window.save_state);
+            $('.b_save').on('press', window.show_prompt);
+            $('.b_slot').on('tap', window.change_slot);
+            $('.b_pp').on('tap', window.play_toggle);
+            $('.b_pp').on('press', window.reset_game);
+            $('.b_load').on('tap', () => { window.load_state(); });
+            $('.b_load').on('press', load_cloud);
             setInterval(window.save_local, 5e4);
             window.addEventListener("blur", window.save_local);
         }
 
-        function moveUIButtons() {
-            if ((window.ejs_media || window._0x378b5c).virtualGamepadContainer) {
-                const newButtonsDiv = document.createElement('div');
-                newButtonsDiv.id = "newButtonsDiv";
-                newButtonsDiv.appendChild(window.EJS_emulator.elements.buttons.play[0]);
-                newButtonsDiv.appendChild(window.EJS_emulator.elements.buttons.restart);
-                newButtonsDiv.appendChild(window.EJS_emulator.elements.buttons.mute);
-                // newButtonsDiv.appendChild(document.createElement('br'));
-                // newButtonsDiv.appendChild(window.EJS_emulator.elements.buttons.saveState);
-                // newButtonsDiv.appendChild(window.EJS_emulator.elements.buttons.loadState);
-                window.EJS_emulator.elements.container.appendChild(newButtonsDiv)
-                window.EJS_emulator.elements.inputs.volume.hidden = false;
-                window.EJS_emulator.elements.buttons.mute.hidden = false;
-                window.EJS_emulator.elements.buttons.cheat.hidden = false;
-                window.EJS_emulator.elements.buttons.play[0].addEventListener("click", () => {
-                    if (window.EJS_emulator.playing) toggleStretchMode()
-                })
-            }
-        }
-
-        function unLoadEMU() {
-            const loaderJS = document.getElementById('loaderJS');
-            if (loaderJS) {
-                loaderJS.remove();
-                window.EJS_terminate()
-                $('#fsbutton').off('click');
-                $('.image.fit').html(`<iframe name="gameFrame" id="gameFrame" src="index2.html" style="width: 100%; height: 693px; transition: all 0.9s; margin-top: 15px;" scrolling="no"></iframe>`);
-                $('.container').css("padding-top", '1em').html(`<div id="game"></div>`);
-                return true;
-            }
-            return false;
-        }
-        let debounce_input;
-        let debounce_toggle;
         let old_input;
-        let old_slot;
-        const save_name = $('#save_name').on('keyup paste search', debounceChange);
-        const save_slot = $('#save_slot').on('change', validateForm);
-        const inputDiv = $('.inputDiv');
-        function validateForm() {
-            if (debounce_input)
-                clearTimeout(debounce_input)
-            if (save_name.is(':valid')) {
-                old_input = save_name.css('animation', 'none').attr('disabled', true).attr('title', 'click to edit').blur().val().trim();
-                old_slot = save_slot.css('animation', 'none').attr('disabled', true).attr('title', 'click to edit').val()
+        let old_slot = 0;
 
-                window.save_local()
-                setCookie('save_name', old_input, 365)
-
-                window.saver = new SaveHandler(old_input);
-                window.saver.set_slot(old_slot);
-                setCookie(`${window.saver.game_slug}-save_slot`, old_slot, 365)
-                if (window.EJS_emulator) {
-                    if (navigator.vibrate) navigator.vibrate([50]);
-                    window.EJS_emulator.config.onsavestate = old_input ? (e) => window.saver.saveToOnline(e) : () => { };
-                    // window.EJS_emulator.on('start-game', window.saver.loadFromOnline)
-                    saver.loadFromOnline()
-                }
-
-                if (debounce_toggle)
-                    clearTimeout(debounce_toggle)
-                setTimeout(() => {
-                    toggleSecretSave('hide');
-                }, 6e4);
-            }
-            return false;
-        }
-        function debounceChange() {
-            let new_input = save_name.val().replaceAll(' ', '-');
-            save_name.val(new_input);
-            if (old_input != new_input) {
-                save_name.css('animation', 'pulse 1s infinite')
-                save_slot.css('animation', 'pulse 1s infinite')
-                if (debounce_input)
-                    clearTimeout(debounce_input)
-                if (debounce_toggle)
-                    clearTimeout(debounce_toggle)
-                debounce_input = setTimeout(() => {
-                    validateForm();
-                }, 4000);
-            }
-        }
-        $('.inputDiv .myform').on('click', () => {
-            if (save_name.is(':disabled')) {
-                save_name.attr('disabled', false).css('cursor', 'auto').attr('title', "only alphabets followed by numbers or hyphen(-) are allowed, don't use spaces or special characters")
-                save_slot.attr('disabled', false).css('cursor', 'auto').attr('title', "select your save game slot")
-            }
-        });
-
-        const toggleSecretSave = (hide) => {
-            if (!window.EJS_emulator) return;
-            if (inputDiv.css('max-height') == "200px" || hide === 'hide') {
-                inputDiv.css('max-height', "0").css('padding', "0");
-                $('#forceLoad').attr('disabled', 'true');
-            } else {
-                inputDiv.css('max-height', "200px").css('padding', "0 1em");
-                if (debounce_toggle)
-                    clearTimeout(debounce_toggle)
-                setTimeout(() => {
-                    toggleSecretSave('hide');
-                }, 6e4);
-                if (navigator.share) {
-                    navigator.share({
-                        title: document.title,
-                        url: document.location.href
-                    }).then(() => {
-                        console.log('Thanks for sharing!');
-                    }).catch(console.error);
-                }
-            }
-        }
-
-        $('#gameTitle').on('click', toggleSecretSave);
-
-        const dwnSaveState = () => {
-            if (window.EJS_emulator) {
-                window.EJS_emulator.config.onsavestate = null;
-                window.save_state();
-                setTimeout(() => {
-                    window.EJS_emulator.config.onsavestate = (e) => window.saver.saveToOnline(e);
-                }, 500);
-                if (debounce_toggle)
-                    clearTimeout(debounce_toggle)
-                setTimeout(() => {
-                    toggleSecretSave('hide');
-                }, 6e4);
-            }
-        }
-        const opnSaveState = () => {
-            if (window.EJS_emulator) {
-                window.EJS_emulator.game.stateloadField.click()
-                if (debounce_toggle)
-                    clearTimeout(debounce_toggle)
-                setTimeout(() => {
-                    toggleSecretSave('hide');
-                }, 6e4);
-            }
-        }
     </script>
     <script type="text/javascript">
         if (navigator.serviceWorker) {

@@ -64,7 +64,8 @@ const HOSTNAME_BLACKLIST = [
 ]
 
 const REGEX_BLACKLIST = [
-  "https://retrogamezone.blynkomssp.eu.org/retrogamezone/.*",
+  "https:\/\/retrogamezone\.blynkomssp\.eu\.org\/retrogamezone\/.*",
+  "https:\/\/rgz\.omssp\.dev\/retrogamezone\/.*",
 ]
 
 const RUNTIME = CACHE_NAMESPACE + 'runtime-v2'
