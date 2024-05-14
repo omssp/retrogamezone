@@ -199,14 +199,12 @@
         }
 
         #toTop {
-            filter: none !important;
             background-color: rgb(0, 0, 0, 0) !important;
             bottom: 1em;
             top: auto !important;
             left: auto;
             right: 1em;
             transform: scale(2);
-            text-shadow: 0px 0px 5px #fff;
         }
 
         .ejs_virtualGamepad_button {
@@ -258,6 +256,10 @@
         #toTop {
             color: #e74c3c !important;
             text-decoration: none !important;
+        }
+
+        #previousGame {
+            justify-content: end;
         }
 
         #save_name {
@@ -349,8 +351,6 @@
         </a>
         <a class="nav top" id="toTop">
             <span class="fa fa-chevron-up"></span>
-            <!--<span class="fa fa-crosshairs"></span>-->
-            <!--<span class="fa fa-bullseye"></span>-->
         </a>
     </div>
     <footer id="footer">
@@ -598,7 +598,7 @@
             var preG = para - 1;
             if (preG < 0)
                 preG = gameNameArray.length - 1;
-            $('#previousGame').attr("href", "game.html?" + preG.toString());
+            $('#').attr("href", "game.html?" + preG.toString());
             $('#nextGame').attr("href", "game.html?" + nexG.toString());
 
             $("a").each(function () {
@@ -655,10 +655,10 @@
             let up = $('#game')[0].offsetTop - parseInt(getComputedStyle(document.body).paddingTop) + 10
             if (20 < currentScroll && currentScroll < up) {
                 window.focus();
-                $('#header.preview, #previousGame, #nextGame, #footer').css("z-index", '-1');
+                $('#header.preview, #, #nextGame, #footer').css("z-index", '-1');
                 $('#toTop').fadeOut();
             } else {
-                $('#header.preview, #previousGame, #nextGame, #footer').css("z-index", '1');
+                $('#header.preview, #, #nextGame, #footer').css("z-index", '1');
                 $('#toTop').fadeIn();
             }
         });
@@ -696,7 +696,7 @@
                 }
                 if ((e.keyCode == 80 && (e.altKey || e.shiftKey)) ||
                     (e.keyCode == 37 && (e.altKey || e.shiftKey))) {
-                    document.getElementById('previousGame').click();
+                    document.getElementById('').click();
                     e.preventDefault();
                 }
                 if (e.keyCode == 67 && (e.altKey || e.shiftKey)) {
