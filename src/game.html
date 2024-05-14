@@ -595,7 +595,7 @@
             var preG = para - 1;
             if (preG < 0)
                 preG = gameNameArray.length - 1;
-            $('#').attr("href", "game.html?" + preG.toString());
+            $('#previousGame').attr("href", "game.html?" + preG.toString());
             $('#nextGame').attr("href", "game.html?" + nexG.toString());
 
             $("a").each(function () {
@@ -693,7 +693,7 @@
                 }
                 if ((e.keyCode == 80 && (e.altKey || e.shiftKey)) ||
                     (e.keyCode == 37 && (e.altKey || e.shiftKey))) {
-                    document.getElementById('').click();
+                    document.getElementById('previousGame').click();
                     e.preventDefault();
                 }
                 if (e.keyCode == 67 && (e.altKey || e.shiftKey)) {
