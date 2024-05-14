@@ -758,7 +758,7 @@
                 if (saveName) {
                     window.saver = new SaveHandler(saveName);
                     let saveSlot = getCookie(`${window.saver.game_slug}-save_slot`);
-                    saveSlot = saveSlot >= 0 ? saveSlot : old_slot;
+                    saveSlot = Number.isInteger(saveSlot) && saveSlot >= 0 ? saveSlot : 0;
                     window.saver.set_slot(saveSlot);
                     window.EJS_onGameStart = (e) => {
                         window.saver.loadFromOnline(e)
