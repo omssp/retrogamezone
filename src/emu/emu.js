@@ -87,6 +87,7 @@ window.init_cloud = () => {
             setCookie('save_name', old_input, 365)
             window.saver = new SaveHandler(old_input);
             window.saver.set_slot(old_slot);
+            setCookie(`${window.saver.game_slug}-save_slot`, old_slot, 365)
             window.cloud_message('CLOUD : User changed')
         }
     } else {
