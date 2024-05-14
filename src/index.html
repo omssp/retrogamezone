@@ -141,6 +141,9 @@
 
         header {
             margin: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+            @supports (margin-top: env(safe-area-inset-top)) and (-webkit-touch-callout: none) {
+                margin-top: calc(env(safe-area-inset-top) - 10px);
+            }
         }
     </style>
     <!-- Google tag (gtag.js) -->
