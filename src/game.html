@@ -655,10 +655,10 @@
             let up = $('#game')[0].offsetTop - parseInt(getComputedStyle(document.body).paddingTop) + 10
             if (20 < currentScroll && currentScroll < up) {
                 window.focus();
-                $('#header.preview, #, #nextGame, #footer').css("z-index", '-1');
+                $('#header.preview, #previousGame, #nextGame, #footer').css("z-index", '-1');
                 $('#toTop').fadeOut();
             } else {
-                $('#header.preview, #, #nextGame, #footer').css("z-index", '1');
+                $('#header.preview, #previousGame, #nextGame, #footer').css("z-index", '1');
                 $('#toTop').fadeIn();
             }
         });
