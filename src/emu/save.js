@@ -83,14 +83,13 @@ class SaveHandler {
                         this.mutex_flag = false;
                         this.fetchStateAndLoad();
                         console.log('saved time fetched : new state available')
-                    } else {
-                        window.load_state()
-                        console.log('saved time fetched : no new state')
-                        if (navigator.vibrate) navigator.vibrate([100, 50, 50]);
-                    }
-                } else {
-                    console.log('no saved time found')
+                        return;
+                    } 
                 }
+                console.log('no saved time found')
+                window.load_state()
+                console.log('saved time fetched : no new state')
+                if (navigator.vibrate) navigator.vibrate([100, 50, 50]);
             },
             error: () => { window.load_state(); }
         });
