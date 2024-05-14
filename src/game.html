@@ -206,6 +206,7 @@
             left: auto;
             right: 1em;
             transform: scale(2);
+            text-shadow: 0px 0px 5px #fff;
         }
 
         .ejs_virtualGamepad_button {
@@ -347,7 +348,9 @@
             <span class="fa fa-chevron-right"></span>
         </a>
         <a class="nav top" id="toTop">
-            <span class="fa fa-chevron-up"></span>
+            <!--<span class="fa fa-chevron-up"></span>-->
+            <span class="fa fa-crosshairs"></span>
+            <!--<span class="fa fa-bullseye"></span>-->
         </a>
     </div>
     <footer id="footer">
@@ -648,17 +651,15 @@
         $('#toTop').click(game_into_view);
 
         $(window).scroll(function () {
-            currentScroll = $(window).scrollTop();
-            if (20 < currentScroll && currentScroll < 120) {
+            let currentScroll = $(window).scrollTop();
+            let up = $('#game')[0].offsetTop - parseInt(getComputedStyle(document.body).paddingTop) + 10
+            if (20 < currentScroll && currentScroll < up) {
                 window.focus();
                 $('#header.preview, #previousGame, #nextGame, #footer').css("z-index", '-1');
+                $('#toTop').fadeOut();
             } else {
                 $('#header.preview, #previousGame, #nextGame, #footer').css("z-index", '1');
-            }
-            if (currentScroll > 120) {
                 $('#toTop').fadeIn();
-            } else {
-                $('#toTop').fadeOut();
             }
         });
 
