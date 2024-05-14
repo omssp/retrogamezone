@@ -27,7 +27,7 @@ class SaveHandler {
 
     set_slot = (save_slot) => {
         this.save_slot = save_slot;
-        if (this.save_slot >= 0) {
+        if (Number.isInteger(this.save_slot) && this.save_slot >= 0) {
             this.base_link = `${this.og_base}/${this.save_slot}`;
             this.make_urls();
         }
