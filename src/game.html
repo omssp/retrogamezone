@@ -674,7 +674,10 @@
                     e.preventDefault();
                 }
                 if (e.keyCode == 81) { //q
-                    window.save_state();
+                    if (e.altKey || e.shiftKey)
+                        window.show_prompt();
+                    else
+                        window.save_state();
                     e.preventDefault();
                 }
                 if (e.keyCode == 69) { //e
@@ -697,10 +700,6 @@
                 if ((e.keyCode == 80 && (e.altKey || e.shiftKey)) ||
                     (e.keyCode == 37 && (e.altKey || e.shiftKey))) {
                     document.getElementById('previousGame').click();
-                    e.preventDefault();
-                }
-                if (e.keyCode == 67 && (e.altKey || e.shiftKey)) {
-                    window.show_prompt();
                     e.preventDefault();
                 }
                 if (e.keyCode == 192) {
