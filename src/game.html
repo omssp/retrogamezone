@@ -678,7 +678,10 @@
                     e.preventDefault();
                 }
                 if (e.keyCode == 69) { //e
-                    window.load_state();
+                    if (e.altKey || e.shiftKey)
+                        window.load_cloud();
+                    else
+                        window.load_state();
                     e.preventDefault();
                 }
                 if ((e.keyCode == 8) ||
@@ -785,7 +788,7 @@
             $('.b_pp').on('tap', window.play_toggle);
             $('.b_pp').on('press', window.reset_game);
             $('.b_load').on('tap', () => { window.load_state(); });
-            $('.b_load').on('press', load_cloud);
+            $('.b_load').on('press', window.load_cloud);
             setInterval(window.save_local, 5e4);
             window.addEventListener("blur", window.save_local);
         }
