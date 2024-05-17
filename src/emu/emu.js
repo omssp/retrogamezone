@@ -10,6 +10,10 @@ window.EJS_volume = 1;
 // window.EJS_threads = true;
 window.EJS_backgroundImage = 'https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/nesicon.png'
 // window.EJS_DEBUG_XX = true
+
+const TOTAL_SLOTS = 5;
+const ROLLI_SLOTS = 2;
+
 $.Finger = {
     pressDuration: 1000,
     doubleTapInterval: 300,
@@ -36,14 +40,29 @@ window.EJS_onSaveSave = async () => {
 
 window.mute_toggle = () => {
     if (navigator.vibrate) navigator.vibrate([50]);
-    window.EJS_emulator.setVolume(EJS_emulator.muted ? 1 : 0);
+
+    if(window.EJS_emulator.muted) {
+        window.cloud_message('LOUD');
+        window.EJS_emulator.setVolume(1);
+        window.b_mute.html(`<span class="fa fa-volume-up"></span>`)
+    } else {
+        window.cloud_message('MUTE');
+        window.EJS_emulator.setVolume(0);
+        window.b_mute.html(`<span class="fa fa-volume-off"></span>`)
+    }
 }
 
 
 window.play_toggle = () => {
     if (navigator.vibrate) navigator.vibrate([50]);
     window.EJS_emulator.togglePlaying();
-    window.cloud_message(window.EJS_emulator.paused ? 'PAUSED' : 'PLAYING');
+    if (window.EJS_emulator.paused) {
+        window.cloud_message('PAUSED');
+        window.b_pp.html(`<span class="fa fa-play"></span>`)
+    } else {
+        window.cloud_message('PLAYING');
+        window.b_pp.html(`<span class="fa fa-pause"></span>`)
+    }
 }
 
 
@@ -57,6 +76,9 @@ window.reset_game = () => {
 window.save_state = () => {
     if (navigator.vibrate) navigator.vibrate([50]);
 
+    if (old_slot < ROLLI_SLOTS)
+        window.change_slot(++old_slot % ROLLI_SLOTS)
+    
     const state = window.save_local();
     if (window.saver) {
         window.saver.saveToOnline({ state });
@@ -111,8 +133,11 @@ window.cloud_message = (message) => {
     window.EJS_emulator.displayMessage(message)
 }
 
-window.change_slot = () => {
-    old_slot = old_slot >= 0 ? ++old_slot % 5 : 0;
+window.change_slot = (num) => {
+    if (Number.isInteger(num) && num >= 0 && num < TOTAL_SLOTS)
+        old_slot = num;
+    else
+        old_slot = old_slot >= 0 ? ++old_slot % TOTAL_SLOTS : 0;
     if (window.saver) {
         window.saver.set_slot(old_slot);
         window.cloud_message('CLOUD : Slot changed')
@@ -242,7 +267,7 @@ window.EJS_VirtualGamepadSettings = [
         id: "slot",
         location: "left",
         fontSize: 15,
-        left: 50,
+        left: 20,
         top: -120,
         block: true,
         input_value: 124,
@@ -263,12 +288,34 @@ window.EJS_VirtualGamepadSettings = [
         text: "PP",
         id: "pp",
         location: "right",
-        left: 30,
+        left: 60,
         top: -115,
         fontSize: 15,
         block: true,
         input_value: 125
-    }
+    },
+    {
+        type: "button",
+        text: "Mu",
+        id: "mute",
+        location: "right",
+        left: 0,
+        top: -115,
+        fontSize: 15,
+        block: true,
+        input_value: 125
+    },
+    {
+        type: "button",
+        text: "Re",
+        id: "rewi",
+        location: "left",
+        fontSize: 15,
+        left: 80,
+        top: -120,
+        block: true,
+        input_value: 28,
+    },
 ];
 
 //TODO fix export import save state & add cloud sync on import
@@ -296,6 +343,7 @@ window.EJS_defaultOptions = {
     'save-state-location': 'browser',
     'fceumm_sndquality': 'Very High',
     'fceumm_aspect': "4:3",
+    'rewindEnabled': "enabled",
 }
 
 EJS_defaultControls = {

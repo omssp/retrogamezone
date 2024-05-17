@@ -234,8 +234,18 @@
         }
 
         .b_slot,
-        .b_pp {
+        .b_pp,
+        .b_mute,
+        .b_rewi {
             transform: none !important;
+        }
+
+        .b_pp .fa::before,
+        .b_mute .fa::before,
+        .b_rewi .fa::before {
+            font-family: FontAwesome;
+            font-size: 18px;
+            line-height: 29px;
         }
 
         .ejs_message {
@@ -278,6 +288,7 @@
 
         header {
             margin: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+
             @supports (margin-top: env(safe-area-inset-top)) and (-webkit-touch-callout: none) {
                 margin-top: calc(env(safe-area-inset-top) - 10px);
             }
@@ -784,16 +795,25 @@
         }
 
         function onGameStart() {
+            window.b_pp = $(".b_pp");
+            window.b_mute = $(".b_mute");
             $('#preloaderWrapper').fadeOut();
             $('.b_save').on('tap', window.save_state);
             $('.b_save').on('press', window.show_prompt);
             $('.b_slot').on('tap', window.change_slot);
-            $('.b_pp').on('tap', window.play_toggle);
-            $('.b_pp').on('press', window.reset_game);
+            window.b_pp.on('tap', window.play_toggle);
+            window.b_pp.on('press', window.reset_game);
             $('.b_load').on('tap', () => { window.load_state(); });
             $('.b_load').on('press', window.load_cloud);
+            window.b_mute.on('tap', window.mute_toggle);
+            
             setInterval(window.save_local, 5e4);
             window.addEventListener("blur", window.save_local);
+
+            $('.b_rewi').html(`<span class="fa fa-fast-backward"></span>`)
+            window.b_pp.html(`<span class="fa fa-pause"></span>`)
+            window.b_mute.html(`<span class="fa fa-volume-up"></span>`)
+            
         }
 
         let old_input;
