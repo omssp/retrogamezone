@@ -279,6 +279,7 @@ TOCPY = [change['file'] for change in CHANGES] + [
     'lib/gamelist.js',
     'sw.js',
     'offlineImage.png',
+    '_headers',
 ]
 
 

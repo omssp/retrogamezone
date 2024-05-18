@@ -7,7 +7,7 @@ window.EJS_pathtodata = "emu/data/"
 window.EJS_oldCores = true;
 window.EJS_startOnLoaded = true;
 window.EJS_volume = 1;
-// window.EJS_threads = true;
+window.EJS_threads = true;
 window.EJS_backgroundImage = 'https://cdn.jsdelivr.net/gh/omssp/retrogamezone/src/nesicon.png'
 // window.EJS_DEBUG_XX = true
 
