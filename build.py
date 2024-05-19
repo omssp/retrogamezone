@@ -76,6 +76,10 @@ global_replacements = [
         f'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone@{GHBRANCH}/src/assets/js/jquery-ui.min.js"'
     ],
     [
+        'src="assets/js/jquery-idlemouse.js"',
+        f'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone@{GHBRANCH}/src/assets/js/jquery-idlemouse.min.js"'
+    ],
+    [
         'src="source/ui.js"',
         f'src="https://cdn.jsdelivr.net/gh/omssp/retrogamezone@{GHBRANCH}/src/source/ui.min.js"'
     ],

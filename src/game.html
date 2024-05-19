@@ -295,6 +295,10 @@
                 margin-top: calc(env(safe-area-inset-top) - 10px);
             }
         }
+
+        #game.idlemouse {
+            cursor: none;
+        }
     </style>
     <style id="temp_style">
         @media (min-width: 600px) {
@@ -501,6 +505,7 @@
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/jquery.finger.js"></script>
     <script src="assets/js/jquery-ui.js"></script>
+    <script src="assets/js/jquery-idlemouse.js"></script>
     <script src="MaterialColorThief.js"></script>
     <script src="lib/gamelist.js"></script>
     <script src="lib/swapplayers.js"></script>
@@ -578,7 +583,7 @@
                     window.location.replace('index.html');
                 });
             }
-            const isMobile = ('ontouchstart' in document.documentElement);
+            isMobile = ('ontouchstart' in document.documentElement);
             const isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
             if (!isChrome && isMobile &&
                 !(document.documentElement.requestFullscreen ||
@@ -649,10 +654,18 @@
             window.save_name = $("#save_name");
             window.myModalAlternative = new bootstrap.Modal('#staticBackdrop')
             window.infoModal = new bootstrap.Modal('#infoModal')
+            window.game = $('#game');
+            $(window).on('idle:start', function () {
+                window.game.addClass('idlemouse')
+            });
+
+            $(window).on('idle:stop', function () {
+                window.game.removeClass('idlemouse')
+            });
         });
 
         const game_into_view = () => {
-            $('#game')[0]?.scrollIntoView({
+            window.game[0]?.scrollIntoView({
                 behavior: "smooth",
                 block: "center",
                 inline: "center"
@@ -663,7 +676,7 @@
 
         $(window).scroll(function () {
             let currentScroll = $(window).scrollTop();
-            let up = $('#game')[0].offsetTop - parseInt(getComputedStyle(document.body).paddingTop) + 10
+            let up = window.game[0].offsetTop - parseInt(getComputedStyle(document.body).paddingTop) + 10
             if (20 < currentScroll && currentScroll < up) {
                 window.focus();
                 $('#header.preview, #previousGame, #nextGame, #footer').css("z-index", '-1');
@@ -812,7 +825,7 @@
             window.b_load.on('tap', () => { window.load_state(); });
             window.b_load.on('press', window.load_cloud);
             window.b_mute.on('tap', window.mute_toggle);
-            
+
             setInterval(window.save_local, 5e4);
             window.addEventListener("blur", window.save_local);
 
@@ -820,6 +833,11 @@
             window.b_pp.html(`<span class="fa fa-pause"></span>`)
             window.b_mute.html(`<span class="fa fa-volume-up"></span>`)
             window.b_slot.html(`<span class="fa fa-tasks"></span>`)
+
+            if (isMobile)
+                $(window.EJS_emulator.elements.parent).on('mousemove', e => {
+                    window.EJS_emulator.menu.close();
+                })
         }
 
         let old_input;
