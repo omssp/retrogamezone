@@ -38,8 +38,9 @@ class SaveHandler {
         this.mutex_flag = true;
     }
 
-    complete = (svld) => {
-        svld?.css('animation', 'none');
+    complete = () => {
+        window.b_save.css('animation', 'none');
+        window.b_load.css('animation', 'none');
         setTimeout(() => { this.mutex_flag = false; }, 2000);
     }
 
@@ -58,7 +59,7 @@ class SaveHandler {
             data: JSON.stringify(data),
             context: this,
             beforeSend: () => { this.beforeSend(window.b_save); },
-            complete: () => { this.complete(window.b_save); },
+            complete: this.complete,
             success: function (resp) {
                 console.log('saved online')
                 if (navigator.vibrate) navigator.vibrate([50, 50, 100]);
@@ -76,7 +77,7 @@ class SaveHandler {
             url: this.get_time_url,
             context: this,
             beforeSend: () => { this.beforeSend(window.b_load); },
-            complete: () => { this.complete(window.b_load); },
+            complete: this.complete,
             success: function (resp) {
                 if (resp) {
                     let time = JSON.parse(resp);
@@ -105,7 +106,7 @@ class SaveHandler {
             url: this.get_state_url,
             context: this,
             beforeSend: () => { this.beforeSend(window.b_load); },
-            complete: () => { this.complete(window.b_load); },
+            complete: this.complete,
             success: function (resp) {
                 if (resp) {
                     window.load_state(pako.inflate(JSON.parse(resp)));
