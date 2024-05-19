@@ -643,6 +643,7 @@
             const isIpad = /Macintosh/i.test(navigator.userAgent) && navigator.maxTouchPoints && navigator.maxTouchPoints > 1;
             if (/(iPad|iPhone|iPod)/gi.test(navigator.userAgent) || isIpad) {
                 $('body').addClass('ios_fs')
+                if (isMobile) window.EJS_threads = false;
             }
 
             window.save_name = $("#save_name");
