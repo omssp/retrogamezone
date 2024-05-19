@@ -835,11 +835,13 @@
             window.b_slot.html(`<span class="fa fa-tasks"></span>`)
 
             if (isMobile) {
-                window.EJS_emulator.listeners
-                    .filter(o => o.elem == window.EJS_emulator.elements.parent && o.listener == 'mousemove')
-                    .forEach(el => {
-                        el.elem.removeEventListener(el.listener, el.cb)
-                    });
+                setTimeout(() => {
+                    window.EJS_emulator.listeners
+                        .filter(o => o.elem == window.EJS_emulator.elements.parent && o.listener == 'mousemove')
+                        .forEach(el => {
+                            el.elem.removeEventListener(el.listener, el.cb)
+                        });
+                }, 2000)
             }
         }
 
