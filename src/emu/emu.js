@@ -55,6 +55,7 @@ window.mute_toggle = () => {
 
 window.play_toggle = () => {
     if (navigator.vibrate) navigator.vibrate([50]);
+
     window.EJS_emulator.togglePlaying();
     if (window.EJS_emulator.paused) {
         window.cloud_message('PAUSED');
@@ -67,7 +68,7 @@ window.play_toggle = () => {
 
 
 window.reset_game = () => {
-    if (navigator.vibrate) navigator.vibrate([50]);
+    if (navigator.vibrate) navigator.vibrate([50 50 50]);
     window.EJS_emulator.gameManager.restart();
     window.cloud_message('RESET');
 }
@@ -86,6 +87,7 @@ window.save_state = () => {
 }
 
 window.show_prompt = () => {
+    if (navigator.vibrate) navigator.vibrate([50 50 50]);
     if (old_input) window.save_name.val(old_input);
     window.myModalAlternative.show();
 }
@@ -122,6 +124,7 @@ window.init_cloud = () => {
 }
 
 window.load_cloud = () => {
+    if (navigator.vibrate) navigator.vibrate([50 50 50]);
     if (window.saver) {
         window.saver.fetchStateAndLoad();
     }
@@ -134,6 +137,8 @@ window.cloud_message = (message) => {
 }
 
 window.change_slot = (num) => {
+    if (navigator.vibrate) navigator.vibrate([50]);
+
     if (Number.isInteger(num) && num >= 0 && num < TOTAL_SLOTS)
         old_slot = num;
     else

@@ -33,13 +33,13 @@ class SaveHandler {
         }
     }
 
-    beforeSend = () => {
-        $('.b_save').css('animation', 'pulse 1s infinite');
+    beforeSend = (svld) => {
+        svld.css('animation', 'pulse 1s infinite');
         this.mutex_flag = true;
     }
 
     complete = () => {
-        $('.b_save').css('animation', 'none');
+        svld.css('animation', 'none');
         setTimeout(() => { this.mutex_flag = false; }, 2000);
     }
 
@@ -57,11 +57,12 @@ class SaveHandler {
             url: this.put_url,
             data: JSON.stringify(data),
             context: this,
-            beforeSend: this.beforeSend,
-            complete: this.complete,
+            beforeSend: () => { this.beforeSend(window.b_save); },
+            complete: () => { this.complete(window.b_save); },
             success: function (resp) {
                 console.log('saved online')
                 if (navigator.vibrate) navigator.vibrate([50, 50, 100]);
+                window.b_save.effect('shake');
             }
         });
     }
@@ -74,8 +75,8 @@ class SaveHandler {
             type: 'GET',
             url: this.get_time_url,
             context: this,
-            beforeSend: this.beforeSend,
-            complete: this.complete,
+            beforeSend: () => { this.beforeSend(window.b_load); },
+            complete: () => { this.complete(window.b_load); },
             success: function (resp) {
                 if (resp) {
                     let time = JSON.parse(resp);
@@ -84,7 +85,7 @@ class SaveHandler {
                         this.fetchStateAndLoad();
                         console.log('saved time fetched : new state available')
                         return;
-                    } 
+                    }
                 }
                 console.log('no saved time found')
                 window.load_state()
@@ -103,8 +104,8 @@ class SaveHandler {
             type: 'GET',
             url: this.get_state_url,
             context: this,
-            beforeSend: this.beforeSend,
-            complete: this.complete,
+            beforeSend: () => { this.beforeSend(window.b_load); },
+            complete: () => { this.complete(window.b_load); },
             success: function (resp) {
                 if (resp) {
                     window.load_state(pako.inflate(JSON.parse(resp)));
@@ -112,6 +113,7 @@ class SaveHandler {
                     window.cloud_message('CLOUD : Load successful')
                     console.log('saved state fetched and loaded')
                     if (navigator.vibrate) navigator.vibrate([50, 50, 100]);
+                    window.b_load.effect('shake');
                 } else {
                     console.log('no saved state found')
                 }

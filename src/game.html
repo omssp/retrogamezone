@@ -801,14 +801,16 @@
             window.b_pp = $(".b_pp");
             window.b_mute = $(".b_mute");
             window.b_slot = $(".b_slot");
+            window.b_save = $('.b_save');
+            window.b_load = $('.b_load');
             $('#preloaderWrapper').fadeOut();
-            $('.b_save').on('tap', window.save_state);
-            $('.b_save').on('press', window.show_prompt);
+            window.b_save.on('tap', window.save_state);
+            window.b_save.on('press', window.show_prompt);
             window.b_slot.on('tap', window.change_slot);
             window.b_pp.on('tap', window.play_toggle);
             window.b_pp.on('press', window.reset_game);
-            $('.b_load').on('tap', () => { window.load_state(); });
-            $('.b_load').on('press', window.load_cloud);
+            window.b_load.on('tap', () => { window.load_state(); });
+            window.b_load.on('press', window.load_cloud);
             window.b_mute.on('tap', window.mute_toggle);
             
             setInterval(window.save_local, 5e4);
