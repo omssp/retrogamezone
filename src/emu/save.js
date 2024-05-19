@@ -38,7 +38,7 @@ class SaveHandler {
         this.mutex_flag = true;
     }
 
-    complete = () => {
+    complete = (svld) => {
         svld.css('animation', 'none');
         setTimeout(() => { this.mutex_flag = false; }, 2000);
     }
