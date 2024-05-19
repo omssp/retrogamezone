@@ -34,12 +34,12 @@ class SaveHandler {
     }
 
     beforeSend = (svld) => {
-        svld.css('animation', 'pulse 1s infinite');
+        svld?.css('animation', 'pulse 1s infinite');
         this.mutex_flag = true;
     }
 
     complete = (svld) => {
-        svld.css('animation', 'none');
+        svld?.css('animation', 'none');
         setTimeout(() => { this.mutex_flag = false; }, 2000);
     }
 
