@@ -68,7 +68,7 @@ window.play_toggle = () => {
 
 
 window.reset_game = () => {
-    if (navigator.vibrate) navigator.vibrate([50 50 50]);
+    if (navigator.vibrate) navigator.vibrate([50, 50, 50]);
     window.EJS_emulator.gameManager.restart();
     window.cloud_message('RESET');
 }
@@ -87,7 +87,7 @@ window.save_state = () => {
 }
 
 window.show_prompt = () => {
-    if (navigator.vibrate) navigator.vibrate([50 50 50]);
+    if (navigator.vibrate) navigator.vibrate([50, 50, 50]);
     if (old_input) window.save_name.val(old_input);
     window.myModalAlternative.show();
 }
@@ -124,7 +124,7 @@ window.init_cloud = () => {
 }
 
 window.load_cloud = () => {
-    if (navigator.vibrate) navigator.vibrate([50 50 50]);
+    if (navigator.vibrate) navigator.vibrate([50, 50, 50]);
     if (window.saver) {
         window.saver.fetchStateAndLoad();
     }
