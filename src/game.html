@@ -834,16 +834,13 @@
             window.b_mute.html(`<span class="fa fa-volume-up"></span>`)
             window.b_slot.html(`<span class="fa fa-tasks"></span>`)
 
-            if (isMobile)
-                this.addEventListener(window.EJS_emulator.elements.parent, 'mousemove', (e) => {
-                    e.stopImmediatePropagation();
-                    e.stopPropagation();
-                    e.preventDefault();
-                    console.log(e)
-                    for (let i = 0; i < 200; ++i) {
-                        setTimeout(window.EJS_emulator.menu.close, i);
-                    }
-                });
+            if (isMobile) {
+                window.EJS_emulator.listeners
+                    .filter(o => o.elem == window.EJS_emulator.elements.parent && o.listener == 'mousemove')
+                    .forEach(el => {
+                        el.elem.removeEventListener(el.listener, el.cb)
+                    });
+            }
         }
 
         let old_input;
