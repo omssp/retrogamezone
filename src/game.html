@@ -837,7 +837,8 @@
             if (isMobile) {
                 setTimeout(() => {
                     window.EJS_emulator.listeners
-                        .filter(o => o.elem == window.EJS_emulator.elements.parent && o.listener == 'mousemove')
+                        .filter(o => o.elem == window.EJS_emulator.elements.parent &&
+                            (o.listener == 'mousemove' || o.listener == 'click'))
                         .forEach(el => {
                             el.elem.removeEventListener(el.listener, el.cb)
                         });
