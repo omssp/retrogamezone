@@ -63,7 +63,7 @@ class SaveHandler {
             success: function (resp) {
                 console.log('saved online')
                 if (navigator.vibrate) navigator.vibrate([50, 50, 100]);
-                window.b_save.effect('shake');
+                window.b_save.effect('shake', {}, 400, this.complete);
             }
         });
     }
@@ -114,7 +114,7 @@ class SaveHandler {
                     window.cloud_message('CLOUD : Load successful')
                     console.log('saved state fetched and loaded')
                     if (navigator.vibrate) navigator.vibrate([50, 50, 100]);
-                    window.b_load.effect('shake');
+                    window.b_load.effect('shake', {}, 400, this.complete);
                 } else {
                     console.log('no saved state found')
                 }
