@@ -39,8 +39,8 @@ class SaveHandler {
     }
 
     complete = () => {
-        window.b_save.css('animation', 'none');
-        window.b_load.css('animation', 'none');
+        window.b_save.css('animation', 'none').hide().fadeIn();
+        window.b_load.css('animation', 'none').hide().fadeIn();
         setTimeout(() => { this.mutex_flag = false; }, 2000);
     }
 
