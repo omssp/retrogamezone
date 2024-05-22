@@ -38,9 +38,8 @@ class SaveHandler {
         this.mutex_flag = true;
     }
 
-    complete = () => {
-        window.b_save.css('animation', 'none').hide().fadeIn();
-        window.b_load.css('animation', 'none').hide().fadeIn();
+    complete = (svld) => {
+        svld?.css('animation', 'none');
         setTimeout(() => { this.mutex_flag = false; }, 2000);
     }
 
@@ -59,11 +58,11 @@ class SaveHandler {
             data: JSON.stringify(data),
             context: this,
             beforeSend: () => { this.beforeSend(window.b_save); },
-            complete: this.complete,
+            complete: () => { this.complete(window.b_save); },
             success: function (resp) {
                 console.log('saved online')
                 if (navigator.vibrate) navigator.vibrate([50, 50, 100]);
-                window.b_save.effect('shake', {}, 400, this.complete);
+                window.b_save.effect('shake', {}, 400, () => { this.complete(window.b_save); window.b_save.hide().fadeIn(); });
             }
         });
     }
@@ -77,7 +76,7 @@ class SaveHandler {
             url: this.get_time_url,
             context: this,
             beforeSend: () => { this.beforeSend(window.b_load); },
-            complete: this.complete,
+            complete: () => { this.complete(window.b_load); },
             success: function (resp) {
                 if (resp) {
                     let time = JSON.parse(resp);
@@ -106,7 +105,7 @@ class SaveHandler {
             url: this.get_state_url,
             context: this,
             beforeSend: () => { this.beforeSend(window.b_load); },
-            complete: this.complete,
+            complete: () => { this.complete(window.b_load); },
             success: function (resp) {
                 if (resp) {
                     window.load_state(pako.inflate(JSON.parse(resp)));
@@ -114,7 +113,7 @@ class SaveHandler {
                     window.cloud_message('CLOUD : Load successful')
                     console.log('saved state fetched and loaded')
                     if (navigator.vibrate) navigator.vibrate([50, 50, 100]);
-                    window.b_load.effect('shake', {}, 400, this.complete);
+                    window.b_load.effect('shake', {}, 400, () => { this.complete(window.b_load); window.b_load.hide().fadeIn(); });
                 } else {
                     console.log('no saved state found')
                 }
